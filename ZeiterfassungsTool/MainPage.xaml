@@ -4,8 +4,12 @@
              x:Class="ZeiterfassungsTool.MainPage">
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*">
-        <Entry x:Name="newData"
-           Placeholder="Enter Data" />
+        <Entry x:Name="newEmployee"
+           Placeholder="Enter Employeee" />
+
+        <Entry x:Name="newTime"
+           Placeholder="Enter Time" 
+               Grid.Row="1"/>
 
         <!--<Button Text="Add Employee"
             Grid.Row="1"
@@ -32,23 +36,23 @@
                 Clicked="OnToRegister"/>-->
 
         <Button Text="Add Employee"
-            Grid.Row="1"
+            Grid.Row="2"
             Clicked="OnAddNewEmployee"/>
 
         <Button Text="Get all Employees"
-            Grid.Row="2"
+            Grid.Row="3"
             Clicked="OnGetAllEmployee"/>
 
         <Button Text="Add Time"
-            Grid.Row="3"
+            Grid.Row="4"
             Clicked="OnAddNewTime"/>
 
         <Button Text="Get all Times"
-            Grid.Row="4"
+            Grid.Row="5"
             Clicked="OnGetAllTimes"/>
 
         <Button Text="DropTables"
-            Grid.Row="5"
+            Grid.Row="6"
             Clicked="OnDropTables"/>
 
         <Label x:Name="statusMessage"
@@ -73,7 +77,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <CollectionView x:Name="TimetrackingList" Grid.Row="10">
+        <CollectionView x:Name="TimetrackingList" Grid.Row="9">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10">

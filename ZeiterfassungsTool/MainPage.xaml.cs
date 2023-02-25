@@ -14,40 +14,53 @@ public partial class MainPage : ContentPage
 
     }
 
-    private async void OnAddNewEmployee(object sender, EventArgs e)
+    private void OnAddNewEmployee(object sender, EventArgs e)
     {
-        await App.EmployeeRepo.SaveItem(new Employee { Firstname = newData.Text });
+        Employee employee = new Employee { Firstname = newEmployee.Text };
+        employee.Timetracking = new List<Timetracking>()
+        {
+           new Timetracking { WorkingHours = newTime.Text },
+           new Timetracking { WorkingHours = "9" },
+           new Timetracking { WorkingHours = "11" },
+        };
+
+
+        App.EmployeeRepo.SaveItemWithChildren(employee);
             statusMessage.Text = App.EmployeeRepo.StatusMessage;
+
+
     }
 
-    private async void OnGetAllEmployee(object sender, EventArgs e)
+    private void OnGetAllEmployee(object sender, EventArgs e)
     {
         statusMessage.Text = "";
 
-        List<Employee> employees = await App.EmployeeRepo.GetItems();
+        List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
         TimetrackingList.ItemsSource = null;
         EmployeeList.ItemsSource = employees;
+
+       
     }
 
-    private async void OnAddNewTime(object sender, EventArgs e)
+    private void OnAddNewTime(object sender, EventArgs e)
     {
-        await App.TimetrackingRepo.SaveItem(new Timetracking { WorkingHours = newData.Text, EmployeeID = 111});
+        App.TimetrackingRepo.SaveItem(new Timetracking { WorkingHours = newTime.Text, EmployeeID = 111});
         statusMessage.Text = App.TimetrackingRepo.StatusMessage;
     }
 
-    private async void OnGetAllTimes(object sender, EventArgs e)
+    private void OnGetAllTimes(object sender, EventArgs e)
     {
         statusMessage.Text = "";
 
-        List<Timetracking> timetracking = await App.TimetrackingRepo.GetItems();
+        List<Timetracking> timetracking = App.TimetrackingRepo.GetItems();
         EmployeeList.ItemsSource = null;
         TimetrackingList.ItemsSource = timetracking;
     }
 
-    private async void OnDropTables(object sender, EventArgs e)
+    private void OnDropTables(object sender, EventArgs e)
     {
-        await App.EmployeeRepo.DropTable();
-        await App.TimetrackingRepo.DropTable();
+        App.EmployeeRepo.DropTable();
+        App.TimetrackingRepo.DropTable();
     }
 
     //private async void OnToRegister(object sender, EventArgs e) 

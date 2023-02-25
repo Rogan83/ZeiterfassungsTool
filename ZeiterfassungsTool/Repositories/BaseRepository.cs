@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZeiterfassungsTool.Abstraction;
 using ZeiterfassungsTool.Models;
+using SQLiteNetExtensions.Extensions;
 
 namespace SQLiteDemo.Repositories
 {
@@ -18,31 +19,198 @@ namespace SQLiteDemo.Repositories
         
         public string StatusMessage { get; set; }
 
-        public SQLiteAsyncConnection connection;
+        #region SQLiteAsyncConnection
+        //public SQLiteAsyncConnection connection;
+
+        //public BaseRepository(string dbPath)
+        //{
+        //    _dbPath = dbPath;
+        //}
+
+
+
+        //public async Task Init()
+        //{
+        //    //if (connection  != null)
+        //    //    return;
+
+        //    if (connection == null)
+        //        connection = new SQLiteAsyncConnection(_dbPath);
+
+        //    await connection.CreateTableAsync<T>();         // nicht ideal, weil auf diese Weise die Tabelle Timetracking ohne Fremdschlüssel hinzugefügt wird. Eig. wollte ich es so lösen, dass die "CreateTableAsync<T>" Methode nur dann ausgelöst wird, wenn T nicht vom Typ Timetracking ist, aber ich weiß nicht, wie man das umsetzt.
+
+        //}
+
+        //public async Task DeleteItem(T item)
+        //{
+        //    try
+        //    {
+        //        await Init();
+        //        await connection.DeleteAsync(item);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //            $"Error: {ex.Message}";
+        //    }
+        //}
+
+        //public void Dispose()
+        //{
+        //    connection.CloseAsync();
+        //}
+
+        //public async Task<T> GetItem(int id)
+        //{
+        //    try
+        //    {
+        //        await Init();
+        //        return await connection.Table<T>()
+        //            .FirstOrDefaultAsync(x => x.Id == id);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //            $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+
+        //public async Task<T> GetItem(Expression<Func<T, bool>> predicate)
+        //{
+        //    try
+        //    {
+        //        await Init();
+        //        return await connection.Table<T>()
+        //            .Where(predicate).FirstOrDefaultAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //           $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+
+        //public async Task<List<T>> GetItems()
+        //{
+        //    try
+        //    {
+        //        await Init();  
+        //        return await connection.Table<T>().ToListAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //           $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+
+        //public async Task<List<T>> GetItems(Expression<Func<T, bool>> predicate)
+        //{
+        //    try
+        //    {
+        //        await Init(); 
+        //        return await connection.Table<T>().Where(predicate).ToListAsync();    
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //           $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+
+        //public async Task SaveItem(T item)
+        //{
+        //    int result = 0;
+        //    try
+        //    {
+        //        await Init();
+        //        if (item.Id != 0)
+        //        {
+        //            result =
+        //                await connection.UpdateAsync(item);
+        //            StatusMessage =
+        //            $"{result} row(s) updated";
+        //        }
+        //        else
+        //        {
+        //            result = await connection.InsertAsync(item); 
+        //            StatusMessage =
+        //                $"{result} row(s) added";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //            $"Error: {ex.Message}";
+        //    }
+        //}
+
+        //public async Task DropTable()
+        //{
+        //    try
+        //    {
+        //        await Init();
+        //        await connection.DropTableAsync<T>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //            $"Error: {ex.Message}";
+        //    }
+        //}
+
+        //public async Task SaveItemWithChildren(T item, bool recursive = false)
+        //{
+
+        //}
+
+        //public async Task<List<T>> GetItemsWithChildren()
+        //{
+        //    try
+        //    {
+        //        return await connection
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //           $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+        #endregion
+
+
+
+        public SQLiteConnection connection;
 
         public BaseRepository(string dbPath)
         {
             _dbPath = dbPath;
+            Init();
         }
 
-        public async Task Init()
+        public void Init()
         {
             //if (connection  != null)
             //    return;
 
             if (connection == null)
-                connection = new SQLiteAsyncConnection(_dbPath);
+                connection = new SQLiteConnection(_dbPath);
 
-            await connection.CreateTableAsync<T>();         // nicht ideal, weil auf diese Weise die Tabelle Timetracking ohne Fremdschlüssel hinzugefügt wird. Eig. wollte ich es so lösen, dass die "CreateTableAsync<T>" Methode nur dann ausgelöst wird, wenn T nicht vom Typ Timetracking ist, aber ich weiß nicht, wie man das umsetzt.
-           
+             connection.CreateTable<T>();         // nicht ideal, weil auf diese Weise die Tabelle Timetracking ohne Fremdschlüssel hinzugefügt wird. Eig. wollte ich es so lösen, dass die "CreateTableAsync<T>" Methode nur dann ausgelöst wird, wenn T nicht vom Typ Timetracking ist, aber ich weiß nicht, wie man das umsetzt.
+
         }
 
-        public async Task DeleteItem(T item)
+        public void DeleteItem(T item)
         {
             try
             {
-                await Init();
-                await connection.DeleteAsync(item);
+                Init();
+                connection.Delete(item);
             }
             catch (Exception ex)
             {
@@ -53,16 +221,16 @@ namespace SQLiteDemo.Repositories
 
         public void Dispose()
         {
-            connection.CloseAsync();
+            connection.Close();
         }
 
-        public async Task<T> GetItem(int id)
+        public T GetItem(int id)
         {
             try
             {
-                await Init();
-                return await connection.Table<T>()
-                    .FirstOrDefaultAsync(x => x.Id == id);
+                Init();
+                return connection.Table<T>()
+                    .FirstOrDefault(x => x.Id == id);
             }
             catch (Exception ex)
             {
@@ -72,13 +240,13 @@ namespace SQLiteDemo.Repositories
             return null;
         }
 
-        public async Task<T> GetItem(Expression<Func<T, bool>> predicate)
+        public T GetItem(Expression<Func<T, bool>> predicate)
         {
             try
             {
-                await Init();
-                return await connection.Table<T>()
-                    .Where(predicate).FirstOrDefaultAsync();
+                Init();
+                return  connection.Table<T>()
+                    .Where(predicate).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -88,12 +256,12 @@ namespace SQLiteDemo.Repositories
             return null;
         }
 
-        public async Task<List<T>> GetItems()
+        public List<T> GetItems()
         {
             try
             {
-                await Init();
-                return await connection.Table<T>().ToListAsync();
+                Init();
+                return connection.Table<T>().ToList();
             }
             catch (Exception ex)
             {
@@ -103,12 +271,12 @@ namespace SQLiteDemo.Repositories
             return null;
         }
 
-        public async Task<List<T>> GetItems(Expression<Func<T, bool>> predicate)
+        public List<T> GetItems(Expression<Func<T, bool>> predicate)
         {
             try
             {
-                await Init();
-                return await connection.Table<T>().Where(predicate).ToListAsync();
+                Init();
+                return connection.Table<T>().Where(predicate).ToList();
             }
             catch (Exception ex)
             {
@@ -118,22 +286,22 @@ namespace SQLiteDemo.Repositories
             return null;
         }
 
-        public async Task SaveItem(T item)
+        public void SaveItem(T item)
         {
             int result = 0;
             try
             {
-                await Init();
+                Init();
                 if (item.Id != 0)
                 {
                     result =
-                        await connection.UpdateAsync(item);
+                        connection.Update(item);
                     StatusMessage =
                     $"{result} row(s) updated";
                 }
                 else
                 {
-                    result = await connection.InsertAsync(item);
+                    result = connection.Insert(item);
                     StatusMessage =
                         $"{result} row(s) added";
                 }
@@ -145,18 +313,39 @@ namespace SQLiteDemo.Repositories
             }
         }
 
-        public async Task DropTable()
+        public void DropTable()
         {
             try
             {
-                await Init();
-                await connection.DropTableAsync<T>();
+                Init();
+                connection.DropTable<T>();
             }
             catch (Exception ex)
             {
                 StatusMessage =
                     $"Error: {ex.Message}";
             }
+        }
+
+        public void SaveItemWithChildren(T item, bool recursive = false)
+        {
+            Init();
+            connection.InsertWithChildren(item, recursive);
+        }
+
+        public List<T> GetItemsWithChildren()
+        {
+            try
+            {
+                Init();
+                return connection.GetAllWithChildren<T>().ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage =
+                   $"Error: {ex.Message}";
+            }
+            return null;
         }
     }
 }

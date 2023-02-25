@@ -22,5 +22,7 @@ namespace ZeiterfassungsTool.Models
         //public string Email { get; set; }
         //public string Password { get; set; }
         //public string Role { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Timetracking> Timetracking { get; set; }
     }
 }
