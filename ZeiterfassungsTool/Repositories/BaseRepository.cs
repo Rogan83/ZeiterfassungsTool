@@ -19,7 +19,7 @@ namespace SQLiteDemo.Repositories
         
         public string StatusMessage { get; set; }
 
-        #region SQLiteAsyncConnection
+        #region SQLiteAsyncConnection Code
         //public SQLiteAsyncConnection connection;
 
         //public BaseRepository(string dbPath)
@@ -346,6 +346,20 @@ namespace SQLiteDemo.Repositories
                    $"Error: {ex.Message}";
             }
             return null;
+        }
+
+        public void DeleteTable()
+        {
+            try
+            {
+                Init();
+                connection.DeleteAll<T>();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage =
+                    $"Error: {ex.Message}";
+            }
         }
     }
 }

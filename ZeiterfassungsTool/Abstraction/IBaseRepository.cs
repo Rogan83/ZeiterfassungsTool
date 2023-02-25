@@ -35,5 +35,6 @@ namespace ZeiterfassungsTool.Abstraction
         List<T> GetItemsWithChildren();
         void DeleteItem(T item);
         void DropTable();
+        void DeleteTable();
     }
 }

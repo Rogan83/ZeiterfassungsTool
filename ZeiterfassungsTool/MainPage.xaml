@@ -4,13 +4,6 @@
              x:Class="ZeiterfassungsTool.MainPage">
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*">
-        <Entry x:Name="newEmployee"
-           Placeholder="Enter Employeee" />
-
-        <Entry x:Name="newTime"
-           Placeholder="Enter Time" 
-               Grid.Row="1"/>
-
         <!--<Button Text="Add Employee"
             Grid.Row="1"
             Clicked="OnAddNewEmployee"/>
@@ -35,6 +28,13 @@
                 Grid.Row="6"
                 Clicked="OnToRegister"/>-->
 
+        <!--#region UI zum Testen-->
+        <!--<Entry x:Name="newEmployee"
+           Placeholder="Enter Employeee" />
+
+        <Entry x:Name="newTime"
+           Placeholder="Enter Time" 
+               Grid.Row="1"/>
         <Button Text="Add Employee"
             Grid.Row="2"
             Clicked="OnAddNewEmployee"/>
@@ -94,10 +94,51 @@
                         <Label Grid.Column="2" Text="{Binding Workend}" />
                         <Label Grid.Column="3" Text="{Binding WorkingHours}" />
                         <Label Grid.Column="4" Text="{Binding EmployeeID}" />
-                        
+
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+        </CollectionView>-->
+        <!--<CollectionView x:Name="EmployeeList" Grid.Row="9">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="{Binding Id}" />
+                        <Label Grid.Column="1" Text="{Binding Firstname}" />
+                        <CollectionView x:Name="EmployeeList" >
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Text="{Binding Timetracking.Id}" />
+                                        <Label Grid.Column="1" Text="{Binding Timetracking.Workbegin}" />
+                                        <Label Grid.Column="2" Text="{Binding Timetracking.Workend}" />
+                                        <Label Grid.Column="3" Text="{Binding Timetracking.WorkingHours}" />
+                                        <Label Grid.Column="4" Text="{Binding Timetracking.EmployeeID}" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+        <!--#endregion-->
+
+        
+        
     </Grid>
 </ContentPage>

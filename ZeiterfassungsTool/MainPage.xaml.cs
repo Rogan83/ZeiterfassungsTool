@@ -11,58 +11,54 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
         
-
     }
-
-    private void OnAddNewEmployee(object sender, EventArgs e)
-    {
-        Employee employee = new Employee { Firstname = newEmployee.Text };
-        employee.Timetracking = new List<Timetracking>()
-        {
-           new Timetracking { WorkingHours = newTime.Text },
-           new Timetracking { WorkingHours = "9" },
-           new Timetracking { WorkingHours = "11" },
-        };
-
-
-        App.EmployeeRepo.SaveItemWithChildren(employee);
-            statusMessage.Text = App.EmployeeRepo.StatusMessage;
+    #region Methoden Zum Testen
+    //private void OnAddNewEmployee(object sender, EventArgs e)
+    //{
+    //    Employee employee = new Employee { Firstname = newEmployee.Text };
+    //    employee.Timetracking = new List<Timetracking>()
+    //    {
+    //       new Timetracking { WorkingHours = newTime.Text },
+    //       new Timetracking { WorkingHours = "9" },
+    //       new Timetracking { WorkingHours = "11" },
+    //    };
 
 
-    }
+    //    App.EmployeeRepo.SaveItemWithChildren(employee);
+    //    statusMessage.Text = App.EmployeeRepo.StatusMessage;
+    //}
 
-    private void OnGetAllEmployee(object sender, EventArgs e)
-    {
-        statusMessage.Text = "";
+    //private void OnGetAllEmployee(object sender, EventArgs e)
+    //{
+    //    statusMessage.Text = "";
 
-        List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
-        TimetrackingList.ItemsSource = null;
-        EmployeeList.ItemsSource = employees;
+    //    List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
+    //    //TimetrackingList.ItemsSource = null;
+    //    EmployeeList.ItemsSource = employees;
+    //}
 
-       
-    }
+    //private void OnAddNewTime(object sender, EventArgs e)
+    //{
+    //    App.TimetrackingRepo.SaveItem(new Timetracking { WorkingHours = newTime.Text, EmployeeID = 111 });
+    //    statusMessage.Text = App.TimetrackingRepo.StatusMessage;
+    //}
 
-    private void OnAddNewTime(object sender, EventArgs e)
-    {
-        App.TimetrackingRepo.SaveItem(new Timetracking { WorkingHours = newTime.Text, EmployeeID = 111});
-        statusMessage.Text = App.TimetrackingRepo.StatusMessage;
-    }
+    //private void OnGetAllTimes(object sender, EventArgs e)
+    //{
+    //    statusMessage.Text = "";
 
-    private void OnGetAllTimes(object sender, EventArgs e)
-    {
-        statusMessage.Text = "";
-
-        List<Timetracking> timetracking = App.TimetrackingRepo.GetItems();
-        EmployeeList.ItemsSource = null;
-        TimetrackingList.ItemsSource = timetracking;
-    }
+    //    List<Timetracking> timetracking = App.TimetrackingRepo.GetItems();
+    //    EmployeeList.ItemsSource = null;
+    //    //TimetrackingList.ItemsSource = timetracking;
+    //}
 
     private void OnDropTables(object sender, EventArgs e)
     {
         App.EmployeeRepo.DropTable();
         App.TimetrackingRepo.DropTable();
     }
-
+    #endregion
+    #region AsynMethoden Zum Testen
     //private async void OnToRegister(object sender, EventArgs e) 
     //{
 
@@ -127,5 +123,8 @@ public partial class MainPage : ContentPage
     //    DebugMessage.Text = (await App.Repo.Debug()).ToString();
     //    statusMessage.Text = App.Repo.StatusMessage;
     //}
+    #endregion
+
+
 }
 

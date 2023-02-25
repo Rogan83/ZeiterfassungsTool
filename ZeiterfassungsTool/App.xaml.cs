@@ -16,7 +16,7 @@ public partial class App : Application
         // TODO: Initialize the Repository property with the Repository singleton object
         InitializeComponent();
 
-		MainPage = new NavigationPage(new MainPage());
+        MainPage = new AppShell();
 
         //Repo = repo;
         EmployeeRepo = employeeRepo;

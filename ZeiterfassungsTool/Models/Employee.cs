@@ -20,9 +20,17 @@ namespace ZeiterfassungsTool.Models
         //public string country { get; set; }
         //public string Birthday { get; set; }
         //public string Email { get; set; }
-        //public string Password { get; set; }
-        //public string Role { get; set; }
+        public string Password { get; set; }
+        public Role Role { get; set; }                        //User, Geschäftsleitung oder Admin
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Timetracking> Timetracking { get; set; }
+
+        
+    }
+    public enum Role
+    {
+        User,
+        Management,
+        Admin
     }
 }

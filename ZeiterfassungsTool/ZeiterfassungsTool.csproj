@@ -56,18 +56,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\CreateUserAccount.xaml.cs">
-	    <DependentUpon>CreateUserAccount.xaml</DependentUpon>
-	  </Compile>
+	  <MauiXaml Update="MVVM\Views\CreateAccount.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\StartPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\CreateFirstAdminAccount.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\CreateUserAccount.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Folder Include="MVVM\Models\" />
 	</ItemGroup>
 
 </Project>
