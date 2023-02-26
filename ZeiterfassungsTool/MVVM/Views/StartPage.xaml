@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.StartPage"
-             Title="Start Seite"
+             Title=""
              >
     <Grid RowDefinitions="auto,auto,auto,*"
           BackgroundColor="AliceBlue"
           RowSpacing="10">
         <Button Grid.Row="0" Text="Einloggen" Command="{Binding }"/>
         <Button Grid.Row="1" Text="Registrieren"  Command="{Binding GoToCreateAccountSite}"/>
-        <Button Grid.Row="2" Text="Tabelle löschen"  Command="{Binding DeleteTable}"/>
+        <Button Grid.Row="2" Text="Tabelle löschen"  Command="{Binding DeleteTable}" BackgroundColor="DarkRed" Margin="20"/>
     </Grid>
 </ContentPage>

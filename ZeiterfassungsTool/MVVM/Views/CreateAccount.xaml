@@ -2,10 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.CreateAccount"
-             Title="CreateAccount">
-    <Grid RowDefinitions="auto,auto,*">
-        <VerticalStackLayout>
-            <Label Text ="{Binding Info}"/>
+             Title="">
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,*">
+        <VerticalStackLayout 
+            Spacing="10"
+            Padding="20">
+            <Label Grid.Row="0" Text ="{Binding Info}"
+                   FontSize="Medium"
+                   HorizontalTextAlignment="Center"/>
+            <Label Grid.Row="1" Text ="{Binding DebugMessage}" TextColor="red"/>
+            <Entry Grid.Row="2" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>
+            <Entry Grid.Row="3" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>
+            <Button Grid.Row="4" Command="{Binding ToRegister}" Text="Speichern"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

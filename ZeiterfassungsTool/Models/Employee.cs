@@ -12,7 +12,8 @@ namespace ZeiterfassungsTool.Models
     public class Employee : TableData
     {
         
-        public string Firstname { get; set; }
+        public string Username { get; set; }
+        //public string Firstname { get; set; }
         //public string lastname { get; set; }
         //public string street { get; set; }
         //public string postalCode { get; set; }
