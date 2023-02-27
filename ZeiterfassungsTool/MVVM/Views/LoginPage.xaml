@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.LoginPage"
+             Title="">
+    <Grid RowDefinitions="auto,auto,*">
+        <VerticalStackLayout x:Name="vslLogin">
+            <Entry x:Name="username" Grid.Row="0"  IsPassword="false" Placeholder="Benutzername hier eingeben"/>
+            <Entry x:Name="password" Grid.Row="1"  IsPassword="True" Placeholder="Passwort"/>
+            <Button x:Name="btnLogin" Grid.Row="2" Command="{Binding ToLogin}" CommandParameter="{Binding Source={x:Reference vslLogin}}" Text="Einloggen"/>
+            <Label Grid.Row="3" Text="{Binding Message}" TextColor="Red"/>
+            <Label x:Name="DebugMessage" IsVisible="true" Grid.Row="4" BackgroundColor="DarkRed"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

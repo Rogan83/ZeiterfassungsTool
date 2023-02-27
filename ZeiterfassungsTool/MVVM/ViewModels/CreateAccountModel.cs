@@ -28,10 +28,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         public string DebugMessage { get; set; }
 
+        public ICommand GoToLoginPage =>
+            new Command(() =>
+            {
+                Shell.Current.GoToAsync(nameof(LoginPage));
+            });
+
         public ICommand GoToCreateAccountSite =>
             new Command(() =>
             {
                 Shell.Current.GoToAsync(nameof(CreateAccount));
+                
             });
 
         public ICommand DeleteTable =>
@@ -41,7 +48,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             });
 
         public ICommand ToRegister =>
-            new Command(() =>
+            new Command((vslRegisterElements) =>
             {
                 if (Username != null && Password != null) 
                 {
@@ -54,14 +61,57 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                         App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = Role.User });  
                     }
                     DebugMessage = App.EmployeeRepo.StatusMessage;
-                    Info = "Speichern erfolgreich";
+                    Info = "Account erfolgreich angelegt";
+                    HideControls(vslRegisterElements);
+                    ShowBackButton(vslRegisterElements);
                 }
                 else
                 {
                     Info = "Der Benutzername und das Passwort Feld darf nicht leer sein!";
                 }
+                
             });
+        public ICommand BackToMainMenu =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("..");
+           });
+        private void HideControls(object vslRegisterElements)
+        {
+            var elements = (VerticalStackLayout)vslRegisterElements;
 
+            for (int i = 1; i < elements.Children.Count - 1; i++)
+            {
+
+                var child = ((VerticalStackLayout)vslRegisterElements).Children[i];
+                if (child is Entry)
+                {
+                    var entry = (Entry)child;
+                    entry.IsVisible = false;
+                }
+                else if (child is Button)
+                {
+                    var btn = (Button)child;
+                    btn.IsVisible = false;
+                }
+                else
+                {
+                    var lbl = (Label)child;
+                    lbl.IsVisible= false;
+                }
+            }
+        }
+
+        private void ShowBackButton(object vslRegisterElements)
+        {
+            var vsl = (VerticalStackLayout)vslRegisterElements;
+            Button btn = (Button)vsl.Children[vsl.Children.Count - 1];
+
+            if (btn != null )
+            {
+                btn.IsVisible = true;   
+            }
+        }
 
         public void CheckIfOneAccountExist()
         {

@@ -10,10 +10,13 @@
             <Label Grid.Row="0" Text ="{Binding Info}"
                    FontSize="Medium"
                    HorizontalTextAlignment="Center"/>
-            <Label Grid.Row="1" Text ="{Binding DebugMessage}" TextColor="red"/>
-            <Entry Grid.Row="2" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>
-            <Entry Grid.Row="3" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>
-            <Button Grid.Row="4" Command="{Binding ToRegister}" Text="Speichern"/>
+            <VerticalStackLayout x:Name="vslRegister" >
+                <Label Grid.Row="1" Text ="{Binding DebugMessage}" TextColor="red"/>
+                <Entry Grid.Row="2" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>
+                <Entry Grid.Row="3" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>
+                <Button x:Name="btnSave" Grid.Row="4" Command="{Binding ToRegister}" CommandParameter="{Binding Source={x:Reference vslRegister}}" Text="Speichern"/>
+                <Button x:Name="btnBackToMenu" Grid.Row="2" Text="Zurück zum Login" IsVisible="false" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
