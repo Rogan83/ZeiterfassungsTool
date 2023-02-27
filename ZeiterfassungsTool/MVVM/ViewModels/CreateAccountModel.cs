@@ -1,5 +1,6 @@
 ﻿//using Android.OS;
 //using Android.Views;
+using Microsoft.Maui.Controls;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -7,8 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
+using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
@@ -24,9 +27,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public string Info { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
-
         public string DebugMessage { get; set; }
+
+        public bool rbUser { get; set; } = true;            //Soll standardmäßig ausgewählt sein
+        public bool rbManagement { get; set; }
+        public bool rbAdmin { get; set; }
+
+        public bool rbsIsVisible { get; set; } = true;
+
 
         public ICommand GoToLoginPage =>
             new Command(() =>
@@ -50,6 +58,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand ToRegister =>
             new Command((vslRegisterElements) =>
             {
+
                 if (Username != null && Password != null) 
                 {
                     if (isFirstAccount)
@@ -58,7 +67,42 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     }
                     else
                     {
-                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = Role.User });  
+                        rbsIsVisible = true;
+
+                        Role role = Role.User;
+
+                        if (rbUser)
+                        {
+                            role = Role.User;
+                        }
+                        else if (rbManagement)
+                        {
+                            if (SaveLoginStatus.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            {
+                                role = Role.Management;
+                            }
+                            else
+                            {
+                                Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+                                return;
+                            }
+                        }
+                        else if (rbAdmin)
+                        {
+                            if (SaveLoginStatus.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            {
+                                role = Role.Admin;
+                            }
+                            else
+                            {
+                                Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+                                return;
+                            }
+                        }
+
+                        rbsIsVisible = false;
+                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = role });
+                        Info = $"{role} Account wurde erfolgreich angelegt";
                     }
                     DebugMessage = App.EmployeeRepo.StatusMessage;
                     Info = "Account erfolgreich angelegt";
@@ -74,7 +118,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand BackToMainMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("..");
+               Shell.Current.GoToAsync("CreateAccount/StartPage");
            });
         private void HideControls(object vslRegisterElements)
         {
@@ -94,6 +138,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     var btn = (Button)child;
                     btn.IsVisible = false;
                 }
+                else if (child is RadioButton)
+                {
+                    var btn = (RadioButton)child;
+                    btn.IsVisible = false;
+                }
                 else
                 {
                     var lbl = (Label)child;
@@ -105,7 +154,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         private void ShowBackButton(object vslRegisterElements)
         {
             var vsl = (VerticalStackLayout)vslRegisterElements;
-            Button btn = (Button)vsl.Children[vsl.Children.Count - 1];
+            Button btn = (Button)vsl.FindByName("btnBackToMenu");//(Button)vsl.Children[vsl.Children.Count - 1];
 
             if (btn != null )
             {
@@ -119,13 +168,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             string text = "Bitte geben Sie ihr Benutzername und Passwort zum Registrieren ein.";
             if (count == 0)
             {
+                
                 //Noch kein Account in der Datenbank vorhanden. Der erste Account wird somit ein Admin Account werden.
                 Info = $"Es existiert noch kein Account. Somit wird jetzt ein Admin Account erstellt. {text}";
+                rbsIsVisible = false;
                 isFirstAccount = true;
             }
             else
             {
                 Info = $"{text}";
+                rbsIsVisible = true;
                 isFirstAccount = false;
             }
 

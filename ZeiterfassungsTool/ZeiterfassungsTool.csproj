@@ -66,16 +66,25 @@
 	  <MauiXaml Update="MVVM\Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\ManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\UserTimeTracking.xaml">
+	  <MauiXaml Update="MVVM\Views\UserPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="MVVM\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="MVVM\Views\UserPage.xaml.cs">
+	    <DependentUpon>UserPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

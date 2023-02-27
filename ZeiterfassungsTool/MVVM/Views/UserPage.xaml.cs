@@ -2,12 +2,12 @@ using ZeiterfassungsTool.MVVM.ViewModels;
 
 namespace ZeiterfassungsTool.MVVM.Views;
 
-public partial class AdminPage : ContentPage
+public partial class UserPage : ContentPage
 {
-	public AdminPage()
+	public UserPage()
 	{
 		InitializeComponent();
 
-		BindingContext= new AdminPageModel();
+		BindingContext = new UserPageModel();
 	}
 }

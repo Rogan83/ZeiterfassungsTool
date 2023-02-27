@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.CreateAccount"
-             Title="">
+             Title=""
+             >
     <Grid RowDefinitions="auto,auto,auto,auto,auto,*">
         <VerticalStackLayout 
             Spacing="10"
@@ -15,8 +16,22 @@
                 <Entry Grid.Row="2" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>
                 <Entry Grid.Row="3" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>
                 <Button x:Name="btnSave" Grid.Row="4" Command="{Binding ToRegister}" CommandParameter="{Binding Source={x:Reference vslRegister}}" Text="Speichern"/>
-                <Button x:Name="btnBackToMenu" Grid.Row="2" Text="Zurück zum Login" IsVisible="false" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"/>
+                <Button x:Name="btnBackToMenu" Grid.Row="4" Text="Zurück zum Login" IsVisible="true" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"/>
+
+
+                <Frame BackgroundColor="Azure" Padding="10" IsVisible="{Binding rbsIsVisible}">
+                    
+                    <VerticalStackLayout >
+                        <Label Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
+                            FontSize="Medium"/>
+                        <RadioButton x:Name="user"          Content="Benutzer"         GroupName ="SelectRole" IsChecked="{Binding rbUser}"/>
+                        <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}"/>
+                        <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}"/>
+                    </VerticalStackLayout>
+                </Frame>
             </VerticalStackLayout>
+
+            
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
+using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
@@ -34,7 +36,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                        {
                            //((Label)((Label)child).FindByName("DebugMessage")).Text = e.Message;
                        }
-                      
+
                    }
                }
                if (username != null || password != null)
@@ -44,25 +46,29 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                    if (count > 0)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username und Passwort hat.
                    {
+                       SaveLoginStatus.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
+
                        foreach (var result in results)      //Es könnte theoretisch sein, dass mehrere Accounts mit Users und Admin Rollen vorhanden sind, die den selben Benutzername und Passwort haben ... Man müsste dafür sorgen, dass der Benutzername nicht mehr als 1 mal vergeben wird
                        {
                            switch (result.Role)
                            {
                                case Role.User:
-                                   Shell.Current.GoToAsync(nameof(UserTimeTracking));
+                                   Shell.Current.GoToAsync(nameof(UserPage));
+                                   break;
+                               case Role.Management:
+                                   Shell.Current.GoToAsync(nameof(ManagementPage));
                                    break;
                                case Role.Admin:
                                    Shell.Current.GoToAsync(nameof(AdminPage));
                                    break;
 
-
                                default:
-                                   Shell.Current.GoToAsync(nameof(UserTimeTracking));
+                                   Shell.Current.GoToAsync(nameof(UserPage));
                                    break;
                            }
                        }
 
-                       
+
                    }
                    else
                    {
@@ -74,7 +80,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    Message = "Es müssen beide Felder ausgefüllt sein.";
                }
 
-               
+
+           });
+
+        public ICommand BackToMainMenu =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("LoginPage/StartPage");
            });
     }
 }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ZeiterfassungsTool.MVVM.Views.AdminPage"
-             Title="AdminPage">
+             x:Class="ZeiterfassungsTool.MVVM.Views.UserPage"
+             Title="UserTimeTracking">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to Admin Page"
+            Text="Welcome to .UserPage!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Button
-            Text="Zurück zum Hauptmenu"
+            Text="Zurück zum Hauptmenü"
             Command="{Binding BackToMenu}"/>
     </VerticalStackLayout>
 </ContentPage>

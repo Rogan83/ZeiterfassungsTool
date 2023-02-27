@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeiterfassungsTool.Abstraction;
+using ZeiterfassungsTool.Enumerations;
 
 namespace ZeiterfassungsTool.Models
 {
@@ -28,10 +29,5 @@ namespace ZeiterfassungsTool.Models
 
         
     }
-    public enum Role
-    {
-        User,
-        Management,
-        Admin
-    }
+    
 }
