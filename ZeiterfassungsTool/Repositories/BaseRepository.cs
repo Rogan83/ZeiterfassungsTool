@@ -261,7 +261,7 @@ namespace SQLiteDemo.Repositories
             try
             {
                 Init();
-                return connection.Table<T>().ToList();
+                return connection.Table<T>().ToList();   
             }
             catch (Exception ex)
             {
@@ -295,7 +295,7 @@ namespace SQLiteDemo.Repositories
                 if (item.Id != 0)
                 {
                     result =
-                        connection.Update(item);
+                        connection.Update(item);  
                     StatusMessage =
                     $"{result} row(s) updated";
                 }
@@ -313,6 +313,30 @@ namespace SQLiteDemo.Repositories
             }
         }
 
+
+
+        //public void SaveItemWithChildren(T item, bool recursive = false)
+        //{
+
+        //    //Init();
+        //    if (item.Id != 0)
+        //    {
+
+        //        connection.UpdateWithChildren(item);                //Fehler: Fügt nciht die kinder hinzu
+        //        connection.upd
+
+        //    }
+        //    else
+        //    {
+        //        connection.InsertWithChildren(item, recursive);
+
+        //    }
+        //}
+        public void SaveItemWithChildren(T item, bool recursive = false)
+        {
+            connection.InsertWithChildren(item, recursive);
+        }
+
         public void DropTable()
         {
             try
@@ -327,17 +351,11 @@ namespace SQLiteDemo.Repositories
             }
         }
 
-        public void SaveItemWithChildren(T item, bool recursive = false)
-        {
-            Init();
-            connection.InsertWithChildren(item, recursive);
-        }
-
         public List<T> GetItemsWithChildren()
         {
             try
             {
-                Init();
+                //Init();
                 return connection.GetAllWithChildren<T>().ToList();
             }
             catch (Exception ex)
@@ -347,6 +365,26 @@ namespace SQLiteDemo.Repositories
             }
             return null;
         }
+
+        //public List<T> GetItemsWithChildren(Expression<Func<T, bool>> predicate)
+        //{
+        //    try
+        //    {
+        //        Init();
+        //          var a = connection.GetAllWithChildren<T>().ToList();
+                
+
+
+        //        return connection.Table<T>().Where(predicate).ToList();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        StatusMessage =
+        //           $"Error: {ex.Message}";
+        //    }
+        //    return null;
+        //}
+
 
         public void DeleteTable()
         {

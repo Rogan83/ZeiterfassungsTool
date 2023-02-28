@@ -10,7 +10,7 @@
             <Button x:Name="btnLogin" Grid.Row="2" Command="{Binding ToLogin}" CommandParameter="{Binding Source={x:Reference vslLogin}}" Text="Einloggen"/>
             
             <Label Grid.Row="3" Text="{Binding Message}" TextColor="Red"/>
-            <Label x:Name="DebugMessage" IsVisible="true" Grid.Row="4" BackgroundColor="DarkRed"/>
+            <Label x:Name="DebugMessage" Text="{Binding Debug}" IsVisible="true" Grid.Row="4" BackgroundColor="DarkRed"/>
 
             <Button Text="Zurück zum Hauptmenü" Command="{Binding BackToMainMenu}"/>
 

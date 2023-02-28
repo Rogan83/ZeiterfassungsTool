@@ -25,7 +25,7 @@ namespace ZeiterfassungsTool.Models
         public string Password { get; set; }
         public Role Role { get; set; }                        //User, Geschäftsleitung oder Admin
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<Timetracking> Timetracking { get; set; }
+        public List<Timetracking> Timetracking { get; set; } = new List<Timetracking>();
 
         
     }

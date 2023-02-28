@@ -33,7 +33,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             }
 
             user = SaveLoginStatus.WhoIsLoggedIn[0];
-            user.Timetracking = new List<Timetracking>();
+
+            //DebugText = user.Timetracking.Count.ToString();
+            //user.Timetracking = new List<Timetracking>();
         }
 
 
@@ -41,6 +43,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             new Command(() =>
             {
                 Shell.Current.GoToAsync("UserPage/StartPage");
+                SaveLoginStatus.WhoIsLoggedIn[0] = null;
             });
 
         private DateTime workbegin = DateTime.Now;
@@ -57,6 +60,24 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
 
                InitTimer(100, true);
+
+               SaveEmployeeInDataBase();
+
+               //Test
+
+            //   user.Timetracking = new List<Timetracking>
+            //{
+            //    new Timetracking
+            //    {
+            //        Workbegin = DateTime.Now.AddDays(30)
+            //    },
+            //    new Timetracking
+            //    {
+            //        Workbegin = DateTime.Now.AddDays(15)
+            //    },
+            //};
+
+
            });
         private DateTime workend = DateTime.Now;
         public ICommand StopTimeTracking =>
@@ -71,7 +92,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                // In Datenbank hinzufügen
                user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
 
-               DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}"; 
+               DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}";
+
+               SaveEmployeeInDataBase();
            });
 
         private void InitTimer(int duration, bool isActivate)
@@ -105,15 +128,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             TimePassed =  $"{workingTimeTotal.Hours.ToString()} h : {workingTimeTotal.Minutes.ToString()} m : {workingTimeTotal.Seconds.ToString()} s";
         }
 
-
-        
-
-
-        private void Time()
+        void SaveEmployeeInDataBase()
         {
-            
-        }
+            App.EmployeeRepo.DeleteItem(user);
+            App.EmployeeRepo.SaveItemWithChildren(user);        //Speichert irgendwie nicht die children, ka warum
 
+            //var count = App.EmployeeRepo.GetItems().Count;
+
+            List<Employee> a  = App.EmployeeRepo.GetItemsWithChildren();
+                                
+        }
+        
 
 
 

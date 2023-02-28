@@ -16,6 +16,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
     public class LoginPageModel
     {
         public string Message { get; set; }
+        public string Debug { get; set; }
         public ICommand ToLogin =>
            new Command((elements) =>
            {
@@ -41,7 +42,20 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                }
                if (username != null || password != null)
                {
-                   var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);
+                   //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
+                   List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
+
+                   List<Employee> results = new List<Employee>();
+                   foreach (var item in allAccounts)
+                   {
+                       if (item.Username == username && item.Password == password)
+                       {
+                           results.Add(item);
+                       }
+                   }
+
+                   Debug = App.EmployeeRepo.GetItems().Count.ToString();
+
                    var count = results.Count();
 
                    if (count > 0)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username und Passwort hat.
