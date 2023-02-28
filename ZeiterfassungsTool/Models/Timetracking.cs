@@ -16,7 +16,7 @@ namespace ZeiterfassungsTool.Models
         
         public DateTime Workbegin { get; set; }
         public DateTime Workend { get; set; }
-        public string WorkingHours { get; set; }
+        public TimeSpan WorkingTime { get; set; }
         [ForeignKey(typeof(Employee))]
         public int EmployeeID { get; set; }
         

@@ -3,13 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.UserPage"
              Title="UserTimeTracking">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .UserPage!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
-            Text="Zurück zum Hauptmenü"
-            Command="{Binding BackToMenu}"/>
-    </VerticalStackLayout>
+    
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
+        <VerticalStackLayout>
+            <Label 
+                Grid.Row="0"
+                Text="Welcome to .UserPage!"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button
+                Grid.Row="1"
+                Text="Zurück zum Hauptmenü"
+                Command="{Binding BackToMenu}"/>
+            <Label
+                Grid.Row="2"
+                Text="{Binding TimePassed}"
+                />
+            <Button
+                Grid.Row="3"
+                Text="Starte die Zeiterfassung"
+                BackgroundColor="CadetBlue"
+                IsVisible="{Binding isStartTimeTracking}"
+                Command="{Binding StartTimeTracking}"/>
+            <Button
+                Grid.Row="3"
+                Text="Stoppe die Zeiterfassung"
+                BackgroundColor="DarkRed"
+                IsVisible="{Binding isStopTimeTracking}"
+                Command="{Binding StopTimeTracking}"/>
+            <Label
+                Grid.Row="4"
+                Text="{Binding DebugText}"
+                TextColor="Red"
+                />
+        </VerticalStackLayout>
+    </Grid>
+        
+    
 </ContentPage>
