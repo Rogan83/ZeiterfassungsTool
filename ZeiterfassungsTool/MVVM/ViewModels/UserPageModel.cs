@@ -17,8 +17,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
     {
         private static System.Timers.Timer aTimer;
 
-        public bool isStartTimeTracking { get; set; } = true;
-        public bool isStopTimeTracking { get; set; }
+        public bool ShowStartTimer { get; set; } 
+        public bool ShowStopTimer { get; set; }
         public string DebugText { get; set; }
         public string TimePassed { get; set; }
 
@@ -34,6 +34,26 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
             user = SaveLoginStatus.WhoIsLoggedIn[0];
 
+            index = user.Timetracking.Count - 1;
+
+            if (index >= 0)  //Ist überhaupt ein Datensatz vorhanden?
+            {
+                ShowStartTimer = !user.Timetracking[index].IsCurrentlyWorking;
+                ShowStopTimer  = user.Timetracking[index].IsCurrentlyWorking;
+
+                workbegin = user.Timetracking[index].Workbegin;
+                workend = user.Timetracking[index].Workend;
+            }
+            else
+            {
+                ShowStartTimer = true;
+                ShowStopTimer = false;
+
+                workbegin = workend = DateTime.Now;
+            }
+
+            InitTimer(100, true);
+
             //DebugText = user.Timetracking.Count.ToString();
             //user.Timetracking = new List<Timetracking>();
         }
@@ -46,51 +66,50 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 SaveLoginStatus.WhoIsLoggedIn[0] = null;
             });
 
-        private DateTime workbegin = DateTime.Now;
+        private DateTime workbegin;
+        private int index = 0;
         public ICommand StartTimeTracking =>
            new Command(() =>
            {
+               user.Timetracking.Add(new Timetracking() { Workbegin = DateTime.Now, Workend = DateTime.Now});
+
+               index = user.Timetracking.Count - 1;
+
                // Es soll die Zeit gespeichert werden, wann angefangen wird zu Arbeiten
                workbegin = DateTime.Now;
 
-               isStartTimeTracking = false;
-               isStopTimeTracking = true;
+               ShowStartTimer = false;
+               ShowStopTimer = true;
 
                //user.Timetracking[count].Workbegin = DateTime.Now;
 
+               user.Timetracking[index].Workbegin = workbegin;
+               user.Timetracking[index].IsCurrentlyWorking = true;
 
-               InitTimer(100, true);
+               //InitTimer(100, true);
+
+
 
                SaveEmployeeInDataBase();
 
-               //Test
-
-            //   user.Timetracking = new List<Timetracking>
-            //{
-            //    new Timetracking
-            //    {
-            //        Workbegin = DateTime.Now.AddDays(30)
-            //    },
-            //    new Timetracking
-            //    {
-            //        Workbegin = DateTime.Now.AddDays(15)
-            //    },
-            //};
-
+               
 
            });
-        private DateTime workend = DateTime.Now;
+        private DateTime workend;
         public ICommand StopTimeTracking =>
            new Command(() =>
            {
                // Es soll die Zeit gespeichert werden, wann gestoppt wird zu Arbeiten
                workend = DateTime.Now;
 
-               isStartTimeTracking = true;
-               isStopTimeTracking = false;
+               ShowStartTimer = true;
+               ShowStopTimer = false;
 
                // In Datenbank hinzufügen
-               user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
+               //user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
+               user.Timetracking[index].Workend = workend;
+               user.Timetracking[index].WorkingTime = workend - workbegin;
+               user.Timetracking[index].IsCurrentlyWorking = false;
 
                DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}";
 
@@ -130,7 +149,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         void SaveEmployeeInDataBase()
         {
-            App.EmployeeRepo.DeleteItem(user);
+            App.EmployeeRepo.DeleteItem(user);                  //Updaten funktioniert aus irgendeinen Grund nicht, deswegen musste ich mich mit Löschen und neu hinzufügen behelfen
             App.EmployeeRepo.SaveItemWithChildren(user);        //Speichert irgendwie nicht die children, ka warum
 
             //var count = App.EmployeeRepo.GetItems().Count;

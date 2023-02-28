@@ -23,13 +23,13 @@
                 Grid.Row="3"
                 Text="Starte die Zeiterfassung"
                 BackgroundColor="CadetBlue"
-                IsVisible="{Binding isStartTimeTracking}"
+                IsVisible="{Binding ShowStartTimer}"
                 Command="{Binding StartTimeTracking}"/>
             <Button
                 Grid.Row="3"
                 Text="Stoppe die Zeiterfassung"
                 BackgroundColor="DarkRed"
-                IsVisible="{Binding isStopTimeTracking}"
+                IsVisible="{Binding ShowStopTimer}"
                 Command="{Binding StopTimeTracking}"/>
             <Label
                 Grid.Row="4"
