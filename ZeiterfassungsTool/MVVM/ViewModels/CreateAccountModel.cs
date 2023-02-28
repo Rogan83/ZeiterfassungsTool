@@ -21,6 +21,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public CreateAccountModel()
         {
             CheckIfOneAccountExist();
+            LbUsername = $"Sie sind mit dem Benutzername {SaveLoginStatus.WhoIsLoggedIn[0].Username} angemeldet.";
         }
         private bool isFirstAccount = false;
 
@@ -32,6 +33,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public bool rbUser { get; set; } = true;            //Soll standardmäßig ausgewählt sein
         public bool rbManagement { get; set; }
         public bool rbAdmin { get; set; }
+
+        public string LbUsername { get; set; }
 
         public bool rbsIsVisible { get; set; } = true;
 
@@ -58,7 +61,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand ToRegister =>
             new Command((vslRegisterElements) =>
             {
-
+                if (ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
+                {
+                    Info = "Dieser Benutzername ist bereits schon vergeben.";
+                    return;
+                }
                 if (Username != null && Password != null) 
                 {
                     if (isFirstAccount)
@@ -115,6 +122,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 }
                 
             });
+
+        private bool ExistsThisUser()
+        {
+           var user = App.EmployeeRepo.GetItem(x => x.Username == this.Username);
+
+            if (user == null)
+                return false;
+
+            return true;
+        }
+
         public ICommand BackToMainMenu =>
            new Command(() =>
            {

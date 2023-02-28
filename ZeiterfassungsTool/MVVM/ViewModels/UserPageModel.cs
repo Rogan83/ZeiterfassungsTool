@@ -145,6 +145,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
             //var workingTimeTotal = DateTime.Now - workbegin;
             TimePassed =  $"{workingTimeTotal.Hours.ToString()} h : {workingTimeTotal.Minutes.ToString()} m : {workingTimeTotal.Seconds.ToString()} s";
+
+            //TODO:
+            //Noch extra hinzufügen, wie lange ich HEUTE gearbeitet habe und nicht in der Summe von allen Arbeitszeiten
+            
         }
 
         void SaveEmployeeInDataBase()
