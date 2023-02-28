@@ -63,8 +63,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             new Command(() =>
             {
                 Shell.Current.GoToAsync("UserPage/StartPage");
-                SaveLoginStatus.WhoIsLoggedIn[0] = null;
+                //SaveLoginStatus.WhoIsLoggedIn[0] = null;
             });
+
+        public ICommand ForwardToScheduler =>
+           new Command(() =>
+           {
+               //Shell.Current.GoToAsync("UserPageScheduler"); UserPage/UserPageScheduler
+               Shell.Current.GoToAsync("UserPage/UserPageScheduler"); 
+           });
 
         private DateTime workbegin;
         private int index = 0;

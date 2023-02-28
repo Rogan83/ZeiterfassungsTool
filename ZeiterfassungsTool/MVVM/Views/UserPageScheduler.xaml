@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.UserPageScheduler"
+             Title="Kalender"
+             xmlns:scheduler="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
+             xmlns:local="clr-namespace:ZeiterfassungsTool">
+
+    <VerticalStackLayout>
+        <scheduler:SfScheduler View="Week"
+                               FirstDayOfWeek="Monday"
+                               AllowedViews="Agenda,Day,Month,TimelineDay,TimelineMonth,TimelineWeek,TimelineWorkWeek,Week,WorkWeek"
+                                AppointmentsSource="{Binding SchedulerEvents}" 
+                               HeightRequest="700"
+                               >
+
+        </scheduler:SfScheduler>
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Button
+            Text="Zurück zum Hauptmenü" 
+            Command="{Binding BackToMainMenu}"/>
+            <Button
+            Text="Zurück zur Zeiterfassungs Seite" 
+            Command="{Binding BackToTimeTracking}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+            
+            
+       
+        
+    
+    
+    
+    
+</ContentPage>

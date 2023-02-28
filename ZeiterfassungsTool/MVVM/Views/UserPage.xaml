@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.UserPage"
-             Title="UserTimeTracking">
+             Title="UserTimeTracking"
+             >
     
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,*">
         <VerticalStackLayout>
             <Label 
                 Grid.Row="0"
@@ -36,7 +37,16 @@
                 Text="{Binding DebugText}"
                 TextColor="Red"
                 />
+            <Button
+                Grid.Row="5"
+                Text="Gehe zum Kalander"
+                BackgroundColor="Aquamarine"
+                TextColor="CadetBlue"
+                Command="{Binding ForwardToScheduler}"/>
         </VerticalStackLayout>
+
+        
+        
     </Grid>
         
     
