@@ -47,15 +47,29 @@
                            WidthRequest="2000"
                            >-->
 
-                    <Label  
+                    
+
+                            <Label  
+                                
                                 HorizontalTextAlignment="Center"
-                               Text="{Binding Username}"
-                                   TextColor="DarkBlue"
-                                   FontSize="Large"/>
+                                WidthRequest="200"
+                                Text="{Binding Username}"
+                                TextColor="DarkBlue"
+                                FontSize="Large"/>
+                   
+
                     <!--</Frame>-->
                 </DataTemplate>
+                
             </CollectionView.ItemTemplate>
+            
         </CollectionView>
-    </Grid>
+        </Grid>
     
 </ContentPage>
+
+
+<!--<Button
+                                
+                            Text="Löschen"
+                            BackgroundColor="red"/>-->

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.StaticClasses;
@@ -25,7 +26,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             var employees = App.EmployeeRepo.GetItemsWithChildren();
             foreach (var employee in employees)
             {
-                Employees.Add(employee);
+                if (employee.Role == Role.User)             // Es sollen nur die Benutzer hinzugefügt werden, da nur diese die Arbeitszeiten mit der Start und Stopfunktion einfügen können
+                {
+                    Employees.Add(employee);
+                }
             }
         }
 

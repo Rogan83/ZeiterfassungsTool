@@ -4,13 +4,13 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.AdminPageUserManagement"
              Title="AdminPageUserManagement">
     <Grid 
-            RowDefinitions="*,auto,auto"
-            ColumnDefinitions=".8*,.2*">
+            RowDefinitions="*,auto,auto,auto"
+            >
         
         <CollectionView
             Grid.Row="0"
             EmptyView="Keine Daten vorhanden!"
-            ItemsSource="{Binding Timetracking}"
+            ItemsSource="{Binding Employee.Timetracking}"
             SelectionMode="Single"
             SelectedItem="{Binding }"
             SelectionChangedCommand="{Binding }">
@@ -63,12 +63,22 @@
         </CollectionView>
 
         <Button
-            Grid.Row="1"
-            Text="Zurück"
-            Command="{Binding Back}"/>
+            Grid.Row="1"                
+            Text="Benutzer Löschen"
+            BackgroundColor="red"
+            Margin="10,0,10,30"
+            Clicked="OnButton_DeleteUser"
+            /> 
+
         <Button
             Grid.Row="2"
+            Text="Zurück"
+            Margin="10,0,10,10"
+            Command="{Binding Back}"/>
+        <Button
+            Grid.Row="3"
             Text="Zurück zum Hauptmenu"
+            Margin="10,0,10,10"
             Command="{Binding BackToMenu}"/>
     </Grid>
 </ContentPage>
