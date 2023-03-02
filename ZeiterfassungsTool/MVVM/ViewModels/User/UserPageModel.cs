@@ -22,6 +22,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string DebugText { get; set; }
         public string TimePassed { get; set; }
 
+        public string EntrySubject { get; set; }
 
         private Employee user;
 
@@ -117,6 +118,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                user.Timetracking[index].EndTime = workend;
                user.Timetracking[index].WorkingTime = workend - workbegin;
                user.Timetracking[index].IsCurrentlyWorking = false;
+               user.Timetracking[index].Subject = EntrySubject;
+
+               EntrySubject = string.Empty;
 
                DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}";
 

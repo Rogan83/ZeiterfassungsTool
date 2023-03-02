@@ -13,9 +13,9 @@ public partial class AdminPageUserManagement : ContentPage
     }
     protected override void OnAppearing()
     {
-        //base.OnAppearing();
-       
-        //model.LoadTimeTrackingData();  // L‰dt die Daten von Employee.Timetracking in die Eigenschaft "Timetracking", wenn diese Seite dargestellt wird.
+        base.OnAppearing();
+
+        model.SelectFirstTime();        
     }
     // Ich weiﬂ sonst nicht, wie ich das mit dem Display Alert umsetzen soll, wenn ich dies in der Model Klasse machen soll
     private async void OnButton_DeleteUser(object sender, EventArgs e)

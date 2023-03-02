@@ -16,7 +16,7 @@ namespace ZeiterfassungsTool.Models
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string Subject { get; set; }                 //Hier kann beschrieben werden, was heute gemacht wurde.
+        public string Subject { get; set; } = String.Empty;              //Hier kann beschrieben werden, was heute gemacht wurde. WICHTIG: vorher Initialisieren, so dass es nicht NULL ist, sonst stürzt das Programm ab, wenn man es für Android kompiliert. Bei WIndows funktioniert es komischerweise aber.
         public TimeSpan WorkingTime { get; set; }
 
         public bool IsCurrentlyWorking { get; set; }

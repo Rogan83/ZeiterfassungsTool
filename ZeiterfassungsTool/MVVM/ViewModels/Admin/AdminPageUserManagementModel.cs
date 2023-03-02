@@ -19,13 +19,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         //public List<Timetracking> Timetracking { get; set; }
 
-        public DateTime DateAnDTimeStartTime { get; set; }
+        public DateTime DateAndTimeStartTime { get; set; }
         
         public DateTime DateStartTime { get; set; } = DateTime.Now;
         public TimeSpan TimeStartTime { get; set; } = TimeSpan.Zero;
 
 
-        public DateTime DateAnDTimeEndTime { get; set; }
+        public DateTime DateAndTimeEndTime { get; set; }
         public DateTime DateEndTime { get; set; } = DateTime.Now;
 
         public TimeSpan TimeEndTime { get; set; } = TimeSpan.Zero;
@@ -33,12 +33,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public string Username { get; set; }
 
-        public Timetracking SelectedItem { get; set; }
+        public Timetracking SelectedTime { get; set; }
+
+        public string EntrySubject { get; set; }
+
 
         public AdminPageUserManagementModel()
         {
-            // Timetracking = Employee.Timetracking;
-
+            
         }
 
 
@@ -63,65 +65,94 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                Shell.Current.GoToAsync("AdminPage/StartPage");
            });
 
-        public ICommand SaveDateAndTime =>
+        public ICommand Update =>
            new Command(() =>
            {
-               DateAnDTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
-               DateAnDTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
-               Console.WriteLine("Datum: " + DateAnDTimeStartTime);
-               Console.WriteLine("Datum von einen User: " + Employee.Timetracking[0].StartTime.ToString());
+                DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
+                DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
+               
+                for (int i = 0; i < Employee.Timetracking.Count; i++)
+                {
+                    if (Employee.Timetracking[i].Id == SelectedTime.Id)
+                    {
+                        //UpdateWithchildren funktioniert nicht, deswegen muss der User gelöscht und in modifizierter Form wieder hinzugefügt werden
+                        App.EmployeeRepo.DeleteItem(Employee);
 
-               try
-               {
-                    Console.WriteLine("selected item start:" + SelectedItem.StartTime); // SelectedItem = DateAnDTime;
-                    Console.WriteLine("selected item end:" + SelectedItem.EndTime); // SelectedItem = DateAnDTime;
-               }
-               catch    (Exception ex)
-               {
+                        Employee.Timetracking[i].StartTime = DateAndTimeStartTime;
+                        Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
+                        Employee.Timetracking[i].Subject = EntrySubject;
 
-                   Console.WriteLine("no item selected.");
-               }
+                        App.EmployeeRepo.SaveItemWithChildren(Employee);
 
+                        //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
+                        var temp = Employee;
+                        Employee = null;
+                        Employee = temp;
 
-               var employees = App.EmployeeRepo.GetItemsWithChildren();
-
-
-               for (int i = 0; i < employees.Count; i++)
-               {
-                   if (employees[i].Username == Employee.Username)
-                   {
-                       for (int j = 0; j < employees[i].Timetracking.Count; j++)
-                       {
-                           if ((employees[i].Timetracking[j].StartTime == SelectedItem.StartTime) && (employees[i].Timetracking[j].EndTime == SelectedItem.EndTime))
-                           {
-                               //UpdateWithchildren funktioniert nicht, deswegen muss der User gelöscht und in modifizierter Form wieder hinzugefügt werden
-                               App.EmployeeRepo.DeleteItem(employees[i]); 
-
-                               var employee = employees[i];
-                               employee.Timetracking[j].StartTime = DateAnDTimeStartTime;
-                               employee.Timetracking[j].EndTime = DateAnDTimeEndTime;
-
-                               App.EmployeeRepo.SaveItemWithChildren(employee);
-
-                               Employee = employee;
-
-                               return;              
-                           }
-                       }
-                   }
-
-               }
-
-               //SelectedItem.StartTime = DateAnDTimeStartTime;
-               //SelectedItem.EndTime = DateAnDTimeEndTime;
-              
+                        return;              
+                    }
+                }
+                   
            });
 
-        //public void LoadTimeTrackingData()
-        //{
-        //    Timetracking = Employee.Timetracking;
-        //    Username = Employee.Username;
-        //}
+        public ICommand AddTime =>
+           new Command(() =>
+           {
+               DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
+               DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
+                   
+               App.EmployeeRepo.DeleteItem(Employee);
+
+               int lastElement;
+               int id;
+               if (Employee.Timetracking.Count > 0)
+               {
+                    lastElement = Employee.Timetracking.Count - 1;
+                    id = Employee.Timetracking[lastElement].Id + 1;
+               }
+               else
+               {
+                   id = 0;
+               }
+               Employee.Timetracking.Add(new Timetracking { EmployeeID = Employee.Id, IsCurrentlyWorking = false, StartTime = DateAndTimeStartTime, EndTime = DateAndTimeEndTime
+                    , WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime, Subject = EntrySubject, Id = id});   
+
+               App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+               //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
+               var temp = Employee;
+               Employee = null;
+               Employee = temp;
+
+               EntrySubject = string.Empty;
+           });
+
+        public ICommand DeleteTime =>
+           new Command(() =>
+           {
+               App.EmployeeRepo.DeleteItem(Employee);
+
+               Employee.Timetracking.Remove(SelectedTime);
+
+               App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+               //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
+               var temp = Employee;
+               Employee = null;
+               Employee = temp;
+           });
+
+        /// <summary>
+        /// Wählt das erste Item von der Timetracking Liste aus, wenn vorhanden
+        /// </summary>
+        public void SelectFirstTime()
+        {
+            //Timetracking = Employee.Timetracking;
+            //Username = Employee.Username;
+
+            if (Employee.Timetracking != null)
+                SelectedTime = Employee.Timetracking.FirstOrDefault();          //Das schon ein Element ausgewählt wird beim Start
+        }
 
     }
 }

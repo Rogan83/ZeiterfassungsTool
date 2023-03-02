@@ -1,7 +1,11 @@
 ﻿using SQLiteDemo.Repositories;
+using Syncfusion.Maui.Scheduler;
+using System.Globalization;
+using System.Resources;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.Repositories;
+
 
 namespace ZeiterfassungsTool;
 
@@ -25,5 +29,7 @@ public partial class App : Application
         //Repo = repo;
         EmployeeRepo = employeeRepo;
         TimetrackingRepo= timetrackingRepo;
+
+
     }
 }

@@ -5,16 +5,16 @@
              Title="AdminPageUserManagement">
     <Grid 
             RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto"
-            ColumnDefinitions="*,*"
+            ColumnDefinitions="*,*,*,*"
             >
         
         <CollectionView
             Grid.Row="0"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             EmptyView="Keine Daten vorhanden!"
             ItemsSource="{Binding Employee.Timetracking}"
             SelectionMode="Single"
-            SelectedItem="{Binding SelectedItem}"
+            SelectedItem="{Binding SelectedTime}"
             SelectionChangedCommand="{Binding }">
             <CollectionView.Header>
                 <Frame BackgroundColor="{StaticResource Primary}">
@@ -25,7 +25,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Mitarbeiter: " FontSize="Title" TextColor="BurlyWood"/>
-                                <Span Text="{Binding Username}" TextColor="DarkGray" FontSize="Medium"/>
+                                <Span Text="{Binding Employee.Username}" TextColor="DarkGray" FontSize="Title"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -44,7 +44,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Arbeitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding StartTime}" TextColor="DarkGray" FontSize="Medium"/>
+                                        <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -52,11 +52,26 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Arbeitsende: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding EndTime}" TextColor="DarkGray" FontSize="Medium"/>
+                                        <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
-
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Thema: " TextColor="DarkBlue" FontSize="Medium"/>
+                                        <Span Text="{Binding Subject}" TextColor="DarkGray" FontSize="Medium"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
+                                        <Span Text="{Binding Id}" TextColor="DarkGray" FontSize="Medium"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
 
                         </VerticalStackLayout>
                     </Frame>
@@ -64,10 +79,12 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!--#region vers. Steuerelemente -->
         <Label
             Grid.Row="1"
-            Text="Arbeitsbeginn"
+            Text="Beginn"
             FontSize="Medium"
+            TextColor="DarkBlue"
             />
         <TimePicker
             Grid.Row="2"
@@ -78,46 +95,93 @@
 
         <Label
             Grid.Row="1"
-            Grid.Column="1"
-            Text="Arbeitsende"
+            Grid.Column="3"
+            Text="Ende"
             FontSize="Medium"
+            TextColor="DarkBlue"
             />
         <TimePicker
             Grid.Row="2"
-            Grid.Column="1"
+            Grid.Column="3"
             Time="{Binding TimeEndTime}"/>
         <DatePicker
             Grid.Row="3"
-            Grid.Column="1"
+            Grid.Column="3"
             Date="{Binding DateEndTime}"/>
+
         <Button
-            Grid.Row="4"
+            Text="Hinzufügen" 
+            Grid.Row="2"
+            Grid.Column="1"
             Grid.ColumnSpan="2"
-            Text="Speichern"
-            BackgroundColor="Aqua"
             Margin="10,0,10,10"
-            Command="{Binding SaveDateAndTime}"
+            Command="{Binding AddTime}"
             />
         <Button
-            Grid.Row="5"           
+            Grid.Row="3"
+            Grid.Column="1"
             Grid.ColumnSpan="2"
+            Text="Aktualisieren"
+            BackgroundColor="DarkBlue"
+            Margin="10,0,10,10"
+            Command="{Binding Update}"
+            />
+        
+
+        <Label
+            Text="Aufgabe:"
+            Grid.Row="4"
+            Grid.Column="0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TextColor="DarkBlue"
+            />
+        <Entry
+            Grid.Row="4"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Text="{Binding EntrySubject}"
+            />
+
+        <Button
+            Text="Löschen" 
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10,0,10,10"
+            BackgroundColor="DarkOrange"
+            Command="{Binding DeleteTime}"
+            />
+        
+        <Button
+            Grid.Row="5"       
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
             Text="Benutzer Löschen"
             BackgroundColor="red"
-            Margin="10,20,10,30"
+            Margin="10,0,10,10"
             Clicked="OnButton_DeleteUser"
-            /> 
+            />
+
+        
+        
 
         <Button
             Grid.Row="6"
-            Grid.ColumnSpan="2"
+            Grid.Column="3"
             Text="Zurück"
             Margin="10,0,10,10"
             Command="{Binding Back}"/>
+
+
         <Button
-            Grid.Row="7"
-            Grid.ColumnSpan="2"
+            Grid.Row="6"
+            Grid.ColumnSpan="3"
             Text="Zurück zum Hauptmenu"
             Margin="10,0,10,10"
             Command="{Binding BackToMenu}"/>
+        <!--#endregion-->
+
+        
     </Grid>
 </ContentPage>

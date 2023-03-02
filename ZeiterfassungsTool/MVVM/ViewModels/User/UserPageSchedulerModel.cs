@@ -22,7 +22,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             foreach (var timetracking in user.Timetracking)
             {
-                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime });
+                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = timetracking.Subject});                // Wenn hier das Subject hinzugefügt wird, dann funktioniert das Programm nicht mehr beim Android Emulator, aber noch bei Windows
             }
 
             //this.SchedulerEvents = new ObservableCollection<SchedulerAppointment>
