@@ -10,14 +10,14 @@ using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.StaticClasses;
 
 
-namespace ZeiterfassungsTool.MVVM.ViewModels
+namespace ZeiterfassungsTool.MVVM.ViewModels.User
 {
     [AddINotifyPropertyChangedInterface]
     public class UserPageModel
     {
         private static System.Timers.Timer aTimer;
 
-        public bool ShowStartTimer { get; set; } 
+        public bool ShowStartTimer { get; set; }
         public bool ShowStopTimer { get; set; }
         public string DebugText { get; set; }
         public string TimePassed { get; set; }
@@ -39,10 +39,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             if (index >= 0)  //Ist überhaupt ein Datensatz vorhanden?
             {
                 ShowStartTimer = !user.Timetracking[index].IsCurrentlyWorking;
-                ShowStopTimer  = user.Timetracking[index].IsCurrentlyWorking;
+                ShowStopTimer = user.Timetracking[index].IsCurrentlyWorking;
 
-                workbegin = user.Timetracking[index].Workbegin;
-                workend = user.Timetracking[index].Workend;
+                workbegin = user.Timetracking[index].StartTime;
+                workend = user.Timetracking[index].EndTime;
             }
             else
             {
@@ -70,7 +70,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
            new Command(() =>
            {
                //Shell.Current.GoToAsync("UserPageScheduler"); UserPage/UserPageScheduler
-               Shell.Current.GoToAsync("UserPage/UserPageScheduler"); 
+               Shell.Current.GoToAsync("UserPage/UserPageScheduler");
            });
 
         private DateTime workbegin;
@@ -78,7 +78,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand StartTimeTracking =>
            new Command(() =>
            {
-               user.Timetracking.Add(new Timetracking() { Workbegin = DateTime.Now, Workend = DateTime.Now});
+               user.Timetracking.Add(new Timetracking() { StartTime = DateTime.Now, EndTime = DateTime.Now });
 
                index = user.Timetracking.Count - 1;
 
@@ -90,7 +90,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                //user.Timetracking[count].Workbegin = DateTime.Now;
 
-               user.Timetracking[index].Workbegin = workbegin;
+               user.Timetracking[index].StartTime = workbegin;
                user.Timetracking[index].IsCurrentlyWorking = true;
 
                //InitTimer(100, true);
@@ -99,7 +99,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                SaveEmployeeInDataBase();
 
-               
+
 
            });
         private DateTime workend;
@@ -114,7 +114,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                // In Datenbank hinzufügen
                //user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
-               user.Timetracking[index].Workend = workend;
+               user.Timetracking[index].EndTime = workend;
                user.Timetracking[index].WorkingTime = workend - workbegin;
                user.Timetracking[index].IsCurrentlyWorking = false;
 
@@ -132,7 +132,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         }
 
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             //Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
             //                  e.SignalTime);
@@ -144,18 +144,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 workingTimeTotal += timetracking.WorkingTime;
             }
             // ... und addiere nach dem Start noch zusätzlich die Zeit, die vergangen ist.
-            if(workbegin > workend) 
+            if (workbegin > workend)
             {
                 var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
                 workingTimeTotal += passedTimeSinceStartTimeTracking;
             }
 
             //var workingTimeTotal = DateTime.Now - workbegin;
-            TimePassed =  $"{workingTimeTotal.Hours.ToString()} h : {workingTimeTotal.Minutes.ToString()} m : {workingTimeTotal.Seconds.ToString()} s";
+            TimePassed = $"{workingTimeTotal.Hours.ToString()} h : {workingTimeTotal.Minutes.ToString()} m : {workingTimeTotal.Seconds.ToString()} s";
 
             //TODO:
             //Noch extra hinzufügen, wie lange ich HEUTE gearbeitet habe und nicht in der Summe von allen Arbeitszeiten
-            
+
         }
 
         void SaveEmployeeInDataBase()
@@ -165,10 +165,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
             //var count = App.EmployeeRepo.GetItems().Count;
 
-            List<Employee> a  = App.EmployeeRepo.GetItemsWithChildren();
-                                
+            List<Employee> a = App.EmployeeRepo.GetItemsWithChildren();
+
         }
-        
+
 
 
 

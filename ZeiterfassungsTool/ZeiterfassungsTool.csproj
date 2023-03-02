@@ -58,7 +58,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\AdminPage.xaml">
+	  <MauiXaml Update="MVVM\Views\Admin\AdminPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Admin\AdminPageUserManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\CreateAccount.xaml">
@@ -73,10 +76,10 @@
 	  <MauiXaml Update="MVVM\Views\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\UserPage.xaml">
+	  <MauiXaml Update="MVVM\Views\User\UserPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\UserPageScheduler.xaml">
+	  <MauiXaml Update="MVVM\Views\User\UserPageScheduler.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -86,7 +89,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\UserPage.xaml.cs">
+	  <Compile Update="MVVM\Views\User\UserPage.xaml.cs">
 	    <DependentUpon>UserPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>

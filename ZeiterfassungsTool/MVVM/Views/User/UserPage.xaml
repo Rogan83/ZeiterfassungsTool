@@ -39,7 +39,7 @@
                 />
             <Button
                 Grid.Row="5"
-                Text="Gehe zum Kalander"
+                Text="Gehe zum Kalender"
                 BackgroundColor="Aquamarine"
                 TextColor="CadetBlue"
                 Command="{Binding ForwardToScheduler}"/>

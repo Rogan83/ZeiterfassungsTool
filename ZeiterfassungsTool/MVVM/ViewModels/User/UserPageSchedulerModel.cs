@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeiterfassungsTool.StaticClasses;
 
-namespace ZeiterfassungsTool.MVVM.ViewModels
+namespace ZeiterfassungsTool.MVVM.ViewModels.User
 {
     public class UserPageSchedulerModel
     {
         public ObservableCollection<SchedulerAppointment> SchedulerEvents { get; set; }
 
-        public UserPageSchedulerModel() 
+        public UserPageSchedulerModel()
         {
             var user = SaveLoginStatus.WhoIsLoggedIn[0];
 
-            this.SchedulerEvents = new ObservableCollection<SchedulerAppointment>();
+            SchedulerEvents = new ObservableCollection<SchedulerAppointment>();
 
             foreach (var timetracking in user.Timetracking)
             {
-                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.Workbegin, EndTime = timetracking.Workend });
+                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime });
             }
 
             //this.SchedulerEvents = new ObservableCollection<SchedulerAppointment>
@@ -47,13 +47,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
            {
                Shell.Current.GoToAsync("UserPageScheduler/StartPage");
            });
-        
+
         public ICommand BackToTimeTracking =>
            new Command(() =>
            {
                Shell.Current.GoToAsync("UserPageScheduler/UserPage");
            });
 
-        
+
     }
 }

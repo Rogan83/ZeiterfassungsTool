@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.AdminPageUserManagement"
+             Title="AdminPageUserManagement">
+    <Grid 
+            RowDefinitions="*,auto,auto"
+            ColumnDefinitions=".8*,.2*">
+        
+        <CollectionView
+            Grid.Row="0"
+            EmptyView="Keine Daten vorhanden!"
+            ItemsSource="{Binding Timetracking}"
+            SelectionMode="Single"
+            SelectedItem="{Binding }"
+            SelectionChangedCommand="{Binding }">
+            <CollectionView.Header>
+                <Frame BackgroundColor="{StaticResource Primary}">
+                    <!--<Label Text="Mitarbeiter"
+                       FontSize="Title"
+                       TextColor="BurlyWood"/>-->
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Mitarbeiter: " FontSize="Title" TextColor="BurlyWood"/>
+                                <Span Text="{Binding Username}" TextColor="DarkGray" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Frame>
+            </CollectionView.Header>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="50" >
+                        <VerticalStackLayout>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Arbeitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
+                                        <Span Text="{Binding StartTime}" TextColor="DarkGray" FontSize="Medium"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Arbeitsende: " TextColor="DarkBlue" FontSize="Medium"/>
+                                        <Span Text="{Binding EndTime}" TextColor="DarkGray" FontSize="Medium"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Grid.Row="1"
+            Text="Zurück"
+            Command="{Binding Back}"/>
+        <Button
+            Grid.Row="2"
+            Text="Zurück zum Hauptmenu"
+            Command="{Binding BackToMenu}"/>
+    </Grid>
+</ContentPage>

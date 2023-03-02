@@ -1,4 +1,5 @@
 using ZeiterfassungsTool.MVVM.ViewModels;
+using ZeiterfassungsTool.MVVM.ViewModels.User;
 
 namespace ZeiterfassungsTool.MVVM.Views;
 

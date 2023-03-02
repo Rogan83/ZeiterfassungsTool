@@ -13,15 +13,16 @@ namespace ZeiterfassungsTool.Models
     public class Timetracking : TableData
     {
         //(id int primary key auto_increment, workDate date, workBegin time, workEnd time, pause time, employeeID int, foreign key (employeeID) References timetracking(id));
-        
-        public DateTime Workbegin { get; set; }
-        public DateTime Workend { get; set; }
+
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string Subject { get; set; }                 //Hier kann beschrieben werden, was heute gemacht wurde.
         public TimeSpan WorkingTime { get; set; }
 
         public bool IsCurrentlyWorking { get; set; }
 
         [ForeignKey(typeof(Employee))]
         public int EmployeeID { get; set; }
-        
+
     }
 }

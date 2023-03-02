@@ -1,5 +1,4 @@
-using ZeiterfassungsTool.MVVM.ViewModels;
-
+using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 namespace ZeiterfassungsTool.MVVM.Views;
 
 public partial class AdminPage : ContentPage
