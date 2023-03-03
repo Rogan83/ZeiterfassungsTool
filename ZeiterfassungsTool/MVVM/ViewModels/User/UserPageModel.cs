@@ -22,7 +22,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string DebugText { get; set; }
         public string TimePassed { get; set; }
 
-        public string EntrySubject { get; set; }
+        public string EntrySubject { get; set; } = string.Empty;
 
         private Employee user;
 

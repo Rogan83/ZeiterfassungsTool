@@ -1,4 +1,5 @@
-﻿using Syncfusion.Maui.Scheduler;
+﻿using Javax.Security.Auth;
+using Syncfusion.Maui.Scheduler;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.User
@@ -22,7 +24,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             foreach (var timetracking in user.Timetracking)
             {
-                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = timetracking.Subject});                // Wenn hier das Subject hinzugefügt wird, dann funktioniert das Programm nicht mehr beim Android Emulator, aber noch bei Windows
+                var subject = timetracking.Subject;
+                if (subject == null ) { subject = ""; }             // Es darf NIEMALS ein Feld NULL sein, welches dem SchedulerAppointment zugewiesen wird, sonst schmiert die Anwendung ab (
+
+                Color background;
+                if (subject == "Krank")
+                    background = Colors.DarkRed;
+                else if(subject == "Urlaub")
+                    background = Colors.DarkGreen;
+                else
+                    background = Colors.DarkBlue;
+
+                SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = subject, Background = background });                // Wenn hier das Subject hinzugefügt wird, dann funktioniert das Programm nicht mehr beim Android Emulator, aber noch bei Windows
             }
 
             //this.SchedulerEvents = new ObservableCollection<SchedulerAppointment>
