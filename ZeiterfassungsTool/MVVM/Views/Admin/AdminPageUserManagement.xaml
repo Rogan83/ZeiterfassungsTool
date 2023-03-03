@@ -1,18 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin"
+             xmlns:Datatemplates="clr-namespace:ZeiterfassungsTool.Selectors"
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.AdminPageUserManagement"
              Title="AdminPageUserManagement">
+
+    <ContentPage.Resources>
+        <Datatemplates:EmployeeDataTemplateSelector x:Key="EmployeeTemplates"/>
+    </ContentPage.Resources>
+    
+    
     <Grid 
-            RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto"
+            RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto, auto"
             ColumnDefinitions="*,*,*,*"
             >
-        
+        <!--Um die optischen Sachen werde ich mich später kümmern: URL dazu: https://learn.microsoft.com/de-de/dotnet/maui/user-interface/visual-states?view=net-maui-7.0-->
+        <!--<VisualStateManager.VisualStateGroups>
+            <VisualStateGroup Name="ValidityStates">
+                <VisualState Name="Valid">
+                    <VisualState.Setters>
+                        <Setter TargetName="helpLabel"
+                                    Property="Label.TextColor"
+                                    Value="Transparent" />
+                        <Setter TargetName="entry"
+                                    Property="Entry.BackgroundColor"
+                                    Value="Lime" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState Name="Invalid">
+                    <VisualState.Setters>
+                        <Setter TargetName="entry"
+                                    Property="Entry.BackgroundColor"
+                                    Value="Pink" />
+                        <Setter TargetName="submitButton"
+                                    Property="Button.IsEnabled"
+                                    Value="False" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>-->
+
         <CollectionView
-            Grid.Row="0"
-            Grid.ColumnSpan="3"
-            EmptyView="Keine Daten vorhanden!"
             ItemsSource="{Binding Employee.Timetracking}"
+            ItemTemplate="{StaticResource EmployeeTemplates}"
+            Grid.Row="0"
+            Grid.ColumnSpan="4"
+            EmptyView="Keine Daten vorhanden!"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedTime}"
             SelectionChangedCommand="{Binding }">
@@ -36,47 +70,7 @@
                 <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="50" >
-                        <VerticalStackLayout>
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Arbeitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Arbeitsende: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Thema: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding Subject}" TextColor="DarkGray" FontSize="Medium"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                            <Label>
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
-                                        <Span Text="{Binding Id}" TextColor="DarkGray" FontSize="Medium"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+           
         </CollectionView>
 
         <!--#region vers. Steuerelemente -->
@@ -108,66 +102,91 @@
             Grid.Row="3"
             Grid.Column="3"
             Date="{Binding DateEndTime}"/>
-
-        <Button
-            Text="Hinzufügen" 
+        <ImageButton 
+            Source="add.png"
             Grid.Row="2"
             Grid.Column="1"
             Grid.ColumnSpan="2"
+            HeightRequest="40"
+            WidthRequest="190"
+            BackgroundColor="Darkgreen"
             Margin="10,0,10,10"
-            Command="{Binding AddTime}"
-            />
-        <Button
+            Clicked="OnButton_AddTime"/>
+        
+        <ImageButton 
+            Source="save.png"
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="2"
-            Text="Aktualisieren"
-            BackgroundColor="DarkBlue"
+            HeightRequest="40"
+            WidthRequest="190"
+            BackgroundColor="LightBlue"
             Margin="10,0,10,10"
-            Command="{Binding Update}"
-            />
-        
+            Clicked="OnButton_Update">
+            <!--<VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="1" />
+                            
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Scale" Value="0.8" />
+                            
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>-->
+        </ImageButton>
+
+        <RadioButton x:Name="worktime"       Grid.Row="4"   Grid.Column="0" Grid.ColumnSpan="2"   Content="Arbeitszeit"         GroupName ="SelectSubject"  IsChecked="{Binding rbWorktime}"/>
+        <RadioButton x:Name="holiday" Grid.Row="4"  Grid.Column="2"  Content="Urlaub"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbHoliday}"/>
+        <RadioButton x:Name="ill"      Grid.Row="4"  Grid.Column="3"  Content="Krank"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbIll}"/>
+
 
         <Label
             Text="Aufgabe:"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TextColor="DarkBlue"
             />
         <Entry
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Text="{Binding EntrySubject}"
             />
 
-        <Button
-            Text="Löschen" 
-            Grid.Row="5"
+        <ImageButton 
+            Source="delete.png"
+            Grid.Row="6"
             Grid.Column="0"
+            HeightRequest="40"
+            WidthRequest="190"
             Grid.ColumnSpan="2"
             Margin="10,0,10,10"
             BackgroundColor="DarkOrange"
-            Command="{Binding DeleteTime}"
+            Clicked="OnButtonDeleteTime"    
             />
-        
-        <Button
-            Grid.Row="5"       
+
+        <ImageButton 
+            Source="delete_user.png"
+            HeightRequest="40"
+            WidthRequest="190"
+            Grid.Row="6"       
             Grid.Column="2"
             Grid.ColumnSpan="3"
-            Text="Benutzer Löschen"
             BackgroundColor="red"
             Margin="10,0,10,10"
             Clicked="OnButton_DeleteUser"
             />
 
-        
-        
-
         <Button
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.Column="3"
             Text="Zurück"
             Margin="10,0,10,10"
@@ -175,7 +194,7 @@
 
 
         <Button
-            Grid.Row="6"
+            Grid.Row="7"
             Grid.ColumnSpan="3"
             Text="Zurück zum Hauptmenu"
             Margin="10,0,10,10"

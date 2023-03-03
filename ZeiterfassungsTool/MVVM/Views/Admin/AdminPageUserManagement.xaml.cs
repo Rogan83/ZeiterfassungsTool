@@ -15,8 +15,11 @@ public partial class AdminPageUserManagement : ContentPage
     {
         base.OnAppearing();
 
-        model.SelectFirstTime();        
+        model.SelectFirstTime();
+
     }
+
+    #region ButtonEvents
     // Ich weiß sonst nicht, wie ich das mit dem Display Alert umsetzen soll, wenn ich dies in der Model Klasse machen soll
     private async void OnButton_DeleteUser(object sender, EventArgs e)
     {
@@ -29,4 +32,35 @@ public partial class AdminPageUserManagement : ContentPage
             await Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
         }
     }
+
+    private async void OnButton_Update(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Aktualisieren", "Möchten Sie wirklich diesen Datensatz aktualisieren?", "JA", "NEIN");
+
+        if (answer == true )
+        {
+            model.Update();
+        }
+    }
+
+    private async void OnButton_AddTime(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Hinzufügen", "Möchten Sie wirklich diesen Datensatz hinzufügen?", "JA", "NEIN");
+
+        if (answer == true)
+        {
+            model.AddTime();
+        }
+    }
+
+    private async void OnButtonDeleteTime(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Datensatz löschen", "Möchten Sie wirklich diesen Datensatz löschen?", "JA", "NEIN");
+
+        if (answer == true)
+        {
+            model.DeleteTime();
+        }
+    }
+    #endregion
 }
