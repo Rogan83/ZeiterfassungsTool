@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Javax.Security.Auth;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public string EntrySubject { get; set; }
 
-        public string Text1 { get; set; } = "Arbeitsbeginn: ";
-        public string Text2 { get; set; } = "Arbeitsende: ";
+        public bool IsVisibleEntrySubject { get; set; } = true;
 
         public Color BackgroundColorFrameWork { get; set; } = Colors.LightSkyBlue;        
         public Color BackgroundColorFrameHoliday { get; set; } = Colors.LightGreen;        
@@ -105,6 +105,28 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         #endregion
 
         #region Methods
+
+        private string ChooseSubject()
+        {
+            string subject;
+            if (rbHoliday)
+            {
+                subject = "Urlaub";
+                IsVisibleEntrySubject = false;
+            }
+            else if (rbIll)
+            {
+                subject = "Krank";
+                IsVisibleEntrySubject = false;
+            }
+            else
+            {
+                subject = EntrySubject;
+                IsVisibleEntrySubject = true;
+            }
+            return subject;
+        }
+
         public void Update()
         {
             DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
@@ -119,7 +141,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                     Employee.Timetracking[i].StartTime = DateAndTimeStartTime;
                     Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
-                    Employee.Timetracking[i].Subject = EntrySubject;
+                    Employee.Timetracking[i].Subject = ChooseSubject();
 
                     App.EmployeeRepo.SaveItemWithChildren(Employee);
 
@@ -184,19 +206,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 id = 0;
             }
 
-            string subject;
-            if (rbHoliday)
-            {
-                subject = "Urlaub";
-            }
-            else if (rbIll)
-            {
-                subject = "Krank";
-            }
-            else
-            {
-                subject = EntrySubject;
-            }
+            
 
             Employee.Timetracking.Add(new Timetracking
             {
@@ -205,7 +215,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 StartTime = DateAndTimeStartTime,
                 EndTime = DateAndTimeEndTime,
                 WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
-                Subject = subject,    
+                Subject = ChooseSubject(),    
                 Id = id
             });
 

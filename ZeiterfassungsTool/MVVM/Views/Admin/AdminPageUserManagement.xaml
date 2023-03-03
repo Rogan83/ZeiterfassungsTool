@@ -141,25 +141,28 @@
             </VisualStateManager.VisualStateGroups>-->
         </ImageButton>
 
-        <RadioButton x:Name="worktime"       Grid.Row="4"   Grid.Column="0" Grid.ColumnSpan="2"   Content="Arbeitszeit"         GroupName ="SelectSubject"  IsChecked="{Binding rbWorktime}"/>
-        <RadioButton x:Name="holiday" Grid.Row="4"  Grid.Column="2"  Content="Urlaub"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbHoliday}"/>
-        <RadioButton x:Name="ill"      Grid.Row="4"  Grid.Column="3"  Content="Krank"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbIll}"/>
+        <RadioButton x:Name="worktime"       Grid.Row="4"   Grid.Column="0" Grid.ColumnSpan="2"   Content="Arbeitszeit"         GroupName ="SelectSubject"  IsChecked="{Binding rbWorktime}" CheckedChanged="worktime_CheckedChanged"/>
+        <RadioButton x:Name="holiday" Grid.Row="4"  Grid.Column="2"  Content="Urlaub"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbHoliday}" CheckedChanged="holiday_CheckedChanged" />
+        <RadioButton x:Name="ill"      Grid.Row="4"  Grid.Column="3"  Content="Krank"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbIll}" CheckedChanged="ill_CheckedChanged" />
 
 
-        <Label
+
+        <HorizontalStackLayout x:Name="EntrySubject" Grid.Row="5">
+            <Label
             Text="Aufgabe:"
-            Grid.Row="5"
             Grid.Column="0"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TextColor="DarkBlue"
             />
-        <Entry
-            Grid.Row="5"
+            <Entry
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Text="{Binding EntrySubject}"
+            IsVisible="{Binding IsVisibleEntrySubject}"
             />
+        </HorizontalStackLayout>
+        
 
         <ImageButton 
             Source="delete.png"

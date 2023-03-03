@@ -16,7 +16,6 @@ public partial class AdminPageUserManagement : ContentPage
         base.OnAppearing();
 
         model.SelectFirstTime();
-
     }
 
     #region ButtonEvents
@@ -61,6 +60,21 @@ public partial class AdminPageUserManagement : ContentPage
         {
             model.DeleteTime();
         }
+    }
+
+    private void worktime_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        EntrySubject.IsVisible = true;
+    }
+
+    private void holiday_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        EntrySubject.IsVisible = false;
+    }
+
+    private void ill_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        EntrySubject.IsVisible = false;
     }
     #endregion
 }
