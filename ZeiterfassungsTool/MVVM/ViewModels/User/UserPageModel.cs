@@ -27,6 +27,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string EntrySubject { get; set; } = string.Empty;
         #endregion
 
+
+        private bool isDeterminePastTime = false;       //Wurde die vergangene heutige Zeit schon bestimmt?
+        private TimeSpan determinePastTime;
+
         private Employee user;
 
         public UserPageModel()
@@ -57,7 +61,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             }
 
             InitTimer(100, true);
-
             //DebugText = user.Timetracking.Count.ToString();
             //user.Timetracking = new List<Timetracking>();
         }
@@ -143,9 +146,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             aTimer.Enabled = isActivate;
         }
 
-
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private TimeSpan DeterminePastTime()
         {
+           
+            // Wenn der Index kleiner als null ist, dann ist noch keine Zeit aufgenommen wurden. Insofern müssen auch keine Zeiten zusammen addiert werden.
+            if (index < 0)
+            {
+                TimePassed = "0h : 0m : 0s";
+                return new TimeSpan(0);
+            }
+
             //Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
             //                  e.SignalTime);
             TimeSpan workingTimeTotal = new();
@@ -153,17 +163,56 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             //Addiere alle Arbeitszeiten zusammen
             foreach (var timetracking in user.Timetracking)
             {
-                workingTimeTotal += timetracking.WorkingTime;
+                if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
+                    continue;
+
+                DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+
+                DateOnly dateInTimetrackingStart = DateOnly.FromDateTime(timetracking.StartTime);
+                DateOnly dateInTimetrackingEnd = DateOnly.FromDateTime(timetracking.EndTime);
+
+                if (dateInTimetrackingStart == currentDate && dateInTimetrackingEnd == currentDate)
+                {
+                    //workingTimeTotal += timetracking.WorkingTime;
+                    var difference = timetracking.EndTime - timetracking.StartTime;
+                    workingTimeTotal += difference;
+                }
+                else if (dateInTimetrackingStart == currentDate)
+                {
+                    TimeOnly timeInTimetrackingStart = TimeOnly.FromDateTime(timetracking.StartTime);
+                    TimeOnly endOfDay = new TimeOnly(0, 0);
+
+                    var difference = endOfDay - timeInTimetrackingStart;                // Wenn der Start von der Aufzeichnung am heutigen Datum ist, aber das Ende der Aufzeichnung nicht, dann kann es nur bedeuten, dass über die Nacht hinweg bis zum nächsten Tag gearbeitet wurde. Da aber nur die Zeit vom heutigen Tag angezeigt werden soll, muss die Differenz zwischen 0 Uhr und dem Startzeitpunkt der Aufzeichnung ermittelt werden und zum Schluss dazuaddiert werden.     
+
+                    workingTimeTotal += difference;
+                }
             }
-            // ... und addiere nach dem Start noch zusätzlich die Zeit, die vergangen ist.
-            if (workbegin > workend)
+            return workingTimeTotal;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            determinePastTime = DeterminePastTime();
+
+            // ... und addiere nach dem Start noch zusätzlich die Zeit, die vergangen ist, wenn die Zeit noch nicht gestoppt wurde. (Was bedeutet, dass noch momentan gearbeitet wird.
+            //if (workbegin > workend)
+
+            if (index >= 0)
             {
-                var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
-                workingTimeTotal += passedTimeSinceStartTimeTracking;
+                if (user.Timetracking[index].IsCurrentlyWorking)
+                {
+                    var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
+                    determinePastTime += passedTimeSinceStartTimeTracking;
+                }
+            }
+            else
+            {
+                TimePassed = "0h : 0m : 0s";
+                return;
             }
 
             //var workingTimeTotal = DateTime.Now - workbegin;
-            TimePassed = $"{workingTimeTotal.Hours.ToString()} h : {workingTimeTotal.Minutes.ToString()} m : {workingTimeTotal.Seconds.ToString()} s";
+            TimePassed = $"{determinePastTime.Hours.ToString()}h : {determinePastTime.Minutes.ToString()}m : {determinePastTime.Seconds.ToString()}s";
 
             //TODO:
             //Noch extra hinzufügen, wie lange ich HEUTE gearbeitet habe und nicht in der Summe von allen Arbeitszeiten
