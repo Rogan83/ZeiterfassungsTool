@@ -22,7 +22,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         {
             CheckIfOneAccountExist();
             LbUsername = $"Sie sind mit dem Benutzername {SaveLoginStatus.WhoIsLoggedIn[0].Username} angemeldet.";
+
+            
         }
+
+        #region Properties
+
         private bool isFirstAccount = false;
 
         public string Info { get; set; }
@@ -38,9 +43,38 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         public bool rbsIsVisible { get; set; } = true;
 
+        #endregion
+
+        //protected override bool OnBackButtonPressed() 
+        //{ 
+        //    Dispatcher.Dispatch(async () => 
+        //    { 
+        //        var leave = await DisplayAlert("Leave lobby?", "Are you sure you want to leave the lobby?", "Yes", "No"); if (leave) 
+        //        { 
+        //            await handleLeaveAsync(); await Navigation.PushAsync(new MainPage()); 
+        //        } 
+        //    }); return true; 
+        //}
+
+        //protected override async void OnNavigating(ShellNavigatingEventArgs args)
+        //{
+        //    //base.OnNavigating(args);
+        //    base.OnBackButtonPressed();  
+
+        //    ShellNavigatingDeferral token = args.GetDeferral();
+
+        //    var result = await DisplayActionSheet("Navigate?", "Cancel", "Yes", "No");
+        //    if (result != "Yes")
+        //    {
+        //        args.Cancel();
+        //    }
+        //    token.Complete();
+        //}
+        
+
 
         public ICommand GoToLoginPage =>
-            new Command(() =>
+            new Command( () =>
             {
                 Shell.Current.GoToAsync(nameof(LoginPage));
             });

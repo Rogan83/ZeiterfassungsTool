@@ -1,5 +1,4 @@
-﻿using Javax.Security.Auth;
-using Syncfusion.Maui.Scheduler;
+﻿using Syncfusion.Maui.Scheduler;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

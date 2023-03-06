@@ -19,48 +19,48 @@ public partial class AdminPageUserManagement : ContentPage
     }
 
     #region ButtonEvents
-    // Ich weiß sonst nicht, wie ich das mit dem Display Alert umsetzen soll, wenn ich dies in der Model Klasse machen soll
-    private async void OnButton_DeleteUser(object sender, EventArgs e)
-    {
-        bool answer = await DisplayAlert("Benutzer löschen?", "Möchten Sie diesen Benutzer wirklich löschen?", "JA", "NEIN");
-        Console.WriteLine("antwort: " + answer);
+    
+    //private async void OnButton_DeleteUser(object sender, EventArgs e)
+    //{
+    //    bool answer = await DisplayAlert("Benutzer löschen?", "Möchten Sie diesen Benutzer wirklich löschen?", "JA", "NEIN");
+    //    Console.WriteLine("antwort: " + answer);
 
-        if (answer == true)
-        {
-            App.EmployeeRepo.DeleteItem(model.Employee);
-            await Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
-        }
-    }
+    //    if (answer == true)
+    //    {
+    //        App.EmployeeRepo.DeleteItem(model.Employee);
+    //        await Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
+    //    }
+    //}
 
-    private async void OnButton_Update(object sender, EventArgs e)
-    {
-        bool answer = await DisplayAlert("Aktualisieren", "Möchten Sie wirklich diesen Datensatz aktualisieren?", "JA", "NEIN");
+    //private async void OnButton_Update(object sender, EventArgs e)
+    //{
+    //    bool answer = await DisplayAlert("Aktualisieren", "Möchten Sie wirklich diesen Datensatz aktualisieren?", "JA", "NEIN");
 
-        if (answer == true )
-        {
-            model.Update();
-        }
-    }
+    //    if (answer == true )
+    //    {
+    //        model.Update();
+    //    }
+    //}
 
-    private async void OnButton_AddTime(object sender, EventArgs e)
-    {
-        bool answer = await DisplayAlert("Hinzufügen", "Möchten Sie wirklich diesen Datensatz hinzufügen?", "JA", "NEIN");
+    //private async void OnButton_AddTime(object sender, EventArgs e)
+    //{
+    //    bool answer = await DisplayAlert("Hinzufügen", "Möchten Sie wirklich diesen Datensatz hinzufügen?", "JA", "NEIN");
 
-        if (answer == true)
-        {
-            model.AddTime();
-        }
-    }
+    //    if (answer == true)
+    //    {
+    //        model.AddTime();
+    //    }
+    //}
 
-    private async void OnButtonDeleteTime(object sender, EventArgs e)
-    {
-        bool answer = await DisplayAlert("Datensatz löschen", "Möchten Sie wirklich diesen Datensatz löschen?", "JA", "NEIN");
+    //private async void OnButtonDeleteTime(object sender, EventArgs e)
+    //{
+    //    bool answer = await DisplayAlert("Datensatz löschen", "Möchten Sie wirklich diesen Datensatz löschen?", "JA", "NEIN");
 
-        if (answer == true)
-        {
-            model.DeleteTime();
-        }
-    }
+    //    if (answer == true)
+    //    {
+    //        model.DeleteTime();
+    //    }
+    //}
 
     private void worktime_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
