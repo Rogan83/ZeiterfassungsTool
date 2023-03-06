@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.AdminPage"
              Title="AdminPage">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
     <Grid>
         <Label 
             Text="Welcome to Admin Page"

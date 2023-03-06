@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.StaticClasses;
-using static Android.Graphics.ColorSpace;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
@@ -54,6 +53,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         }
 
         #region Commands
+
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
+           });
+
         public ICommand BackToMenu =>
            new Command(() =>
            {

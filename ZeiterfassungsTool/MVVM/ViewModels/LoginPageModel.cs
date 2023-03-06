@@ -17,6 +17,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
     {
         public string Message { get; set; }
         public string Debug { get; set; }
+
+
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("LoginPage/StartPage");
+           });
+
+
         public ICommand ToLogin =>
            new Command((elements) =>
            {

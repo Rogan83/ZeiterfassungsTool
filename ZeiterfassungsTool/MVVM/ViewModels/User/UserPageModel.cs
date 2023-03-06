@@ -15,7 +15,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     [AddINotifyPropertyChangedInterface]
     public class UserPageModel
     {
+
         private static System.Timers.Timer aTimer;
+        #region Properties
 
         public bool ShowStartTimer { get; set; }
         public bool ShowStopTimer { get; set; }
@@ -23,6 +25,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string TimePassed { get; set; }
 
         public string EntrySubject { get; set; } = string.Empty;
+        #endregion
 
         private Employee user;
 
@@ -58,6 +61,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             //DebugText = user.Timetracking.Count.ToString();
             //user.Timetracking = new List<Timetracking>();
         }
+
+        #region Commands
+
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("UserPage/StartPage");
+           });
 
 
         public ICommand BackToMenu =>
@@ -96,12 +107,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
                //InitTimer(100, true);
 
-
-
                SaveEmployeeInDataBase();
-
-
-
            });
         private DateTime workend;
         public ICommand StopTimeTracking =>
@@ -126,6 +132,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
                SaveEmployeeInDataBase();
            });
+        #endregion
+        #region Methods
 
         private void InitTimer(int duration, bool isActivate)
         {
@@ -170,13 +178,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             //var count = App.EmployeeRepo.GetItems().Count;
 
             List<Employee> a = App.EmployeeRepo.GetItemsWithChildren();
-
         }
 
-
-
-
-
-
+        #endregion
     }
 }

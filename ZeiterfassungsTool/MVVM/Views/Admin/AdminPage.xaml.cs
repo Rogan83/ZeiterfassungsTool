@@ -9,4 +9,6 @@ public partial class AdminPage : ContentPage
 
 		BindingContext= new AdminPageModel();
 	}
+
+   
 }

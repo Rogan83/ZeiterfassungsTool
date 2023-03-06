@@ -4,12 +4,20 @@ namespace ZeiterfassungsTool.MVVM.Views;
 
 public partial class CreateAccount : ContentPage
 {
-	public CreateAccount()
-	{
-		InitializeComponent();
+    public CreateAccount()
+    {
+        InitializeComponent();
 
-		BindingContext = new CreateAccountModel();
-	}
+        BindingContext = new CreateAccountModel();
+
+        
+    }
+    //protected override bool OnBackButtonPressed()
+    //{
+    //    Shell.Current.GoToAsync(nameof(LoginPage));
+    //    return true;
+    //}
+
 
     //protected override async void OnNavigating(ShellNavigatingEventArgs args)
     //{
@@ -25,3 +33,4 @@ public partial class CreateAccount : ContentPage
     //    token.Complete();
     //}
 }
+    

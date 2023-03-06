@@ -4,6 +4,11 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.CreateAccount"
              Title=""
              >
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
     <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
         <VerticalStackLayout 
             Spacing="10"

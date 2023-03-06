@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
-using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
@@ -32,6 +26,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 }
             }
         }
+
+
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("AdminPage/StartPage");
+           });
+
+
 
         public ICommand BackToMenu =>
            new Command(() =>

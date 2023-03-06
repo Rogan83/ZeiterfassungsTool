@@ -6,6 +6,10 @@
              xmlns:scheduler="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
              xmlns:local="clr-namespace:ZeiterfassungsTool">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+    
     <VerticalStackLayout>
         <scheduler:SfScheduler View="Week"
                                FirstDayOfWeek="Monday"

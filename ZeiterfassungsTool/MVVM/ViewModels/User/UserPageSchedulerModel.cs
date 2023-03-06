@@ -54,6 +54,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         }
 
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("UserPageScheduler/UserPage");
+           });
+
         public ICommand BackToMainMenu =>
            new Command(() =>
            {

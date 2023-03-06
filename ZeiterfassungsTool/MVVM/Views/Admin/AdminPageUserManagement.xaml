@@ -9,8 +9,12 @@
     <ContentPage.Resources>
         <Datatemplates:EmployeeDataTemplateSelector x:Key="EmployeeTemplates"/>
     </ContentPage.Resources>
-    
-    
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
+
     <Grid 
             RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto, auto"
             ColumnDefinitions="*,*,*,*"
@@ -146,7 +150,6 @@
         <RadioButton x:Name="worktime"       Grid.Row="4"   Grid.Column="0" Grid.ColumnSpan="2"   Content="Arbeitszeit"         GroupName ="SelectSubject"  IsChecked="{Binding rbWorktime}" CheckedChanged="worktime_CheckedChanged"/>
         <RadioButton x:Name="holiday" Grid.Row="4"  Grid.Column="2"  Content="Urlaub"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbHoliday}" CheckedChanged="holiday_CheckedChanged" />
         <RadioButton x:Name="ill"      Grid.Row="4"  Grid.Column="3"  Content="Krank"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbIll}" CheckedChanged="ill_CheckedChanged" />
-
 
 
         <HorizontalStackLayout x:Name="EntrySubject" Grid.Row="5">

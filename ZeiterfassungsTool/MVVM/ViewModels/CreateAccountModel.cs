@@ -1,6 +1,4 @@
-﻿//using Android.OS;
-//using Android.Views;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -22,8 +20,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         {
             CheckIfOneAccountExist();
             LbUsername = $"Sie sind mit dem Benutzername {SaveLoginStatus.WhoIsLoggedIn[0].Username} angemeldet.";
-
-            
         }
 
         #region Properties
@@ -45,33 +41,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         #endregion
 
-        //protected override bool OnBackButtonPressed() 
-        //{ 
-        //    Dispatcher.Dispatch(async () => 
-        //    { 
-        //        var leave = await DisplayAlert("Leave lobby?", "Are you sure you want to leave the lobby?", "Yes", "No"); if (leave) 
-        //        { 
-        //            await handleLeaveAsync(); await Navigation.PushAsync(new MainPage()); 
-        //        } 
-        //    }); return true; 
-        //}
 
-        //protected override async void OnNavigating(ShellNavigatingEventArgs args)
-        //{
-        //    //base.OnNavigating(args);
-        //    base.OnBackButtonPressed();  
+        #region Commands
 
-        //    ShellNavigatingDeferral token = args.GetDeferral();
-
-        //    var result = await DisplayActionSheet("Navigate?", "Cancel", "Yes", "No");
-        //    if (result != "Yes")
-        //    {
-        //        args.Cancel();
-        //    }
-        //    token.Complete();
-        //}
-        
-
+        public ICommand BackButton =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("CreateAccount/StartPage");
+           });
 
         public ICommand GoToLoginPage =>
             new Command( () =>
@@ -157,21 +134,25 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 
             });
 
+        public ICommand BackToMainMenu =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("CreateAccount/StartPage");
+           });
+
+        #endregion
+
+        #region Methods
+
         private bool ExistsThisUser()
         {
-           var user = App.EmployeeRepo.GetItem(x => x.Username == this.Username);
+            var user = App.EmployeeRepo.GetItem(x => x.Username == this.Username);
 
             if (user == null)
                 return false;
 
             return true;
         }
-
-        public ICommand BackToMainMenu =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("CreateAccount/StartPage");
-           });
         private void HideControls(object vslRegisterElements)
         {
             var elements = (VerticalStackLayout)vslRegisterElements;
@@ -232,8 +213,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 rbsIsVisible = true;
                 isFirstAccount = false;
             }
-
-            
         }
+        #endregion
+
     }
 }

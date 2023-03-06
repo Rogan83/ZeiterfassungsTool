@@ -4,7 +4,12 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.UserPage"
              Title="UserTimeTracking"
              >
-    
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
+
     <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,*"
           ColumnDefinitions="*,*">
         
