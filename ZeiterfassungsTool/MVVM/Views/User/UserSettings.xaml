@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.User.UserSettings"
+             Title="UserSettings">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Wie viele Stunden arbeiten Sie pro Woche?"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry
+            Placeholder="Stundenzahl eingeben"
+            Text="{Binding WorkingHoursPerWeek}"
+            />
+        <Button
+            Text="Speichern"
+            Command="{Binding SaveWorkingHours}"
+            />
+    </VerticalStackLayout>
+</ContentPage>

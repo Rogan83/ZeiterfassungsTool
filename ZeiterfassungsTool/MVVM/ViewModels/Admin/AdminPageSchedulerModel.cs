@@ -39,10 +39,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = employee.Username, Background = background});
                 }
             }
-
-
-            //SchedulerEvents.Add(new SchedulerAppointment { StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(2) });
-
         }
 
 

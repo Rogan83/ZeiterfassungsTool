@@ -28,7 +28,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         #endregion
 
 
-        private bool isDeterminePastTime = false;       //Wurde die vergangene heutige Zeit schon bestimmt?
+        
         private TimeSpan determinePastTime;
 
         private Employee user;
@@ -73,6 +73,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                Shell.Current.GoToAsync("UserPage/StartPage");
            });
 
+        public ICommand Settings =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("UserPage/UserSettings");
+           });
+        
 
         public ICommand BackToMenu =>
             new Command(() =>

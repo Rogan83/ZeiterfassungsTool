@@ -23,7 +23,8 @@ namespace ZeiterfassungsTool.Models
         //public string Birthday { get; set; }
         //public string Email { get; set; }
         public string Password { get; set; } = string.Empty;
-        public Role Role { get; set; }                        //User, Geschäftsleitung oder Admin
+        public int WorkingHoursPerWeek { get; set; } = 40;       //Legt fest, wie viele Stunden dieser Mitarbeiter pro Woche planmäßig arbeiten soll.
+        public Role Role { get; set; }                        //Rollen: Benutzer, Geschäftsleitung oder Admin
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Timetracking> Timetracking { get; set; } = new List<Timetracking>();
 

@@ -1,6 +1,7 @@
 ﻿using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
+using ZeiterfassungsTool.MVVM.Views.User;
 
 namespace ZeiterfassungsTool;
 
@@ -16,6 +17,8 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("UserPage", typeof(UserPage));
         Routing.RegisterRoute("UserPageScheduler", typeof(UserPageScheduler));
+        Routing.RegisterRoute("UserSettings", typeof(UserSettings));
+
 
         Routing.RegisterRoute("AdminPageUserList", typeof(AdminPageUserList));
         Routing.RegisterRoute("AdminPageUserManagement", typeof(AdminPageUserManagement));
@@ -37,6 +40,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("UserPageScheduler/StartPage", typeof(UserPageScheduler));
         Routing.RegisterRoute("UserPage/UserPageScheduler", typeof(UserPage));
         Routing.RegisterRoute("ManagementPage/StartPage", typeof(ManagementPage));
+
+        Routing.RegisterRoute("UserSettings/UserPage", typeof(UserSettings));
 
         Routing.RegisterRoute("LoginPage/StartPage", typeof(LoginPage));
         Routing.RegisterRoute("LoginPage/AdminPageChoice", typeof(LoginPage));
