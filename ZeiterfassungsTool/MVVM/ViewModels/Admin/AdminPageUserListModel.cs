@@ -6,7 +6,7 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
-    public class AdminPageModel
+    public class AdminPageUserListModel
     {
         
 
@@ -15,7 +15,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ObservableCollection<Employee> Employees { get; set; }
             = new ObservableCollection<Employee>();
 
-        public AdminPageModel()
+        public AdminPageUserListModel()
         {
             var employees = App.EmployeeRepo.GetItemsWithChildren();
             foreach (var employee in employees)
@@ -31,7 +31,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPage/StartPage");
+               Shell.Current.GoToAsync("AdminPageUserList/AdminPageChoice");
            });
 
 
@@ -39,14 +39,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackToMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPage/StartPage");
+               Shell.Current.GoToAsync("AdminPageUserList/StartPage");
            });
 
         public ICommand Logout =>
            new Command(() =>
            {
                SaveLoginStatus.WhoIsLoggedIn = new List<Employee>() { new Employee() };
-               Shell.Current.GoToAsync("AdminPage/StartPage");
+               Shell.Current.GoToAsync("AdminPageUserList/StartPage");
            });
 
         public ICommand EmployeeClickedCommand =>

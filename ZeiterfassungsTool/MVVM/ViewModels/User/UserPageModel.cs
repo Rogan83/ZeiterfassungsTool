@@ -186,6 +186,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
                     workingTimeTotal += difference;
                 }
+                else if (dateInTimetrackingEnd == currentDate)
+                {
+                    TimeOnly timeInTimetrackingEnd = TimeOnly.FromDateTime(timetracking.EndTime);
+                    TimeOnly startOfDay = new TimeOnly(0, 0);
+
+                    var difference = timeInTimetrackingEnd - startOfDay;
+
+                    workingTimeTotal += difference;
+                }
             }
             return workingTimeTotal;
         }

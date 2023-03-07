@@ -57,7 +57,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
+               Shell.Current.GoToAsync("AdminPageUserManagement/AdminPageUserList");
            });
 
         public ICommand BackToMenu =>
@@ -69,14 +69,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Back =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
+               Shell.Current.GoToAsync("AdminPageUserManagement/AdminPageUserList");
            });
 
         public ICommand Logout =>
            new Command(() =>
            {
                SaveLoginStatus.WhoIsLoggedIn = new List<Employee>() { new Employee() };             // Zurücksetzen
-               Shell.Current.GoToAsync("AdminPage/StartPage");
+               Shell.Current.GoToAsync("AdminPageUserList/StartPage");
            });
 
         public ICommand Update =>
@@ -128,7 +128,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                }
 
                App.EmployeeRepo.DeleteItem(Employee);
-               await Shell.Current.GoToAsync("AdminPageUserManagement/AdminPage");
+               await Shell.Current.GoToAsync("AdminPageUserManagement/AdminPageUserList");
            });
 
         public ICommand DeleteTime =>
@@ -336,9 +336,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         {
             //Timetracking = Employee.Timetracking;
             //Username = Employee.Username;
-
-            if (Employee.Timetracking != null)
-                SelectedTime = Employee.Timetracking.FirstOrDefault();          //Das schon ein Element ausgewählt wird beim Start
+            if (Employee != null)
+            {
+                if (Employee.Timetracking != null)
+                    SelectedTime = Employee.Timetracking.FirstOrDefault();          //Das schon ein Element ausgewählt wird beim Start
+            }
+            else
+            {
+                Console.WriteLine("Es wurde kein Mitarbeiter ausgewählt");
+            }
+            
         }
         #endregion
 

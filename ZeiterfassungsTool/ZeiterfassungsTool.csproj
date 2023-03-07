@@ -70,7 +70,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\Admin\AdminPage.xaml">
+	  <MauiXaml Update="MVVM\Views\Admin\AdminPageUserList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Admin\AdminPageUserManagement.xaml">
@@ -107,6 +107,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="MVVM\Views\Admin\AdminPageUserList.xaml.cs">
+	    <DependentUpon>AdminPageUserList.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="MVVM\Views\User\UserPage.xaml.cs">
 	    <DependentUpon>UserPage.xaml</DependentUpon>
 	  </Compile>

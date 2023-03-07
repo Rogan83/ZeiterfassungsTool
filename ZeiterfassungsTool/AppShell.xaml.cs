@@ -1,4 +1,5 @@
-﻿using ZeiterfassungsTool.MVVM.Views;
+﻿using ZeiterfassungsTool.MVVM.ViewModels.Admin;
+using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
 
 namespace ZeiterfassungsTool;
@@ -16,16 +17,20 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("UserPage", typeof(UserPage));
         Routing.RegisterRoute("UserPageScheduler", typeof(UserPageScheduler));
 
-        Routing.RegisterRoute("AdminPage", typeof(AdminPage));
+        Routing.RegisterRoute("AdminPageUserList", typeof(AdminPageUserList));
         Routing.RegisterRoute("AdminPageUserManagement", typeof(AdminPageUserManagement));
+        Routing.RegisterRoute("AdminPageChoice", typeof(AdminPageChoice));
+        Routing.RegisterRoute("AdminPageScheduler", typeof(AdminPageScheduler));
+
 
 
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
 
-        Routing.RegisterRoute("AdminPage/StartPage", typeof(AdminPage));
-        Routing.RegisterRoute("AdminPage/AdminPageUserManagement", typeof(AdminPage));
-        Routing.RegisterRoute("AdminPageUserManagement/AdminPage", typeof(AdminPageUserManagement));
+        Routing.RegisterRoute("AdminPageUserList/StartPage", typeof(AdminPageUserList));
+        Routing.RegisterRoute("AdminPageUserList/AdminPageUserManagement", typeof(AdminPageUserList));
+        Routing.RegisterRoute("AdminPageUserManagement/AdminPageUserList", typeof(AdminPageUserManagement));
+        //Routing.RegisterRoute("AdminPageChoice/AdminPageScheduler", typeof(AdminPageChoice));
 
         Routing.RegisterRoute("UserPage/StartPage", typeof(UserPage));
         Routing.RegisterRoute("UserPageScheduler/UserPage", typeof(UserPageScheduler));
@@ -34,6 +39,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("ManagementPage/StartPage", typeof(ManagementPage));
 
         Routing.RegisterRoute("LoginPage/StartPage", typeof(LoginPage));
+        Routing.RegisterRoute("LoginPage/AdminPageChoice", typeof(LoginPage));
         Routing.RegisterRoute("CreateAccount/StartPage", typeof(CreateAccount));
 
     }

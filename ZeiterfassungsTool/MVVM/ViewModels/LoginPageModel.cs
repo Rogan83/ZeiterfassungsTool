@@ -8,6 +8,7 @@ using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
+using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
@@ -82,7 +83,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                                    Shell.Current.GoToAsync(nameof(ManagementPage));
                                    break;
                                case Role.Admin:
-                                   Shell.Current.GoToAsync(nameof(AdminPage));
+                                   //Shell.Current.GoToAsync(nameof(AdminPage));
+                                   Shell.Current.GoToAsync(nameof(AdminPageChoice));
+                                   //Shell.Current.GoToAsync("LoginPage/AdminPageChoice");
                                    break;
 
                                default:
