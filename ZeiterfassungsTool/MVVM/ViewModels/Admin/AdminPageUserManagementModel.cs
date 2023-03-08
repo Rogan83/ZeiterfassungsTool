@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         #region Properties
         public Employee Employee { get; set; }
+        public ObservableCollection<Timetracking> Timetracking { get; set; } = new ObservableCollection<Timetracking>();
 
         public DateTime DateAndTimeStartTime { get; set; }
         
@@ -105,10 +107,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                        App.EmployeeRepo.SaveItemWithChildren(Employee);
 
-                       //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-                       var temp = Employee;
-                       Employee = null;
-                       Employee = temp;
+                       var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+                       Timetracking = new ObservableCollection<Timetracking>(timetracking);
 
                        return;
                    }
@@ -147,10 +147,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                 App.EmployeeRepo.SaveItemWithChildren(Employee);
 
-                //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-                var temp = Employee;
-                Employee = null;
-                Employee = temp;
+                var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+                Timetracking = new ObservableCollection<Timetracking>(timetracking);
             });
 
            #endregion
@@ -249,9 +247,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                App.EmployeeRepo.SaveItemWithChildren(Employee);
 
                //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-               var temp = Employee;
-               Employee = null;
-               Employee = temp;
+               //var temp = Employee;
+               //Employee = null;
+               //Employee = temp;
+               var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+               Timetracking = new ObservableCollection<Timetracking>(timetracking);
 
                EntrySubject = string.Empty;
            });

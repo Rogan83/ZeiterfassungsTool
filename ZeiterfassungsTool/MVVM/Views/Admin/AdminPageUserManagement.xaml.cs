@@ -1,4 +1,7 @@
+using System.Collections.ObjectModel;
+using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.ViewModels.Admin;
+
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
@@ -16,6 +19,13 @@ public partial class AdminPageUserManagement : ContentPage
         base.OnAppearing();
 
         model.SelectFirstTime();
+
+        var timetracking = model.Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();             //Sortiert die Liste aufsteigend, (komischerweise aber nicht den 2. Wert)
+        //var timetracking = from t in model.Employee.Timetracking                                                              //SQL ähnliche Syntax
+        //                   orderby t.StartTime, t.EndTime
+        //                   select t;
+
+        model.Timetracking = new ObservableCollection<Timetracking>(timetracking);
     }
 
     #region ButtonEvents

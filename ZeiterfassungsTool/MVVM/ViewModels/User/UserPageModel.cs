@@ -78,7 +78,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
            {
                Shell.Current.GoToAsync("UserPage/UserSettings");
            });
-        
+
+        public ICommand ForwardToWorkingHoursPage =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync("UserPage/UserWorkingHours");
+           });
 
         public ICommand BackToMenu =>
             new Command(() =>

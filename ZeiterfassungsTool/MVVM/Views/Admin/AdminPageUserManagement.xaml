@@ -46,14 +46,15 @@
         </VisualStateManager.VisualStateGroups>-->
 
         <CollectionView
-            ItemsSource="{Binding Employee.Timetracking}"
+            ItemsSource="{Binding Timetracking}"
             ItemTemplate="{StaticResource EmployeeTemplates}"
             Grid.Row="0"
             Grid.ColumnSpan="4"
             EmptyView="Keine Daten vorhanden!"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedTime}"
-            SelectionChangedCommand="{Binding }">
+            SelectionChangedCommand="{Binding }"
+            ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.Header>
                 <Frame BackgroundColor="{StaticResource Primary}">
                     <!--<Label Text="Mitarbeiter"

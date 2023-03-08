@@ -90,7 +90,7 @@
             Text="Gehe zur Anzeige gearbeitete Stunden"
             BackgroundColor="Aquamarine"
             TextColor="CadetBlue"
-            Command="{Binding }"/>
+            Command="{Binding ForwardToWorkingHoursPage}"/>
 
 
 

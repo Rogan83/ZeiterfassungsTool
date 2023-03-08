@@ -13,6 +13,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     {
         public int WorkingHoursPerWeek { get; set; } = 40;
 
+        public UserSettingsModel()
+        {
+            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+
+            if (employee.WorkingHoursPerWeek != 0)
+                WorkingHoursPerWeek = employee.WorkingHoursPerWeek;
+
+        }
+
+
         public ICommand BackButton =>
           new Command(() =>
           {
@@ -32,12 +42,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
               await App.Current.MainPage.DisplayAlert("Speichern", "Speichern erfolgreich", "OK");
 
-              var employees = App.EmployeeRepo.GetItemsWithChildren();
+              await Shell.Current.GoToAsync("UserSettings/UserPage");
 
-              foreach (var e in employees)
-              {
-                  Debug.WriteLine($"Username: {e.Username}, working Hours per Week: {e.WorkingHoursPerWeek}");   
-              }
-    });
+          });
     }
 }

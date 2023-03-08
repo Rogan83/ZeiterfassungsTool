@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Resources;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
+using ZeiterfassungsTool.MVVM.Views.User;
 using ZeiterfassungsTool.Repositories;
 
 
@@ -24,6 +25,9 @@ public partial class App : Application
         InitializeComponent();
 
         MainPage = new AppShell();
+        //MainPage = new UserWorkingHours();
+
+
         //MainPage = new AdminPage();
         //MainPage = new UserPageScheduler();
 
