@@ -9,27 +9,158 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <Grid RowDefinitions=".7*,.3*">
-        <control:SfRadialGauge>
+    <Grid RowDefinitions="auto,*,auto"
+          >
+        <Grid   
+            Grid.Row="0"
+            RowDefinitions="auto,auto, auto"
+            ColumnDefinitions="*,*">
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Geben sie unten den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden Sie dort gearbeitet haben."
+                TextColor="Brown"/>
+            <Entry
+                Grid.Row="1"
+                Grid.Column="0"
+                Placeholder="Monat"
+                MaxLength="2"
+                Keyboard="Numeric"
+                Text="{Binding Month}"
+                />
+            
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Placeholder="Jahr"
+                MaxLength="4"
+                Keyboard="Numeric"
+                Text="{Binding Year}"
+                />
+            <Button
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="10,30,10,0"
+                Text="Bestätigen"
+                Command="{Binding ShowWorkingHours}"
+                />
+        </Grid>
+
+        <Label
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Text="{Binding Percent}"
+            TextColor="DarkBlue"
+            Margin="0,90,0,0"
+            FontSize="50"
+           
+            >
+            <Label.Shadow>
+                <Shadow Brush="Black"
+                Offset="4,4"
+                Radius="70"
+                Opacity="0.8"
+                        />
+            </Label.Shadow>
+
+        </Label>
+
+        <control:SfRadialGauge Grid.Row="1" >
             <control:SfRadialGauge.Axes>
                 <control:RadialAxis Minimum="0" Maximum="{Binding HoursToWorkThisMonth}"
                                     StartAngle="180" EndAngle="360"
+                                    EnableLoadingAnimation="True"
                                     >
-                    <control:RadialAxis.Ranges>
-                        <control:RadialRange StartValue="0" EndValue="{Binding WorkingHours}" Fill="{Binding Color}">
+
+                    <!--<control:RadialAxis.AxisLineStyle>
+                        <control:RadialLineStyle ThicknessUnit="Factor" 
+                                               Thickness="0.1">
+                            <control:RadialLineStyle.GradientStops>
+                                <control:GaugeGradientStop Value="25"
+                                         Color="{Binding ColorStart}" />
+                                <control:GaugeGradientStop Value="100"
+                                         Color="{Binding ColorEnd}" />
+                            </control:RadialLineStyle.GradientStops>
+                        </control:RadialLineStyle>
+                    </control:RadialAxis.AxisLineStyle>-->
+
+                    <control:RadialAxis.AxisLineStyle>
+                        <control:RadialLineStyle Fill="{Binding ColorRadial}"></control:RadialLineStyle>
+                    </control:RadialAxis.AxisLineStyle>
+
+                    <control:RadialAxis.Pointers>
+                        <control:ShapePointer Value="{Binding ShapePointer}" EnableAnimation="True" AnimationDuration="1000" AnimationEasing="{x:Static Easing.SinIn}" Offset="-50"
+                                              Stroke="Black" Fill="{Binding ColorPointer}" BorderWidth="3" HasShadow="True" OverlayRadius="20">
+                            
+                        </control:ShapePointer>
+                    </control:RadialAxis.Pointers>
+
+                    <!--<control:RadialAxis.Ranges>
+                        <control:RadialRange StartValue="0"
+                                  EndValue="{Binding HoursToWorkThisMonth}"
+                                  StartWidth="20"
+                                  EndWidth="20">
+                            <control:RadialRange.GradientStops>
+                                <control:GaugeGradientStop Value="0"
+                                                 Color="{Binding ColorStart}" />
+                                <control:GaugeGradientStop Value="100"
+                                                 Color="{Binding ColorEnd}" />
+                            </control:RadialRange.GradientStops>
+                        </control:RadialRange>
+                    </control:RadialAxis.Ranges>-->
+
+
+                    <!--<control:RadialAxis.Ranges>
+                        <control:RadialRange StartValue="0" EndValue="{Binding HoursToWorkThisMonth}" Fill="{Binding ColorStart}">
                             
                         </control:RadialRange>
-                    </control:RadialAxis.Ranges>
-                    <control:RadialAxis.AxisLineStyle>
-                        <control:RadialLineStyle Fill="Yellow"></control:RadialLineStyle>
-                    </control:RadialAxis.AxisLineStyle>
+                    </control:RadialAxis.Ranges>-->
+                    
                 </control:RadialAxis>
             </control:SfRadialGauge.Axes>
 
         </control:SfRadialGauge>
-        <Label Grid.Row="1"
-            Text="{Binding WorkingHours}"
-            />
+        <Grid Grid.Row="2"
+            ColumnDefinitions="*,*,*"
+             RowDefinitions="*,*"
+              Margin="20">
+            <Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
+            <Label Grid.Column="1" Text="fehlend:" FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
+            <Label Grid.Column="2" Text="Überstunden: " FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding WorkingHours}" FontSize="Medium"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                 Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding HoursLeft}" FontSize="Medium"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                 Grid.Row="1"
+                Grid.Column="2"
+                HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding Overtime}" FontSize="Medium"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+        
     </Grid>
     
     
