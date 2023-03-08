@@ -126,9 +126,9 @@
             ColumnDefinitions="*,*,*"
              RowDefinitions="*,*"
               Margin="20">
-            <Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
-            <Label Grid.Column="1" Text="fehlend:" FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
-            <Label Grid.Column="2" Text="Überstunden: " FontSize="Medium" TextColor="Brown" HorizontalOptions="Center"/>
+            <Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="DarkBlue" HorizontalOptions="Center"/>
+            <Label Grid.Column="1" Text="fehlend:" FontSize="Medium" TextColor="DarkRed" HorizontalOptions="Center"/>
+            <Label Grid.Column="2" Text="Überstunden: " FontSize="Medium" TextColor="DarkGreen" HorizontalOptions="Center"/>
             <Label
                 Grid.Row="1"
                 Grid.Column="0"

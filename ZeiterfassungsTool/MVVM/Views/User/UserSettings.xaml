@@ -15,6 +15,7 @@
             HorizontalOptions="Center" />
         <Entry
             Placeholder="Stundenzahl eingeben"
+            Keyboard="Numeric"
             Text="{Binding WorkingHoursPerWeek}"
             />
         <Button

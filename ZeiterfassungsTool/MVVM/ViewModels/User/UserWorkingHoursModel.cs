@@ -117,9 +117,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                 currentYear = Int32.Parse(Year);        //DateTime.Now.Year;
             }
 
-            
-
-
             var employee = SaveLoginStatus.WhoIsLoggedIn[0];
 
             foreach (var timetracking in employee.Timetracking)
@@ -172,8 +169,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                 ShapePointer = Overtime;
                 HoursLeft = 0;
             }
-
-            
 
             var percent = (int)(hours / HoursToWorkThisMonth * 100);
             Percent = $"{percent}%";
