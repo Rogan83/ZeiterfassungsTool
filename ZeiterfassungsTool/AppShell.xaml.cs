@@ -26,6 +26,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("AdminPageUserManagement", typeof(AdminPageUserManagement));
         Routing.RegisterRoute("AdminPageChoice", typeof(AdminPageChoice));
         Routing.RegisterRoute("AdminPageScheduler", typeof(AdminPageScheduler));
+        Routing.RegisterRoute("AdminPageOvertime", typeof(AdminPageOvertime));
 
 
 

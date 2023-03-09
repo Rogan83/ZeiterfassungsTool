@@ -27,6 +27,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                Shell.Current.GoToAsync("AdminPageChoice/AdminPageUserList");
            });
 
+        public ICommand GoToOvertimeView =>
+           new Command(() =>
+           {
+               Shell.Current.GoToAsync(nameof(AdminPageOvertime));
+           });
+
         public ICommand GoToScheduler =>
            new Command(() =>
            {

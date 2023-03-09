@@ -13,8 +13,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     [AddINotifyPropertyChangedInterface]
     public class UserWorkingHoursModel
     {
-        private string month;
 
+        #region Properties
+
+        private string month;
         public string Month
         {
             get => month; set
@@ -55,16 +57,20 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public Color ColorRadial { get; set; }
         public Color ColorPointer { get; set; }
 
+        #endregion
+
+
         public UserWorkingHoursModel()
         {
             var employee = SaveLoginStatus.WhoIsLoggedIn[0];
 
             double workingHoursPerDay = employee.WorkingHoursPerWeek / 5.0f;
 
-            HoursToWorkThisMonth = GetWorkingDaysPerMonth(workingHoursPerDay);
+            HoursToWorkThisMonth = employee.WorkingHoursPerWeek * 4.3f;
 
             var overtimeOrMinusHoursTotal = CalculateOvertimeTotal();
 
+            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.
             if (overtimeOrMinusHoursTotal >= 0)
             {
                 OvertimeOrMinusHours = "Überstunden insgesamt:";
@@ -82,34 +88,34 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             ColorRadial = Colors.Red;
             ColorPointer = Colors.DarkRed;
+
+            WorkingHoursThisMonth();
         }
 
-        private double GetWorkingDaysPerMonth(double workingHoursPerDay)
-        {
-            //DateTime dt = new DateTime();
+        //private double GetWorkingDaysPerMonth(double workingHoursPerDay)
+        //{
+        //    //DateTime dt = new DateTime();
 
-            //int days = 0;
+        //    //int days = 0;
 
-            //var year = 2023;
-            //var month = 3;
+        //    //var year = 2023;
+        //    //var month = 3;
 
-            ////Anzahl der Tage feststellen
-            //int i = DateTime.DaysInMonth(year, month);
+        //    ////Anzahl der Tage feststellen
+        //    //int i = DateTime.DaysInMonth(year, month);
 
-            //for (int counter = 1; counter <= i; counter++)
-            //{
-            //    dt = new DateTime(year, month, counter);
-            //    //Wenn der Tag kein Samstag oder Sontag ist zähle!
-            //    if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
-            //    {
-            //        days++;
-            //    }
-            //}
+        //    //for (int counter = 1; counter <= i; counter++)
+        //    //{
+        //    //    dt = new DateTime(year, month, counter);
+        //    //    //Wenn der Tag kein Samstag oder Sontag ist zähle!
+        //    //    if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
+        //    //    {
+        //    //        days++;
+        //    //    }
+        //    //}
 
-            double workingHoursPerMonth = workingHoursPerDay * 5 * 4.3;
-
-            return workingHoursPerMonth;
-        }
+        //   
+        //}
 
 
         private double WorkingHoursThisMonth()
@@ -206,7 +212,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             double targetHoursTotal = 0;
 
             int countMonths = 0;
-            double workingHoursPerMonth = GetWorkingDaysPerMonth(employee.WorkingHoursPerWeek / 5.0f);
+            double workingHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
 
             List<string> dates = new();           
 
@@ -251,6 +257,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
          new Command(() =>
          {
              WorkingHours = WorkingHoursThisMonth();
+
          });
     }
 }

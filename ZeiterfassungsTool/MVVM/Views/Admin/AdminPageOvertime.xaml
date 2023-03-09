@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.AdminPageOvertime"
+             xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin"
+             xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
+             Title="AdminPageOvertime">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+    
+    <Grid RowDefinitions="auto,*,auto">
+
+        <Grid   
+            Grid.Row="0"
+            RowDefinitions="auto,auto,auto,auto"
+            ColumnDefinitions="*,*"
+            >
+            <RadioButton x:Name="chooseMonth"   Grid.Row="0"    Grid.Column="0"     Content="Monat auswählen"   GroupName ="SelectMode"  IsChecked="{Binding rbChooseMonth}" CheckedChanged="chooseMonth_CheckedChanged"  />
+            <RadioButton x:Name="total"         Grid.Row="0"    Grid.Column="1"     Content="Gesamt"            GroupName ="SelectMode"  IsChecked="{Binding rbTotal}" CheckedChanged="total_CheckedChanged"/>
+            
+            <Label
+                x:Name="LblInfo"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="Geben sie den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden der Mitarbeiter in diesen Zeitraum gearbeitet hat."
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                Margin="10"
+                />
+
+            <Entry
+                x:Name="EntryMonth"
+                Grid.Row="2"
+                Grid.Column="0"
+                Placeholder="Monat"
+                MaxLength="2"
+                Keyboard="Numeric"
+                Text="{Binding Month}"
+                />
+
+            <Entry
+                x:Name="EntryYear"
+                Grid.Row="2"
+                Grid.Column="1"
+                Placeholder="Jahr"
+                MaxLength="4"
+                Keyboard="Numeric"
+                Text="{Binding Year}"
+                
+                />
+            <Button
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Margin="10,30,10,0"
+                Text="Bestätigen"
+                Command="{Binding CreateEmployeeListCommand}"
+                />
+        </Grid>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding EmployeesWorkingHours}"
+                        BackgroundColor="AliceBlue">
+            <CollectionView.Header>
+                <Label
+                    Text="Mitarbeiter"
+                    FontSize="Large"
+                    TextColor="DarkBlue"
+                    HorizontalOptions="Center"
+                    Margin="0,10,0,20"/>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="10">
+                        <Label 
+                            Text="{Binding Username}"
+                            HorizontalOptions="Center"
+                            FontSize="Medium"
+                            Margin="0,0,0,0"
+                            />
+                        <gauge:SfLinearGauge Orientation="Horizontal" Minimum="0" Maximum="{Binding Source={RelativeSource AncestorType={x:Type local:AdminPageOvertimeModel}}, Path=BiggestNumber}" Margin="40"  HorizontalOptions="Start" Opacity="1" >
+                            <!--<gauge:SfLinearGauge.Ranges >
+                                <gauge:LinearRange  StartValue="0" EndValue="200" Fill="transparent" Position="Cross"></gauge:LinearRange >
+                            </gauge:SfLinearGauge.Ranges>-->
+
+                            <gauge:SfLinearGauge.BarPointers>
+                                <gauge:BarPointer Value="{Binding WorkingHours}" PointerSize="20" 
+                                      Offset="75"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="blue"
+                                  EnableAnimation="True" AnimationDuration="500" >
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+                                <gauge:BarPointer Value="{Binding TargetHours}" PointerSize="20" 
+                                      Offset="50"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="yellow"
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+                                <gauge:BarPointer Value="{Binding Overtime}" PointerSize="20" 
+                                      Offset="25"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="{Binding Color}"
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+                            </gauge:SfLinearGauge.BarPointers>
+
+                        </gauge:SfLinearGauge>
+                    </VerticalStackLayout>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="2" 
+              ColumnDefinitions="*,*"
+              RowDefinitions="*,*,*"
+              >
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="4"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20"
+                TextColor="Brown"
+                TextDecorations="Underline"
+                Text="Legende"
+                />
+            
+            <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Ist Stunden"
+                BackgroundColor="LightBlue"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Soll Stunden"
+                BackgroundColor="Yellow"/>
+            <Label
+                Grid.Column="0"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Überstunden"
+                BackgroundColor="LightGreen"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Minusstunden"
+                BackgroundColor="LightPink"/>
+
+        </Grid>
+    </Grid>
+    
+    
+    
+    
+</ContentPage>
