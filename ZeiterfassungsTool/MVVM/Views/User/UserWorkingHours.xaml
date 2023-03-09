@@ -70,7 +70,7 @@
 
         <control:SfRadialGauge Grid.Row="1" >
             <control:SfRadialGauge.Axes>
-                <control:RadialAxis Minimum="0" Maximum="{Binding HoursToWorkThisMonth}"
+                <control:RadialAxis Minimum="0" Maximum="{Binding TargetHoursPerMonth}"
                                     StartAngle="180" EndAngle="360"
                                     EnableLoadingAnimation="True"
                                     >

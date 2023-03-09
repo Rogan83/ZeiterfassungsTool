@@ -134,7 +134,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
             foreach (var employee in Employees)
             {
-                double actualHoursTotal = CalculateHours.CalculateHoursTotal(employee.Timetracking);
+                double actualHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
                 if (actualHoursTotal > BiggestNumber) BiggestNumber = actualHoursTotal;
                 double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, employee.Timetracking);
                 if (targetHoursTotal > BiggestNumber) BiggestNumber = targetHoursTotal;

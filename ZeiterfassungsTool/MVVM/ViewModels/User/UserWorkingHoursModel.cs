@@ -41,7 +41,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public string Percent { get; set; }
 
-        public double HoursToWorkThisMonth { get; set; }
+        public double TargetHoursPerMonth { get; set; }
 
         public double WorkingHours { get; set; }
         public double ShapePointer { get; set; }
@@ -62,34 +62,41 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserWorkingHoursModel()
         {
-            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
-
-            double workingHoursPerDay = employee.WorkingHoursPerWeek / 5.0f;
-
-            HoursToWorkThisMonth = employee.WorkingHoursPerWeek * 4.3f;
-
-            var overtimeOrMinusHoursTotal = CalculateOvertimeTotal();
-
-            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.
-            if (overtimeOrMinusHoursTotal >= 0)
-            {
-                OvertimeOrMinusHours = "Überstunden insgesamt:";
-            }
-            else
-            {
-                OvertimeOrMinusHours = "Minusstunden insgesamt:";
-                overtimeOrMinusHoursTotal = overtimeOrMinusHoursTotal * -1;
-            }
-
-            OvertimeTotal = overtimeOrMinusHoursTotal;
-
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
 
             ColorRadial = Colors.Red;
             ColorPointer = Colors.DarkRed;
 
-            WorkingHoursThisMonth();
+            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+
+            TargetHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
+
+            WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
+
+            double isHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
+            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, employee.Timetracking);
+            double overtimeTotal = isHoursTotal - targetHoursTotal;
+
+
+            //var overtimeTotal = CalculateOvertimeTotal();
+
+            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.
+            //if (overtimeTotal >= 0)
+            //{
+            //    OvertimeOrMinusHours = "Überstunden insgesamt:";
+            //}
+            //else
+            //{
+            //    OvertimeOrMinusHours = "Minusstunden insgesamt:";
+            //    overtimeTotal = overtimeTotal * -1;
+            //}
+
+            //OvertimeTotal = overtimeTotal;
+
+            //WorkingHoursThisMonth();
+
+            SetColorsAndLabels(WorkingHours, overtimeTotal);
         }
 
         //private double GetWorkingDaysPerMonth(double workingHoursPerDay)
@@ -118,134 +125,176 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         //}
 
 
-        private double WorkingHoursThisMonth()
+        private void SetColorsAndLabels(double workingHoursThisMonth, double overtimeTotal)
         {
-            
-            double hours = 0;
-            int currentMonth = 0;
-            if (Month != null)
+            SetColorsAndLabels(workingHoursThisMonth);
+
+            if (overtimeTotal >= 0)
             {
-                if(Month.Length == 0)
-                {
-                    App.Current.MainPage.DisplayAlert("Ungültige Eingabe", "Sie müssen min. 1 Zeichen im Feld Monat eingeben", "OK");
-                    return 0;
-                }
-                currentMonth = Int32.Parse(Month);      //DateTime.Now.Month;
+                ColorOvertimeTotal = Colors.DarkGreen;
+                OvertimeOrMinusHours = "Überstunden insgesamt:";
             }
-            //
-            int currentYear = 0;
-            if (Year != null)
+            else
             {
-                if (Year.Length < 4)
-                {
-                    App.Current.MainPage.DisplayAlert("Ungültige Eingabe", "Sie müssen min. 4 Zeichen im Feld Jahr eingeben", "OK");
-                    return 0;
-                }
-                currentYear = Int32.Parse(Year);        //DateTime.Now.Year;
+                ColorOvertimeTotal = Colors.DarkRed;
+                OvertimeOrMinusHours = "Minusstunden insgesamt:";
+                OvertimeTotal = overtimeTotal * -1;
             }
+        }
 
-            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
-
-            foreach (var timetracking in employee.Timetracking)
-            {
-                if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
-                    continue;
-
-                if (timetracking.StartTime.Month == currentMonth && timetracking.EndTime.Month == currentMonth && timetracking.StartTime.Year == currentYear && timetracking.EndTime.Year == currentYear)
-                {
-                    TimeSpan timeSpan = timetracking.EndTime - timetracking.StartTime;
-
-                    hours += timeSpan.TotalHours;
-
-                }
-                else if (timetracking.StartTime.Month == currentMonth && timetracking.StartTime.Year == currentYear)
-                {
-                    TimeOnly timeInTimetrackingStart = TimeOnly.FromDateTime(timetracking.StartTime);
-                    TimeOnly endOfDay = new TimeOnly(0, 0);
-
-                    TimeSpan difference = endOfDay - timeInTimetrackingStart;                // Wenn der Start von der Aufzeichnung am heutigen Datum ist, aber das Ende der Aufzeichnung nicht, dann kann es nur bedeuten, dass über die Nacht hinweg bis zum nächsten Tag gearbeitet wurde. Da aber nur die Zeit vom heutigen Tag angezeigt werden soll, muss die Differenz zwischen 0 Uhr und dem Startzeitpunkt der Aufzeichnung ermittelt werden und zum Schluss dazuaddiert werden.     
-
-                    hours += difference.TotalHours;
-                }
-                else if (timetracking.EndTime.Month == currentMonth && timetracking.EndTime.Year == currentYear)
-                {
-                    TimeOnly timeInTimetrackingEnd = TimeOnly.FromDateTime(timetracking.EndTime);
-                    TimeOnly startOfDay = new TimeOnly(0, 0);
-
-                    TimeSpan difference = timeInTimetrackingEnd - startOfDay;
-
-                    hours += difference.TotalHours;
-                }
-            }
-
-            if (hours < HoursToWorkThisMonth)
+        private void SetColorsAndLabels(double workingHoursThisMonth)
+        {
+            if (workingHoursThisMonth < TargetHoursPerMonth)
             {
                 ColorRadial = Colors.Red;
                 ColorPointer = Colors.Red;
 
                 Overtime = 0;
-                ShapePointer = hours;
-                HoursLeft = (int)(HoursToWorkThisMonth - hours);
+                ShapePointer = workingHoursThisMonth;
+                HoursLeft = (int)(TargetHoursPerMonth - workingHoursThisMonth);
             }
             else
             {
                 ColorRadial = Colors.Green;
                 ColorPointer = Colors.DarkGreen;
 
-                Overtime = (int)(hours - HoursToWorkThisMonth);
+                Overtime = (int)(workingHoursThisMonth - TargetHoursPerMonth);
                 ShapePointer = Overtime;
                 HoursLeft = 0;
             }
-
-            var percent = (int)(hours / HoursToWorkThisMonth * 100);
+            var percent = (int)(workingHoursThisMonth / TargetHoursPerMonth * 100);
             Percent = $"{percent}%";
-
-            return (int)hours;
         }
 
-        private double CalculateOvertimeTotal()
-        {
-            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
 
-            double workingHoursTotal = 0;
-            double overtimeTotal = 0;
-            double targetHoursTotal = 0;
+        //private double WorkingHoursThisMonth()
+        //{
+            
+        //    double hours = 0;
+        //    int currentMonth = 0;
+        //    if (Month != null)
+        //    {
+        //        if(Month.Length == 0)
+        //        {
+        //            App.Current.MainPage.DisplayAlert("Ungültige Eingabe", "Sie müssen min. 1 Zeichen im Feld Monat eingeben", "OK");
+        //            return 0;
+        //        }
+        //        currentMonth = Int32.Parse(Month);      //DateTime.Now.Month;
+        //    }
+        //    //
+        //    int currentYear = 0;
+        //    if (Year != null)
+        //    {
+        //        if (Year.Length < 4)
+        //        {
+        //            App.Current.MainPage.DisplayAlert("Ungültige Eingabe", "Sie müssen min. 4 Zeichen im Feld Jahr eingeben", "OK");
+        //            return 0;
+        //        }
+        //        currentYear = Int32.Parse(Year);        //DateTime.Now.Year;
+        //    }
 
-            int countMonths = 0;
-            double workingHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
+        //    var employee = SaveLoginStatus.WhoIsLoggedIn[0];
 
-            List<string> dates = new();           
+        //    foreach (var timetracking in employee.Timetracking)
+        //    {
+        //        if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
+        //            continue;
 
-            foreach (var timetracking in employee.Timetracking)
-            {
-                if (timetracking.Subject == "Krank" || timetracking.Subject == "Urlaub")
-                    continue;
+        //        if (timetracking.StartTime.Month == currentMonth && timetracking.EndTime.Month == currentMonth && timetracking.StartTime.Year == currentYear && timetracking.EndTime.Year == currentYear)
+        //        {
+        //            TimeSpan timeSpan = timetracking.EndTime - timetracking.StartTime;
 
-                workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;
+        //            hours += timeSpan.TotalHours;
 
-                var date = timetracking.StartTime.Month.ToString() + timetracking.StartTime.Year.ToString();
-                if (!dates.Contains(date))
-                    dates.Add(date);
+        //        }
+        //        else if (timetracking.StartTime.Month == currentMonth && timetracking.StartTime.Year == currentYear)
+        //        {
+        //            TimeOnly timeInTimetrackingStart = TimeOnly.FromDateTime(timetracking.StartTime);
+        //            TimeOnly endOfDay = new TimeOnly(0, 0);
 
-            }
+        //            TimeSpan difference = endOfDay - timeInTimetrackingStart;                // Wenn der Start von der Aufzeichnung am heutigen Datum ist, aber das Ende der Aufzeichnung nicht, dann kann es nur bedeuten, dass über die Nacht hinweg bis zum nächsten Tag gearbeitet wurde. Da aber nur die Zeit vom heutigen Tag angezeigt werden soll, muss die Differenz zwischen 0 Uhr und dem Startzeitpunkt der Aufzeichnung ermittelt werden und zum Schluss dazuaddiert werden.     
 
-            countMonths = dates.Count;
-            targetHoursTotal = countMonths * workingHoursPerMonth;
+        //            hours += difference.TotalHours;
+        //        }
+        //        else if (timetracking.EndTime.Month == currentMonth && timetracking.EndTime.Year == currentYear)
+        //        {
+        //            TimeOnly timeInTimetrackingEnd = TimeOnly.FromDateTime(timetracking.EndTime);
+        //            TimeOnly startOfDay = new TimeOnly(0, 0);
 
-            overtimeTotal = workingHoursTotal - targetHoursTotal;
+        //            TimeSpan difference = timeInTimetrackingEnd - startOfDay;
 
-            if (overtimeTotal >= 0)
-            {
-                ColorOvertimeTotal = Colors.DarkGreen;
-            }
-            else
-            {
-                ColorOvertimeTotal = Colors.DarkRed;
-            }
+        //            hours += difference.TotalHours;
+        //        }
+        //    }
+
+        //    if (hours < TargetHoursPerMonth)
+        //    {
+        //        ColorRadial = Colors.Red;
+        //        ColorPointer = Colors.Red;
+
+        //        Overtime = 0;
+        //        ShapePointer = hours;
+        //        HoursLeft = (int)(TargetHoursPerMonth - hours);
+        //    }
+        //    else
+        //    {
+        //        ColorRadial = Colors.Green;
+        //        ColorPointer = Colors.DarkGreen;
+
+        //        Overtime = (int)(hours - TargetHoursPerMonth);
+        //        ShapePointer = Overtime;
+        //        HoursLeft = 0;
+        //    }
+
+        //    var percent = (int)(hours / TargetHoursPerMonth * 100);
+        //    Percent = $"{percent}%";
+
+        //    return (int)hours;
+        //}
+
+        //private double CalculateOvertimeTotal()
+        //{
+        //    var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+
+        //    double workingHoursTotal = 0;
+        //    double overtimeTotal = 0;
+        //    double targetHoursTotal = 0;
+
+        //    int countMonths = 0;
+        //    double workingHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
+
+        //    List<string> dates = new();           
+
+        //    foreach (var timetracking in employee.Timetracking)
+        //    {
+        //        if (timetracking.Subject == "Krank" || timetracking.Subject == "Urlaub")
+        //            continue;
+
+        //        workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;
+
+        //        var date = timetracking.StartTime.Month.ToString() + timetracking.StartTime.Year.ToString();
+        //        if (!dates.Contains(date))
+        //            dates.Add(date);
+
+        //    }
+
+        //    countMonths = dates.Count;
+        //    targetHoursTotal = countMonths * workingHoursPerMonth;
+
+        //    overtimeTotal = workingHoursTotal - targetHoursTotal;
+
+        //    if (overtimeTotal >= 0)
+        //    {
+        //        ColorOvertimeTotal = Colors.DarkGreen;
+        //    }
+        //    else
+        //    {
+        //        ColorOvertimeTotal = Colors.DarkRed;
+        //    }
 
 
-            return Math.Round(overtimeTotal);
-        }
+        //    return Math.Round(overtimeTotal);
+        //}
 
         public ICommand BackButton =>
          new Command(() =>
@@ -256,8 +305,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public ICommand ShowWorkingHours =>
          new Command(() =>
          {
-             WorkingHours = WorkingHoursThisMonth();
+             //WorkingHours = WorkingHoursThisMonth();
+             var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+             WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
 
+             SetColorsAndLabels(WorkingHours);
          });
     }
 }

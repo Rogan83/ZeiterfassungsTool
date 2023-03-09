@@ -99,7 +99,7 @@ namespace ZeiterfassungsTool.StaticClasses
             return Math.Round(targetHoursTotal);
         }
 
-        public static double CalculateHoursTotal(List<Timetracking> timetrackingList)
+        public static double CalculateIsHoursTotal(List<Timetracking> timetrackingList)
         {
             double workingHoursTotal = 0;
             foreach (var timetracking in timetrackingList)
