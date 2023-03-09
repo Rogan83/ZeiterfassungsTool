@@ -40,7 +40,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
               App.EmployeeRepo.SaveItemWithChildren(currentEmployee);
 
-              await App.Current.MainPage.DisplayAlert("Speichern", "Speichern erfolgreich", "OK");
+              await App.Current.MainPage.DisplayAlert("", "Die Einstellungen wurden gespeichert.", "OK");
 
               await Shell.Current.GoToAsync("UserSettings/UserPage");
 

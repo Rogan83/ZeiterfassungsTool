@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.User
@@ -34,6 +35,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         }
         public string Year { get; set; }
 
+        public string OvertimeOrMinusHours { get; set; }
+
         public string Percent { get; set; }
 
         public double HoursToWorkThisMonth { get; set; }
@@ -45,6 +48,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public double Overtime { get; set; }
 
+        public double OvertimeTotal { get; set; }
+
+        public Color ColorOvertimeTotal { get; set; }
+
         public Color ColorRadial { get; set; }
         public Color ColorPointer { get; set; }
 
@@ -52,9 +59,23 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         {
             var employee = SaveLoginStatus.WhoIsLoggedIn[0];
 
-            double workingHoursPerDay = employee.WorkingHoursPerWeek / 5;
+            double workingHoursPerDay = employee.WorkingHoursPerWeek / 5.0f;
 
             HoursToWorkThisMonth = GetWorkingDaysPerMonth(workingHoursPerDay);
+
+            var overtimeOrMinusHoursTotal = CalculateOvertimeTotal();
+
+            if (overtimeOrMinusHoursTotal >= 0)
+            {
+                OvertimeOrMinusHours = "Überstunden insgesamt:";
+            }
+            else
+            {
+                OvertimeOrMinusHours = "Minusstunden insgesamt:";
+                overtimeOrMinusHoursTotal = overtimeOrMinusHoursTotal * -1;
+            }
+
+            OvertimeTotal = overtimeOrMinusHoursTotal;
 
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
@@ -174,6 +195,50 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             Percent = $"{percent}%";
 
             return (int)hours;
+        }
+
+        private double CalculateOvertimeTotal()
+        {
+            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+
+            double workingHoursTotal = 0;
+            double overtimeTotal = 0;
+            double targetHoursTotal = 0;
+
+            int countMonths = 0;
+            double workingHoursPerMonth = GetWorkingDaysPerMonth(employee.WorkingHoursPerWeek / 5.0f);
+
+            List<string> dates = new();           
+
+            foreach (var timetracking in employee.Timetracking)
+            {
+                if (timetracking.Subject == "Krank" || timetracking.Subject == "Urlaub")
+                    continue;
+
+                workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;
+
+                var date = timetracking.StartTime.Month.ToString() + timetracking.StartTime.Year.ToString();
+                if (!dates.Contains(date))
+                    dates.Add(date);
+
+            }
+
+            countMonths = dates.Count;
+            targetHoursTotal = countMonths * workingHoursPerMonth;
+
+            overtimeTotal = workingHoursTotal - targetHoursTotal;
+
+            if (overtimeTotal >= 0)
+            {
+                ColorOvertimeTotal = Colors.DarkGreen;
+            }
+            else
+            {
+                ColorOvertimeTotal = Colors.DarkRed;
+            }
+
+
+            return Math.Round(overtimeTotal);
         }
 
         public ICommand BackButton =>

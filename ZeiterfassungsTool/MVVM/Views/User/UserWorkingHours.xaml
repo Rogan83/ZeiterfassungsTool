@@ -19,8 +19,9 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Text="Geben sie unten den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden Sie dort gearbeitet haben."
-                TextColor="Brown"/>
+                Text="Geben sie den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden Sie dort gearbeitet haben."
+                TextColor="Black"
+                Margin="10"/>
             <Entry
                 Grid.Row="1"
                 Grid.Column="0"
@@ -124,7 +125,7 @@
         </control:SfRadialGauge>
         <Grid Grid.Row="2"
             ColumnDefinitions="*,*,*"
-             RowDefinitions="*,*"
+             RowDefinitions="*,*,auto"
               Margin="20">
             <Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="DarkBlue" HorizontalOptions="Center"/>
             <Label Grid.Column="1" Text="fehlend:" FontSize="Medium" TextColor="DarkRed" HorizontalOptions="Center"/>
@@ -159,9 +160,25 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+
+            <Grid Grid.Row="2" Grid.ColumnSpan="3"
+                  RowDefinitions="*,*"
+                  Margin="20">
+                <Label
+                HorizontalOptions="Center"
+                Text="{Binding OvertimeOrMinusHours}"
+                FontSize="Large"
+                TextColor="Black"
+                TextDecorations="Underline"
+                />
+                <Label
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Text="{Binding OvertimeTotal}"
+                FontSize="Large"
+                TextColor="{Binding ColorOvertimeTotal}"
+                />
+            </Grid>
         </Grid>
-        
     </Grid>
-    
-    
 </ContentPage>
