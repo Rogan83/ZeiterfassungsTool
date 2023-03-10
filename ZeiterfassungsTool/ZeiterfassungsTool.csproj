@@ -72,6 +72,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageAdminAndManagementManagement.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageOvertime.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

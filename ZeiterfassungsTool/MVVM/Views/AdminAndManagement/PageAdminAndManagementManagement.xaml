@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.AdminAndManagement.PageAdminAndManagementManagement"
+             Title="PageAdminAndManagementManagement">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
+    </Shell.BackButtonBehavior>
+
+    <Grid   RowDefinitions="*,auto" 
+            BackgroundColor="AntiqueWhite"
+            >
+        
+        <CollectionView 
+            Grid.Row="0"
+            ItemsSource="{Binding Employees}"
+            EmptyView="Keine Daten vorhanden!"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedEmployee}"
+            SelectionChangedCommand="{Binding }"
+            ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.Header>
+                <Frame BackgroundColor="{StaticResource Primary}">
+                    
+                    <Label HorizontalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Die Liste aller Accounts: " FontSize="Title" TextColor="BurlyWood" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Frame>
+            </CollectionView.Header>
+                
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Spacing="10">
+                        <Label HorizontalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <!--<Span Text="Name: " TextColor="DarkBlue" FontSize="Medium"/>-->
+                                    <Span Text="{Binding Username}" TextColor="DarkGray" FontSize="Medium"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+                <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+        <Grid Grid.Row="1"
+              BackgroundColor="LightCoral"
+              ColumnDefinitions="*,*,*">
+            <ImageButton 
+                x:Name="imgBtnDeleteUser"
+                Source="delete_user.png"
+                HeightRequest="40"
+                WidthRequest="190"
+                BackgroundColor="red"
+                Margin="10,0,10,10"
+                Command="{Binding DeleteAccount}"
+            />
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

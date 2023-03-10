@@ -9,12 +9,19 @@
     </Shell.BackButtonBehavior>
 
 
-    <Grid RowDefinitions="auto,auto,auto,*">
+    <Grid RowDefinitions="auto,auto,auto,auto,*">
         <Button
             Grid.Row="0"
             Margin="10"
-            Text="zur Benutzer Listenansicht"
-            Command="{Binding GoToListView}"
+            Text="zur Arbeitszeiten Ansicht "
+            Command="{Binding GoToUserListView}"
+            />
+        <Button
+            x:Name="btnShowAllAccounts"
+            Grid.Row="1"
+            Margin="10"
+            Text="zur Listenansicht von allen Accounts"
+            Command="{Binding GoToAccountsListView}"
             />
         <Button
             Grid.Row="2"
@@ -23,7 +30,7 @@
             Command="{Binding GoToOvertimeView}"
             />
         <Button
-            Grid.Row="1"
+            Grid.Row="3"
             Margin="10"
             Text="zur Kalenderansicht"
             Command="{Binding GoToScheduler}"

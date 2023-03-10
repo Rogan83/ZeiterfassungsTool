@@ -1,6 +1,7 @@
 ﻿using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
+using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.MVVM.Views.User;
 
 namespace ZeiterfassungsTool;
@@ -27,6 +28,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("PageChoice", typeof(PageChoice));
         Routing.RegisterRoute("PageScheduler", typeof(PageScheduler));
         Routing.RegisterRoute("PageOvertime", typeof(PageOvertime));
+        Routing.RegisterRoute("PageAdminAndManagementManagement", typeof(PageAdminAndManagementManagement));
 
 
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeiterfassungsTool.MVVM.Views.Admin;
+using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
@@ -21,11 +22,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                Shell.Current.GoToAsync("PageChoice/LoginPage");
            });
 
-        public ICommand GoToListView =>
+        public ICommand GoToUserListView =>
            new Command(() =>
            {
                Shell.Current.GoToAsync("PageChoice/PageUserList");
            });
+
+        public ICommand GoToAccountsListView =>
+          new Command(() =>
+          {
+              Shell.Current.GoToAsync(nameof(PageAdminAndManagementManagement));
+          });
 
         public ICommand GoToOvertimeView =>
            new Command(() =>
