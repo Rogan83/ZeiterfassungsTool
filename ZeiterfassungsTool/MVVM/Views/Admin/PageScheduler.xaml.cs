@@ -2,9 +2,9 @@ using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
-public partial class AdminPageScheduler : ContentPage
+public partial class PageScheduler : ContentPage
 {
-	public AdminPageScheduler()
+	public PageScheduler()
 	{
 		InitializeComponent();
 

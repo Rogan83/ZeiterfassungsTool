@@ -45,7 +45,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
           new Command(() =>
           {
-              Shell.Current.GoToAsync("AdminPageScheduler/AdminPageChoice");
+              Shell.Current.GoToAsync("PageScheduler/PageChoice");
           });
     }
 }

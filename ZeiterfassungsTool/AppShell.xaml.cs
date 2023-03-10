@@ -22,21 +22,20 @@ public partial class AppShell : Shell
 
 
 
-        Routing.RegisterRoute("AdminPageUserList", typeof(AdminPageUserList));
-        Routing.RegisterRoute("AdminPageUserManagement", typeof(AdminPageUserManagement));
-        Routing.RegisterRoute("AdminPageChoice", typeof(AdminPageChoice));
-        Routing.RegisterRoute("AdminPageScheduler", typeof(AdminPageScheduler));
-        Routing.RegisterRoute("AdminPageOvertime", typeof(AdminPageOvertime));
+        Routing.RegisterRoute("PageUserList", typeof(PageUserList));
+        Routing.RegisterRoute("PageUserManagement", typeof(PageUserManagement));
+        Routing.RegisterRoute("PageChoice", typeof(PageChoice));
+        Routing.RegisterRoute("PageScheduler", typeof(PageScheduler));
+        Routing.RegisterRoute("PageOvertime", typeof(PageOvertime));
 
 
 
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
 
-        Routing.RegisterRoute("AdminPageUserList/StartPage", typeof(AdminPageUserList));
-        Routing.RegisterRoute("AdminPageUserList/AdminPageUserManagement", typeof(AdminPageUserList));
-        Routing.RegisterRoute("AdminPageUserManagement/AdminPageUserList", typeof(AdminPageUserManagement));
-        //Routing.RegisterRoute("AdminPageChoice/AdminPageScheduler", typeof(AdminPageChoice));
+        Routing.RegisterRoute("PageUserList/StartPage", typeof(PageUserList));
+        Routing.RegisterRoute("PageUserList/PageUserManagement", typeof(PageUserList));
+        Routing.RegisterRoute("PageUserManagement/PageUserList", typeof(PageUserManagement));
 
         Routing.RegisterRoute("UserPage/StartPage", typeof(UserPage));
         Routing.RegisterRoute("UserPageScheduler/UserPage", typeof(UserPageScheduler));
@@ -49,7 +48,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("UserWorkingHours/UserPage", typeof(UserWorkingHours));
 
         Routing.RegisterRoute("LoginPage/StartPage", typeof(LoginPage));
-        Routing.RegisterRoute("LoginPage/AdminPageChoice", typeof(LoginPage));
+        Routing.RegisterRoute("LoginPage/PageChoice", typeof(LoginPage));
         Routing.RegisterRoute("CreateAccount/StartPage", typeof(CreateAccount));
 
     }

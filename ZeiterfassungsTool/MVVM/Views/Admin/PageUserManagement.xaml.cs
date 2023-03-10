@@ -1,14 +1,14 @@
 using System.Collections.ObjectModel;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.ViewModels.Admin;
-
+using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
-public partial class AdminPageUserManagement : ContentPage
+public partial class PageUserManagement : ContentPage
 {
     AdminPageUserManagementModel model = new AdminPageUserManagementModel();
-    public AdminPageUserManagement()
+    public PageUserManagement()
     {
         InitializeComponent();
         model = new AdminPageUserManagementModel();
@@ -26,6 +26,27 @@ public partial class AdminPageUserManagement : ContentPage
         //                   select t;
 
         model.Timetracking = new ObservableCollection<Timetracking>(timetracking);
+
+        var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+
+        if (employee != null)
+        {
+            if (employee.Role != Enumerations.Role.Admin)
+            {
+                imgBtnDeleteTime.IsEnabled = false;
+                imgBtnDeleteUser.IsEnabled = false;
+                imgBtnUpdate.IsEnabled = false;
+            }
+            else
+            {
+                imgBtnDeleteTime.IsEnabled = true;
+                imgBtnDeleteUser.IsEnabled = true;
+                imgBtnUpdate.IsEnabled = true;
+            }
+                
+        }
+
+        
     }
 
     #region ButtonEvents

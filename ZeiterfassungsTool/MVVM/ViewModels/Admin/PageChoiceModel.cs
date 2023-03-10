@@ -8,9 +8,9 @@ using ZeiterfassungsTool.MVVM.Views.Admin;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
-    public class AdminPageChoiceModel
+    public class PageChoiceModel
     {
-        public AdminPageChoiceModel() 
+        public PageChoiceModel() 
         {
         
         }
@@ -18,26 +18,26 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPageChoice/LoginPage");
+               Shell.Current.GoToAsync("PageChoice/LoginPage");
            });
 
         public ICommand GoToListView =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("AdminPageChoice/AdminPageUserList");
+               Shell.Current.GoToAsync("PageChoice/PageUserList");
            });
 
         public ICommand GoToOvertimeView =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync(nameof(AdminPageOvertime));
+               Shell.Current.GoToAsync(nameof(PageOvertime));
            });
 
         public ICommand GoToScheduler =>
            new Command(() =>
            {
                //Shell.Current.GoToAsync("AdminPageChoice/AdminPageScheduler");
-               Shell.Current.GoToAsync(nameof(AdminPageScheduler));
+               Shell.Current.GoToAsync(nameof(PageScheduler));
            });
     }
 }

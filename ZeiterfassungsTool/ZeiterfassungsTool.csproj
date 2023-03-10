@@ -72,13 +72,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\Admin\AdminPageOvertime.xaml">
+	  <MauiXaml Update="MVVM\Views\Admin\PageOvertime.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Admin\AdminPageUserList.xaml">
+	  <MauiXaml Update="MVVM\Views\Admin\PageUserList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Admin\AdminPageUserManagement.xaml">
+	  <MauiXaml Update="MVVM\Views\Admin\PageUserManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\CreateAccount.xaml">
@@ -118,8 +118,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\Admin\AdminPageUserList.xaml.cs">
-	    <DependentUpon>AdminPageUserList.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\Admin\PageOvertime.xaml.cs">
+	    <DependentUpon>PageOvertime.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\Admin\PageScheduler.xaml.cs">
+	    <DependentUpon>PageScheduler.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\Admin\PageUserManagement.xaml.cs">
+	    <DependentUpon>PageUserManagement.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\Admin\PageChoice.xaml.cs">
+	    <DependentUpon>PageChoice.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\Admin\PageUserList.xaml.cs">
+	    <DependentUpon>PageUserList.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="MVVM\Views\User\UserPage.xaml.cs">
 	    <DependentUpon>UserPage.xaml</DependentUpon>

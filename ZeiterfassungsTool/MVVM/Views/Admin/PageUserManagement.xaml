@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin"
              xmlns:Datatemplates="clr-namespace:ZeiterfassungsTool.Selectors"
-             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.AdminPageUserManagement"
-             Title="AdminPageUserManagement">
+             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.PageUserManagement"
+             Title="PageUserManagement">
 
     <ContentPage.Resources>
         <Datatemplates:EmployeeDataTemplateSelector x:Key="EmployeeTemplates"/>
@@ -116,9 +116,11 @@
             WidthRequest="190"
             BackgroundColor="Darkgreen"
             Margin="10,0,10,10"
-            Command="{Binding AddTime}"/>
-        
+            Command="{Binding AddTime}"
+            />
+        <!--CommandParameter="{Binding Source={x:Reference imgBtnAdd}}"-->
         <ImageButton 
+            x:Name="imgBtnUpdate"
             Source="save.png"
             Grid.Row="3"
             Grid.Column="1"
@@ -127,7 +129,7 @@
             WidthRequest="190"
             BackgroundColor="LightBlue"
             Margin="10,0,10,10"
-            Command="{Binding Update}"
+            Command="{Binding Update} "
             
             >
             <!--<VisualStateManager.VisualStateGroups>
@@ -171,6 +173,7 @@
         
 
         <ImageButton 
+            x:Name="imgBtnDeleteTime"
             Source="delete.png"
             Grid.Row="6"
             Grid.Column="0"
@@ -183,6 +186,7 @@
             />
 
         <ImageButton 
+            x:Name="imgBtnDeleteUser"
             Source="delete_user.png"
             HeightRequest="40"
             WidthRequest="190"

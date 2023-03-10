@@ -61,7 +61,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync(nameof(AdminPageChoice));
+               Shell.Current.GoToAsync(nameof(PageChoice));
            });
 
         public ICommand CreateEmployeeListCommand =>

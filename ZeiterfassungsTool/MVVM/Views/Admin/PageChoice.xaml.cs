@@ -2,12 +2,12 @@ using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
-public partial class AdminPageChoice : ContentPage
+public partial class PageChoice : ContentPage
 {
-	public AdminPageChoice()
+	public PageChoice()
 	{
 		InitializeComponent();
 
-		BindingContext = new AdminPageChoiceModel();
+		BindingContext = new PageChoiceModel();
 	}
 }
