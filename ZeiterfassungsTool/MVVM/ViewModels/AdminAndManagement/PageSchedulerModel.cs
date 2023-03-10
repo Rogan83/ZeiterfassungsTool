@@ -9,12 +9,12 @@ using System.Windows.Input;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
-    public class AdminPageSchedulerModel
+    public class PageSchedulerModel
     {
 
         public ObservableCollection<SchedulerAppointment> SchedulerEvents { get; set; }
 
-        public AdminPageSchedulerModel()
+        public PageSchedulerModel()
         {
             var employees = App.EmployeeRepo.GetItemsWithChildren();
 

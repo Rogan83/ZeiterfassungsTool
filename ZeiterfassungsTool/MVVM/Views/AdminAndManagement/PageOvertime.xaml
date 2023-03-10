@@ -82,7 +82,7 @@
                             FontSize="Medium"
                             Margin="0,0,0,0"
                             />
-                        <gauge:SfLinearGauge Orientation="Horizontal" Minimum="0" Maximum="{Binding Source={RelativeSource AncestorType={x:Type local:AdminPageOvertimeModel}}, Path=BiggestNumber}" Margin="40"  HorizontalOptions="Start" Opacity="1" >
+                        <gauge:SfLinearGauge Orientation="Horizontal" Minimum="0" Maximum="{Binding Source={RelativeSource AncestorType={x:Type local:PageOvertimeModel}}, Path=BiggestNumber}" Margin="40"  HorizontalOptions="Start" Opacity="1" >
                             <!--<gauge:SfLinearGauge.Ranges >
                                 <gauge:LinearRange  StartValue="0" EndValue="200" Fill="transparent" Position="Cross"></gauge:LinearRange >
                             </gauge:SfLinearGauge.Ranges>-->

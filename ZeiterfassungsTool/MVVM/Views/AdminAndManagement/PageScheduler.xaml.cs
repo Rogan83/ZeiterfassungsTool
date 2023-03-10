@@ -8,6 +8,6 @@ public partial class PageScheduler : ContentPage
 	{
 		InitializeComponent();
 
-		BindingContext = new AdminPageSchedulerModel();
+		BindingContext = new PageSchedulerModel();
 	}
 }

@@ -7,11 +7,11 @@ namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
 public partial class PageUserManagement : ContentPage
 {
-    AdminPageUserManagementModel model = new AdminPageUserManagementModel();
+    PageUserManagementModel model = new PageUserManagementModel();
     public PageUserManagement()
     {
         InitializeComponent();
-        model = new AdminPageUserManagementModel();
+        model = new PageUserManagementModel();
         BindingContext = model;
     }
     protected override void OnAppearing()

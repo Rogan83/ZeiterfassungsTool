@@ -13,7 +13,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     [AddINotifyPropertyChangedInterface]
     [QueryProperty(nameof(Employee), "employee")]
-    public class AdminPageUserManagementModel
+    public class PageUserManagementModel
     {
 
         #region Properties
@@ -50,7 +50,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         #endregion
 
 
-        public AdminPageUserManagementModel()
+        public PageUserManagementModel()
         {
 
         }

@@ -7,7 +7,7 @@ public partial class PageUserList : ContentPage
 	{
 		InitializeComponent();
 
-		BindingContext = new AdminPageUserListModel();
+		BindingContext = new PageUserListModel();
 	}
 
    

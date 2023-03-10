@@ -13,7 +13,7 @@ using ZeiterfassungsTool.StaticClasses;
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     [AddINotifyPropertyChangedInterface]
-    public class AdminPageOvertimeModel
+    public class PageOvertimeModel
     {
         #region Properties
        
@@ -48,7 +48,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<EmployeeWorkingHours> EmployeesWorkingHours { get; set; } = new ObservableCollection<EmployeeWorkingHours>();
 
-        public AdminPageOvertimeModel()
+        public PageOvertimeModel()
         {
             Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren());
 
