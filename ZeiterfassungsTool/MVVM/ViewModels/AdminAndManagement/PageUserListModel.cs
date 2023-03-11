@@ -45,7 +45,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Logout =>
            new Command(() =>
            {
-               SaveLoginStatus.WhoIsLoggedIn = new List<Employee>() { new Employee() };
+               Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
                Shell.Current.GoToAsync("PageUserList/StartPage");
            });
 

@@ -53,7 +53,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 
         public ObservableCollection<Employee> GetAccountsWithoutLogginInAccount()
         {
-            Employee LoggedInAccount = SaveLoginStatus.WhoIsLoggedIn[0];
+            Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
             List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
             List<Employee> employeeWithoutLogginInAccount = new();
 

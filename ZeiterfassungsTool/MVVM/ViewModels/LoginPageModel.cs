@@ -1,4 +1,5 @@
-﻿using PropertyChanged;
+﻿using Microsoft.Maui.Controls;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
+using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.StaticClasses;
+using static SQLite.SQLite3;
+
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
@@ -19,6 +23,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public string Message { get; set; }
         public string Debug { get; set; }
 
+        public string TxtForwardToContent { get; set; }
 
         public ICommand BackButton =>
            new Command(() =>
@@ -26,22 +31,26 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                Shell.Current.GoToAsync("LoginPage/StartPage");
            });
 
+        public LoginPageModel() 
+        {
+            UpdateButtonForwardText();
+        }
 
         public ICommand ToLogin =>
-           new Command((elements) =>
+           new Command((element) =>
            {
                string username = string.Empty;
                string password = string.Empty;
 
-               var children = ((VerticalStackLayout)elements).Children;
+               var children = ((VerticalStackLayout)element).Children;
                foreach (var child in children)
                {
                    if (child is Entry)
                    {
                        try
                        {
-                           username = ((Entry)((Entry)child).FindByName("username")).Text;
-                           password = ((Entry)((Entry)child).FindByName("password")).Text;
+                           username = ((Entry)((Entry)child).FindByName("entryUsername")).Text;
+                           password = ((Entry)((Entry)child).FindByName("entryPassword")).Text;
                        }
                        catch (NullReferenceException e)     //Fängt es nicht ab, ka wieso
                        {
@@ -70,31 +79,34 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                    if (count > 0)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username und Passwort hat.
                    {
-                       SaveLoginStatus.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
+                       Login.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
 
-                       foreach (var result in results)      //Es könnte theoretisch sein, dass mehrere Accounts mit Users und Admin Rollen vorhanden sind, die den selben Benutzername und Passwort haben ... Man müsste dafür sorgen, dass der Benutzername nicht mehr als 1 mal vergeben wird
-                       {
-                           switch (result.Role)
-                           {
-                               case Role.User:
-                                   Shell.Current.GoToAsync(nameof(UserPage));
-                                   break;
-                               case Role.Management:
-                                   //Shell.Current.GoToAsync(nameof(ManagementPage));
-                                   Shell.Current.GoToAsync(nameof(PageChoice));
-                                   break;
-                               case Role.Admin:
-                                   //Shell.Current.GoToAsync(nameof(AdminPage));
-                                   Shell.Current.GoToAsync(nameof(PageChoice));
-                                   //Shell.Current.GoToAsync("LoginPage/AdminPageChoice");
-                                   break;
+                       //foreach (var result in results)      //Es könnte theoretisch sein, dass mehrere Accounts mit Users und Admin Rollen vorhanden sind, die den selben Benutzername und Passwort haben ... Man müsste dafür sorgen, dass der Benutzername nicht mehr als 1 mal vergeben wird
+                       //{
+                       //    switch (result.Role)
+                       //    {
+                       //        case Role.User:
+                       //            Shell.Current.GoToAsync(nameof(UserPage));
+                       //            break;
+                       //        case Role.Management:
+                       //            Shell.Current.GoToAsync(nameof(PageChoice));
+                       //            break;
+                       //        case Role.Admin:
+                       //            Shell.Current.GoToAsync(nameof(PageChoice));
+                       //            break;
+                       //        default:
+                       //            Shell.Current.GoToAsync(nameof(UserPage));
+                       //            break;
+                       //    }
+                       //}
 
-                               default:
-                                   Shell.Current.GoToAsync(nameof(UserPage));
-                                   break;
-                           }
-                       }
 
+                       //Redundanter Code, sollte am besten in einer Methode ausgelagert werden...
+
+                       //Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
+                       DeaktivateAndAktivateSeveralButtonAndEntries(element, true);
+
+                       UpdateButtonForwardText();
 
                    }
                    else
@@ -106,14 +118,97 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                {
                    Message = "Es müssen beide Felder ausgefüllt sein.";
                }
-
-
            });
 
-        public ICommand BackToMainMenu =>
+        private void DeaktivateAndAktivateSeveralButtonAndEntries(object element, bool activate)
+        {
+            VerticalStackLayout verticalStackLayout = (VerticalStackLayout)element;
+
+            Button btnForwardToContent = (Button)verticalStackLayout.FindByName("btnForwardToContent");
+            Button btnLogout = (Button)verticalStackLayout.FindByName("btnLogout");
+
+            Entry entryUsername = (Entry)verticalStackLayout.FindByName("entryUsername");
+            Entry entryPassword = (Entry)verticalStackLayout.FindByName("entryPassword");
+            Button btnLogin = (Button)verticalStackLayout.FindByName("btnLogin");
+
+            btnForwardToContent.IsVisible = activate;
+            btnLogout.IsVisible = activate;
+
+            entryUsername.IsVisible = !activate;
+            entryPassword.IsVisible = !activate;
+            btnLogin.IsVisible = !activate;
+        }
+
+        /// <summary>
+        /// Passt den Text vom button in Abhängigkeit davon an, wer sich eingeloggt hat.
+        /// </summary>
+        private void UpdateButtonForwardText()
+        {
+            var result = Login.WhoIsLoggedIn[0];
+            switch (result.Role)
+            {
+                case Role.User:
+                    TxtForwardToContent = "Weiter zur Benutzerseite";
+                    break;
+                case Role.Management:
+                    TxtForwardToContent = "Weiter zur Geschäftsführungsseite";
+                    break;
+                case Role.Admin:
+                    TxtForwardToContent = "Weiter zur Adminseite";
+                    break;
+            }
+        }
+
+        public ICommand ForwardToContent =>
+          new Command(() =>
+          {
+              var result = Login.WhoIsLoggedIn[0];
+
+              switch (result.Role)
+              {
+                  case Role.User:
+                      Shell.Current.GoToAsync(nameof(UserPage));
+                      break;
+                  case Role.Management:
+                      Shell.Current.GoToAsync(nameof(PageChoice));
+                      break;
+                  case Role.Admin:
+                       Shell.Current.GoToAsync(nameof(PageChoice));
+                       break;
+                  default:
+                      Shell.Current.GoToAsync(nameof(UserPage));
+                      break;
+              }
+          });
+        public ICommand Logout =>
+          new Command((element) =>
+          {
+              Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
+              Shell.Current.GoToAsync(nameof(LoginPage));
+
+              //Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
+              //VerticalStackLayout verticalStackLayout = (VerticalStackLayout)element;
+
+              //Button btnForwardToContent = (Button)verticalStackLayout.FindByName("btnForwardToContent");
+              //Button btnLogout = (Button)verticalStackLayout.FindByName("btnLogout");
+
+              //Entry entryUsername = (Entry)verticalStackLayout.FindByName("entryUsername");
+              //Entry entryPassword = (Entry)verticalStackLayout.FindByName("entryPassword");
+              //Button btnLogin = (Button)verticalStackLayout.FindByName("btnLogin");
+
+              //btnForwardToContent.IsVisible = false;
+              //btnLogout.IsVisible = false;
+
+              //entryUsername.IsVisible = true;
+              //entryPassword.IsVisible = true;
+              //btnLogin.IsVisible = true;
+              DeaktivateAndAktivateSeveralButtonAndEntries(element, false);
+          });
+
+        public ICommand GoToCreateAccountSite =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("LoginPage/StartPage");
+               Shell.Current.GoToAsync(nameof(CreateAccount));
            });
     }
 }

@@ -15,7 +15,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserSettingsModel()
         {
-            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+            var employee = Login.WhoIsLoggedIn[0];
 
             if (employee.WorkingHoursPerWeek != 0)
                 WorkingHoursPerWeek = employee.WorkingHoursPerWeek;
@@ -32,7 +32,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public ICommand SaveWorkingHours =>
           new Command( async () =>
           {
-              var currentEmployee = SaveLoginStatus.WhoIsLoggedIn[0];
+              var currentEmployee = Login.WhoIsLoggedIn[0];
 
               App.EmployeeRepo.DeleteItem(currentEmployee);
 

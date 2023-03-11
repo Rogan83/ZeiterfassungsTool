@@ -27,7 +27,7 @@ public partial class PageUserManagement : ContentPage
 
         model.Timetracking = new ObservableCollection<Timetracking>(timetracking);
 
-        var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+        var employee = Login.WhoIsLoggedIn[0];
 
         if (employee != null)
         {

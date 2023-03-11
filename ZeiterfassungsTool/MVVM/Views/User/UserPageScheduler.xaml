@@ -19,14 +19,14 @@
                                >
 
         </scheduler:SfScheduler>
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+        <!--<HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
             <Button
             Text="Zurück zum Hauptmenü" 
             Command="{Binding BackToMainMenu}"/>
             <Button
             Text="Zurück zur Zeiterfassungs Seite" 
             Command="{Binding BackToTimeTracking}"/>
-        </HorizontalStackLayout>
+        </HorizontalStackLayout>-->
     </VerticalStackLayout>
             
             

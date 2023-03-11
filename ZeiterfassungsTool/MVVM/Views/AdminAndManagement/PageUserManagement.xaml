@@ -54,17 +54,18 @@
             SelectionMode="Single"
             SelectedItem="{Binding SelectedTime}"
             SelectionChangedCommand="{Binding }"
-            ItemsUpdatingScrollMode="KeepLastItemInView">
+            ItemsUpdatingScrollMode="KeepLastItemInView"
+            BackgroundColor="AliceBlue">
             <CollectionView.Header>
-                <Frame BackgroundColor="{StaticResource Primary}">
+                <Frame BackgroundColor="LightSteelBlue"  HorizontalOptions="FillAndExpand" >
                     <!--<Label Text="Mitarbeiter"
                        FontSize="Title"
                        TextColor="BurlyWood"/>-->
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Mitarbeiter: " FontSize="Title" TextColor="BurlyWood"/>
-                                <Span Text="{Binding Employee.Username}" TextColor="DarkGray" FontSize="Title"/>
+                    <Label >
+                        <Label.FormattedText > 
+                            <FormattedString >
+                                <Span Text="Mitarbeiter: " FontSize="Title" TextColor="DarkBlue"/>
+                                <Span Text="{Binding Employee.Username}" TextColor="AliceBlue" FontSize="Title" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -74,11 +75,10 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
-
-           
         </CollectionView>
 
         <!--#region vers. Steuerelemente -->
+        
         <Label
             Grid.Row="1"
             Text="Beginn"

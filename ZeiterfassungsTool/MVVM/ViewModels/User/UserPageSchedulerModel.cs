@@ -17,7 +17,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserPageSchedulerModel()
         {
-            var user = SaveLoginStatus.WhoIsLoggedIn[0];
+            var user = Login.WhoIsLoggedIn[0];
 
             SchedulerEvents = new ObservableCollection<SchedulerAppointment>();
 
@@ -59,19 +59,5 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
            {
                Shell.Current.GoToAsync("UserPageScheduler/UserPage");
            });
-
-        public ICommand BackToMainMenu =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("UserPageScheduler/StartPage");
-           });
-
-        public ICommand BackToTimeTracking =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("UserPageScheduler/UserPage");
-           });
-
-
     }
 }

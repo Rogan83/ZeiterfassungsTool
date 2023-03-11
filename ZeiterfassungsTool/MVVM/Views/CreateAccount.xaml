@@ -21,7 +21,7 @@
                 <Entry Grid.Row="3" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>
                 <Entry Grid.Row="4" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>
                 <Button x:Name="btnSave"        Grid.Row="4"                                                Command="{Binding ToRegister}" CommandParameter="{Binding Source={x:Reference vslRegister}}"    Text="Speichern"/>
-                <Button x:Name="btnBackToMenu"  Grid.Row="4"  IsVisible="true" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"               Text="Zurück zum Login"/>
+                <!--<Button x:Name="btnBackToMenu"  Grid.Row="4"  IsVisible="true" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"               Text="Zurück zum Login"/>-->
                 <Label Grid.Row="0" Text="{Binding LbUsername}" FontSize="Medium"/>
 
 

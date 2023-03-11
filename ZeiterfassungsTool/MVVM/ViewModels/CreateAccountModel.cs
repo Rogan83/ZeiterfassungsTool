@@ -19,7 +19,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public CreateAccountModel()
         {
             CheckIfOneAccountExist();
-            LbUsername = $"Sie sind mit dem Benutzername {SaveLoginStatus.WhoIsLoggedIn[0].Username} angemeldet.";
+            LbUsername = $"Sie sind mit dem Benutzername {Login.WhoIsLoggedIn[0].Username} angemeldet.";
         }
 
         #region Properties
@@ -47,21 +47,21 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("CreateAccount/StartPage");
+               Shell.Current.GoToAsync("CreateAccount/LoginPage");
            });
 
-        public ICommand GoToLoginPage =>
-            new Command( () =>
-            {
-                Shell.Current.GoToAsync(nameof(LoginPage));
-            });
+        //public ICommand GoToLoginPage =>
+        //    new Command( () =>
+        //    {
+        //        Shell.Current.GoToAsync(nameof(LoginPage));
+        //    });
 
-        public ICommand GoToCreateAccountSite =>
-            new Command(() =>
-            {
-                Shell.Current.GoToAsync(nameof(CreateAccount));
+        //public ICommand GoToCreateAccountSite =>
+        //    new Command(() =>
+        //    {
+        //        Shell.Current.GoToAsync(nameof(CreateAccount));
                 
-            });
+        //    });
 
         public ICommand DeleteTable =>
             new Command(() =>
@@ -95,7 +95,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                         }
                         else if (rbManagement)
                         {
-                            if (SaveLoginStatus.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
                             {
                                 role = Role.Management;
                             }
@@ -107,7 +107,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                         }
                         else if (rbAdmin)
                         {
-                            if (SaveLoginStatus.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
                             {
                                 role = Role.Admin;
                             }
@@ -120,6 +120,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                         rbsIsVisible = false;
                         App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = role });
+                        App.Current.MainPage.DisplayAlert("Account angelegt", $"Account mit dem Namen {Username} wurde erfolgreich angelegt", "Ok");
+                        Shell.Current.GoToAsync("CreateAccount/LoginPage");
+
                         Info = $"{role} Account wurde erfolgreich angelegt";
                     }
                     DebugMessage = App.EmployeeRepo.StatusMessage;
@@ -133,12 +136,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 }
                 
             });
-
-        public ICommand BackToMainMenu =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("CreateAccount/StartPage");
-           });
 
         #endregion
 

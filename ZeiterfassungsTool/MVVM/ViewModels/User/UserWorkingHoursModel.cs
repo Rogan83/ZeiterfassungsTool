@@ -68,7 +68,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             ColorRadial = Colors.Red;
             ColorPointer = Colors.DarkRed;
 
-            var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+            var employee = Login.WhoIsLoggedIn[0];
 
             TargetHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
 
@@ -306,7 +306,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
          new Command(() =>
          {
              //WorkingHours = WorkingHoursThisMonth();
-             var employee = SaveLoginStatus.WhoIsLoggedIn[0];
+             var employee = Login.WhoIsLoggedIn[0];
              WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
 
              SetColorsAndLabels(WorkingHours);

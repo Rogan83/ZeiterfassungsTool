@@ -8,19 +8,21 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <Grid RowDefinitions="auto,auto,*">
+    <Grid RowDefinitions="auto,auto,auto,*">
         <VerticalStackLayout x:Name="vslLogin">
-            <Entry x:Name="username" Grid.Row="0"  IsPassword="false" Placeholder="Benutzername hier eingeben"/>
-            <Entry x:Name="password" Grid.Row="1"  IsPassword="True" Placeholder="Passwort"/>
+            <!--Soll nur angezeigt werden, wenn sich noch keiner eingeloggt hat-->
+            <Entry x:Name="entryUsername" Grid.Row="0"  IsPassword="false" Placeholder="Benutzername hier eingeben"/>
+            <Entry x:Name="entryPassword" Grid.Row="1"  IsPassword="True" Placeholder="Passwort"/>
             <Button x:Name="btnLogin" Grid.Row="2" Command="{Binding ToLogin}" CommandParameter="{Binding Source={x:Reference vslLogin}}" Text="Einloggen"/>
-            
+
+            <!--Soll nur angezeigt werden, wenn jemand bereits eingeloggt ist-->
+            <Button x:Name="btnForwardToContent" Text="{Binding TxtForwardToContent}" Grid.Row="1" IsVisible="false" Command="{Binding ForwardToContent}"/>
+            <Button x:Name="btnLogout" Text="Ausloggen" Grid.Row="2" IsVisible="false" Command="{Binding Logout}" CommandParameter="{Binding Source={x:Reference vslLogin}}"/>
+
+            <Button Grid.Row="3" Text="Neuen Account anlegen"  Command="{Binding GoToCreateAccountSite}" Margin="0,20,0,20"/>
+
             <Label Grid.Row="3" Text="{Binding Message}" TextColor="Red"/>
-            <Label x:Name="DebugMessage" Text="{Binding Debug}" IsVisible="true" Grid.Row="4" BackgroundColor="DarkRed"/>
-
-            <Button Text="Zurück zum Hauptmenü" Command="{Binding BackToMainMenu}"/>
-
-
-
+            <Label x:Name="DebugMessage" Text="{Binding Debug}" IsVisible="true" Grid.Row="4" TextColor="DarkRed"/>
 
         </VerticalStackLayout>
     </Grid>

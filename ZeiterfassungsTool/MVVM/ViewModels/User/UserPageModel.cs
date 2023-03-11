@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using ZeiterfassungsTool.Models;
+using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.StaticClasses;
 
 
@@ -35,12 +36,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserPageModel()
         {
-            if (SaveLoginStatus.WhoIsLoggedIn.Count > 1)
+            if (Login.WhoIsLoggedIn.Count > 1)
             {
                 DebugText = "Es existieren min. 2 User mit den selben Benutzernamen und Passwort!";
             }
 
-            user = SaveLoginStatus.WhoIsLoggedIn[0];
+            user = Login.WhoIsLoggedIn[0];
 
             index = user.Timetracking.Count - 1;
 
@@ -70,7 +71,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("UserPage/StartPage");
+               //Shell.Current.GoToAsync(nameof(LoginPage));
+               Shell.Current.GoToAsync("UserPage/LoginPage");
            });
 
         public ICommand Settings =>
@@ -85,12 +87,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                Shell.Current.GoToAsync("UserPage/UserWorkingHours");
            });
 
-        public ICommand BackToMenu =>
-            new Command(() =>
-            {
-                Shell.Current.GoToAsync("UserPage/StartPage");
-                //SaveLoginStatus.WhoIsLoggedIn[0] = null;
-            });
+        //public ICommand BackToMenu =>
+        //    new Command(() =>
+        //    {
+        //        Shell.Current.GoToAsync("UserPage/LoginPage");
+        //        //SaveLoginStatus.WhoIsLoggedIn[0] = null;
+        //    });
 
         public ICommand ForwardToScheduler =>
            new Command(() =>

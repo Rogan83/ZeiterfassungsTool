@@ -16,7 +16,7 @@ public partial class PageChoice : ContentPage
 	{
 		base.OnAppearing();
 
-		var loggedInAccount = SaveLoginStatus.WhoIsLoggedIn[0];
+		var loggedInAccount = Login.WhoIsLoggedIn[0];
 		if (loggedInAccount != null)
 		{
 			if (loggedInAccount.Role != Enumerations.Role.Admin)

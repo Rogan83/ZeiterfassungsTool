@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin">
 
     <DataTemplate x:Key="EmployeeStyleWork">
-        <Frame Margin="50" BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:PageUserManagementModel}}, Path=BackgroundColorFrameWork}">
+        <Frame Margin="50" BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:PageUserManagementModel}}, Path=BackgroundColorFrameWork}" >
             <VerticalStackLayout>
                 <Label>
                     <Label.FormattedText>

@@ -7,7 +7,7 @@ using ZeiterfassungsTool.Models;
 
 namespace ZeiterfassungsTool.StaticClasses
 {
-    public static class SaveLoginStatus
+    public static class Login
     {
         public static List<Employee> WhoIsLoggedIn { get; set; } = new List<Employee>() { new Employee()};
     }
