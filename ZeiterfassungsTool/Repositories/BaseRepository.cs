@@ -210,7 +210,7 @@ namespace SQLiteDemo.Repositories
             try
             {
                 Init();
-                connection.Delete(item);
+                connection.Delete(item,true);           //Damit auch die Timetable daten gelöscht werden (hoffentlich)   
             }
             catch (Exception ex)
             {

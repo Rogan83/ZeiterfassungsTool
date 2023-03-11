@@ -106,7 +106,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                        Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
                        Employee.Timetracking[i].Subject = ChooseSubject();
 
-                       App.EmployeeRepo.SaveItemWithChildren(Employee);
+                       App.EmployeeRepo.SaveItemWithChildren(Employee);   
 
                        var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
                        Timetracking = new ObservableCollection<Timetracking>(timetracking);
@@ -154,28 +154,28 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
            #endregion
 
-           #region Methods
+        #region Methods
 
-           private string ChooseSubject()
-           {
-                string subject;
-                if (rbHoliday)
-                {
-                    subject = "Urlaub";
-                    IsVisibleEntrySubject = false;
-                }
-                else if (rbIll)
-                {
-                    subject = "Krank";
-                    IsVisibleEntrySubject = false;
-                }
-                else
-                {
-                    subject = EntrySubject;
-                    IsVisibleEntrySubject = true;
-                }
-                return subject;
-           }
+        private string ChooseSubject()
+        {
+            string subject;
+            if (rbHoliday)
+            {
+                subject = "Urlaub";
+                IsVisibleEntrySubject = false;
+            }
+            else if (rbIll)
+            {
+                subject = "Krank";
+                IsVisibleEntrySubject = false;
+            }
+            else
+            {
+                subject = EntrySubject;
+                IsVisibleEntrySubject = true;
+            }
+            return subject;
+        }
 
         //public void Update()
         //{

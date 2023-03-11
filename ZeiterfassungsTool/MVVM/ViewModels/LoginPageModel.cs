@@ -81,33 +81,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    {
                        Login.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
 
-                       //foreach (var result in results)      //Es könnte theoretisch sein, dass mehrere Accounts mit Users und Admin Rollen vorhanden sind, die den selben Benutzername und Passwort haben ... Man müsste dafür sorgen, dass der Benutzername nicht mehr als 1 mal vergeben wird
-                       //{
-                       //    switch (result.Role)
-                       //    {
-                       //        case Role.User:
-                       //            Shell.Current.GoToAsync(nameof(UserPage));
-                       //            break;
-                       //        case Role.Management:
-                       //            Shell.Current.GoToAsync(nameof(PageChoice));
-                       //            break;
-                       //        case Role.Admin:
-                       //            Shell.Current.GoToAsync(nameof(PageChoice));
-                       //            break;
-                       //        default:
-                       //            Shell.Current.GoToAsync(nameof(UserPage));
-                       //            break;
-                       //    }
-                       //}
-
-
-                       //Redundanter Code, sollte am besten in einer Methode ausgelagert werden...
-
-                       //Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
-                       DeaktivateAndAktivateSeveralButtonAndEntries(element, true);
+                       DeactivateAndActivateSeveralButtonAndEntries(element, true);
 
                        UpdateButtonForwardText();
-
                    }
                    else
                    {
@@ -119,8 +95,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    Message = "Es müssen beide Felder ausgefüllt sein.";
                }
            });
-
-        private void DeaktivateAndAktivateSeveralButtonAndEntries(object element, bool activate)
+        /// <summary>
+        /// Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="activate"></param>
+        private void DeactivateAndActivateSeveralButtonAndEntries(object element, bool activate)
         {
             VerticalStackLayout verticalStackLayout = (VerticalStackLayout)element;
 
@@ -186,23 +166,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
               Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
               Shell.Current.GoToAsync(nameof(LoginPage));
 
-              //Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
-              //VerticalStackLayout verticalStackLayout = (VerticalStackLayout)element;
-
-              //Button btnForwardToContent = (Button)verticalStackLayout.FindByName("btnForwardToContent");
-              //Button btnLogout = (Button)verticalStackLayout.FindByName("btnLogout");
-
-              //Entry entryUsername = (Entry)verticalStackLayout.FindByName("entryUsername");
-              //Entry entryPassword = (Entry)verticalStackLayout.FindByName("entryPassword");
-              //Button btnLogin = (Button)verticalStackLayout.FindByName("btnLogin");
-
-              //btnForwardToContent.IsVisible = false;
-              //btnLogout.IsVisible = false;
-
-              //entryUsername.IsVisible = true;
-              //entryPassword.IsVisible = true;
-              //btnLogin.IsVisible = true;
-              DeaktivateAndAktivateSeveralButtonAndEntries(element, false);
+              DeactivateAndActivateSeveralButtonAndEntries(element, false);
           });
 
         public ICommand GoToCreateAccountSite =>
