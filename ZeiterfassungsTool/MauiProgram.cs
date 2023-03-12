@@ -13,7 +13,8 @@ public static class MauiProgram
 		builder.ConfigureSyncfusionCore();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .ConfigureSyncfusionCore()
+            .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");

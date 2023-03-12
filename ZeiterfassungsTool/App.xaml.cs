@@ -26,6 +26,8 @@ public partial class App : Application
         InitializeComponent();
 
         MainPage = new AppShell();
+
+
         //MainPage = new AdminPageOvertime();
 
         //MainPage = new UserWorkingHours();

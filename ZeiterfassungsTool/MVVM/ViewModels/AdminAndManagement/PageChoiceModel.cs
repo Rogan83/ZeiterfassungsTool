@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.Maui.Core;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     public class PageChoiceModel
     {
-
+        public bool IsRunningBusyIndicator { get; set; } = false;
+        public bool IsVisible { get; set; } = false;
 
         private static string path = "";
         private static string pathWindows = "C:\\TimetrackingTool\\";
@@ -27,7 +29,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public PageChoiceModel() 
         {
-        
+            
         }
 
         public ICommand BackButton =>
@@ -70,10 +72,22 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
            });
 
         public ICommand LoadDatabaseInCSVFile =>
-           new Command(() =>
+           new Command(  (grid) =>
            {
-               FromCSV(); 
+               var elements = (Grid)grid;
+               //SfBusyIndicator busy = (SfBusyIndicator)grid.
+               SfBusyIndicator busy = elements.FindByName("busy") as SfBusyIndicator;
+               if (busy == null)
+                   return;
+               busy.IsRunning = true;   //Funktioniert leider nicht, da die Methode FromCSV nicht asynchron ausgeführt wird...
+               FromCSV();
+               busy.IsRunning = false;
            });
+
+        
+
+
+        
 
         /// <summary>
         /// Überprüfe, ob der Code mit Android oder Windows gestartet wurde und passe dementsprechend den Pfad an.

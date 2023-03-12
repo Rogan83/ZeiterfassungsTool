@@ -29,4 +29,5 @@ public partial class PageChoice : ContentPage
 			}
 		}
 	}
+
 }
