@@ -16,6 +16,7 @@
             Grid.Row="0"
             RowDefinitions="auto,auto,auto,auto"
             ColumnDefinitions="*,*"
+            BackgroundColor="{StaticResource BGColor1}"
             >
             <RadioButton x:Name="chooseMonth"   Grid.Row="0"    Grid.Column="0"     Content="Monat auswählen"   GroupName ="SelectMode"  IsChecked="{Binding rbChooseMonth}" CheckedChanged="chooseMonth_CheckedChanged"  />
             <RadioButton x:Name="total"         Grid.Row="0"    Grid.Column="1"     Content="Gesamt"            GroupName ="SelectMode"  IsChecked="{Binding rbTotal}" CheckedChanged="total_CheckedChanged"/>

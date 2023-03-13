@@ -46,6 +46,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             new Command(() =>
             {
                 App.EmployeeRepo.DeleteTable();
+                App.TimetrackingRepo.DeleteTable();
             });
 
         public ICommand ToLogin =>

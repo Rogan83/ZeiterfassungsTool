@@ -9,7 +9,8 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <Grid RowDefinitions="auto,*,auto"
+    <Grid BackgroundColor="{StaticResource BGColor1}"
+        RowDefinitions="auto,*,auto"
           >
         <Grid   
             Grid.Row="0"

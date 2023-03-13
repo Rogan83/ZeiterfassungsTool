@@ -8,26 +8,26 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <Grid>
-        <Label 
-            Text="Welcome to Admin Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
+    <Grid BackgroundColor="{StaticResource BGColor1}"
+          RowDefinitions="auto,*">
+        <VerticalStackLayout Grid.Row="0">
+
+            
+            <Button
             Text="Zurück zum Hauptmenu"
-            Command="{Binding BackToMenu}"/>
-        <Button
-            Text="Ausloggen"
-            Command="{Binding Logout}"
-            Margin="0,0,0,50"/>
+            Command="{Binding BackToMainMenu}"/>
+            
+        </VerticalStackLayout>
+        
 
 
         <CollectionView
+            Grid.Row="1"
             ItemsSource="{Binding Employees}"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedEmployee}"
-            SelectionChangedCommand="{Binding EmployeeClickedCommand}"
-            BackgroundColor="CadetBlue">
+            SelectionChangedCommand="{Binding EmployeeClickedCommand}">
+            
             <CollectionView.Header>
                 <Frame BackgroundColor="DarkCyan"
                        HorizontalOptions="Center"

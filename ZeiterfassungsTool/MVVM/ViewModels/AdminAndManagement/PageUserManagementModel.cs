@@ -66,7 +66,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackToMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserManagement/StartPage");
+               Shell.Current.GoToAsync("PageUserManagement/LoginPage");
            });
 
         public ICommand Back =>

@@ -23,21 +23,22 @@
     </Shell.BackButtonBehavior>
 
         <ScrollView >
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
-        <VerticalStackLayout 
-            Spacing="10"
-            Padding="20">
-            <Label Grid.Row="1" Text ="{Binding Info}"
-                   FontSize="Medium"
-                   HorizontalTextAlignment="Center"/>
-            
+        <Grid   BackgroundColor="{StaticResource BGColor1}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*">
+            <VerticalStackLayout 
+                Spacing="10"
+                Padding="20">
+                <Label Grid.Row="1" Text ="{Binding Info}"
+                       FontSize="Medium"
+                       HorizontalTextAlignment="Center"/>
+
 
 
                 <VerticalStackLayout x:Name="vslRegister" Grid.Row="2">
                     <Frame BackgroundColor="Azure" Padding="10" IsVisible="{Binding rbsIsVisible}" Margin="0,20,0,40">
                         <VerticalStackLayout >
                             <Label Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
-                                FontSize="Medium"/>
+                                    FontSize="Medium"/>
                             <RadioButton x:Name="user"          Content="Benutzer"         GroupName ="SelectRole" IsChecked="{Binding rbUser}"/>
                             <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}"/>
                             <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}"/>
@@ -45,104 +46,104 @@
                     </Frame>
 
                     <inputLayout:SfTextInputLayout
-                        Hint="Benutzername"
-                        Stroke="#0450C2"
-                        ContainerBackground="{Binding UsernameColor}"
-                        ErrorText="Benutzername schon vergeben"
+                            Hint="Benutzername"
+                            Stroke="#0450C2"
+                            ContainerBackground="{Binding UsernameColor}"
+                            ErrorText="Benutzername schon vergeben"
                         
-                                HasError="{Binding UsernameAlreadyExists}"
-                        >
+                                    HasError="{Binding UsernameAlreadyExists}"
+                            >
                         <Entry Text="{Binding Username}"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                Hint="Vorname" 
-                                Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                                >
+                                    Hint="Vorname" 
+                                    Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9"
+                                    >
                         <Entry Text="{Binding Firstname}"/>
                     </inputLayout:SfTextInputLayout>
-                    
+
                     <inputLayout:SfTextInputLayout 
-                                Hint="Nachname" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9">
+                                    Hint="Nachname" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9">
                         <Entry Text="{Binding Lastname}"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                Hint="Geburtstag" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9">
+                                    Hint="Geburtstag" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9">
                         <Entry Text="{Binding Birthday}"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                Hint="Straße" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                                >
+                                    Hint="Straße" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9"
+                                    >
                         <Entry Text="{Binding Street}"/>
                     </inputLayout:SfTextInputLayout>
-                    
+
                     <inputLayout:SfTextInputLayout 
-                                Hint="PLZ" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9">
+                                    Hint="PLZ" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9">
                         <Entry  Text="{Binding PostalCode}"
-                              Keyboard="Numeric" MaxLength="5" />
+                                  Keyboard="Numeric" MaxLength="5" />
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
-                                Hint="Stadt" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                                >
+                                    Hint="Stadt" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9"
+                                    >
                         <Entry Text="{Binding City}"/>
-                        
+
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
-                                Hint="Land" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                                >
+                                    Hint="Land" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9"
+                                    >
                         <Entry Text="{Binding Country}"/>
-                        
+
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
-                                Hint="E-Mail Adresse" 
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                                >
+                                    Hint="E-Mail Adresse" 
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EEF9"
+                                    >
                         <Entry Text="{Binding EMail}"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                        Margin="0,30,0,0"
-                                Hint="Passwort" 
-                                EnablePasswordVisibilityToggle="True"
+                            Margin="0,30,0,0"
+                                    Hint="Passwort" 
+                                    EnablePasswordVisibilityToggle="True"
                                 
-                                ErrorText="Ungültiges Passwort"
-                                HasError="False"
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EE"
-                                >
+                                    ErrorText="Ungültiges Passwort"
+                                    HasError="False"
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EE"
+                                    >
                         <Entry Text="{Binding Password}"/>
                     </inputLayout:SfTextInputLayout>
 
                     <!--<inputLayout:SfTextInputLayout 
                         
-                                Hint="Passwort wiederholen" 
-                                EnablePasswordVisibilityToggle="True"
+                                    Hint="Passwort wiederholen" 
+                                    EnablePasswordVisibilityToggle="True"
                                 
-                                ErrorText="Ungültiges Passwort"
-                                HasError="False"
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EE"
-                                >
-                        <Entry Text="{Binding PasswordConfirm}"/>
-                    </inputLayout:SfTextInputLayout>-->
+                                    ErrorText="Ungültiges Passwort"
+                                    HasError="False"
+                            Stroke="#0450C2"
+                            ContainerBackground="#E6EE"
+                                    >
+                            <Entry Text="{Binding PasswordConfirm}"/>
+                        </inputLayout:SfTextInputLayout>-->
 
-                
+
 
 
                     <!--<Entry Grid.Row="3" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>-->
@@ -152,11 +153,11 @@
                     <Button x:Name="btnBackToMenu"  Grid.Row="4"  IsVisible="true" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"               Text="Zurück zum Login"/>
                     <!--<Label Grid.Row="0" Text="{Binding LbUsername}" FontSize="Medium"/>-->
 
-                    
-                </VerticalStackLayout>
-           
 
-        </VerticalStackLayout>
-    </Grid>
-        </ScrollView>
+                </VerticalStackLayout>
+
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

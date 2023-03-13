@@ -15,7 +15,7 @@
     </Shell.BackButtonBehavior>
 
 
-    <Grid 
+    <Grid  BackgroundColor="{StaticResource BGColor1}"
             RowDefinitions="*,auto,auto,auto,auto,auto,auto,auto, auto"
             ColumnDefinitions="*,*,*,*"
             >

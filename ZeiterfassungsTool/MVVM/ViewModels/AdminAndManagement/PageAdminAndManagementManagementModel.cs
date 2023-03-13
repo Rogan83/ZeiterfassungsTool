@@ -22,11 +22,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public Employee SelectedEmployee { get; set; }
 
-        public PageAdminAndManagementManagementModel() 
-        {
-            
-        }
-
 
         #endregion
 
@@ -83,7 +78,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
                SelectedEmployee.IsResetPassword = true;
                App.EmployeeRepo.SaveItemWithChildren(SelectedEmployee);
 
-               await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {SelectedEmployee.Username} lautet nun '0'", "OK");
+               await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {SelectedEmployee.Username} lautet nun '0'.", "OK");
            });
 
         #endregion

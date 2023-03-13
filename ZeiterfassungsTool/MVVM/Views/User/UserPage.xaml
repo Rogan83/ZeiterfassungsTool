@@ -10,8 +10,9 @@
     </Shell.BackButtonBehavior>
 
 
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*"
-          ColumnDefinitions="*,*,.1*">
+    <Grid   BackgroundColor="{StaticResource BGColor1}"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*"
+            ColumnDefinitions="*,*,.1*">
 
         <ImageButton
             Source="settings.png"
@@ -28,7 +29,7 @@
                 Command="{Binding BackToMenu}"/>-->
         <Label
             Grid.Row="2"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             FontSize="Large"
             HorizontalOptions="Center"
             TextColor="DarkGray"
@@ -37,7 +38,7 @@
             />
         <Button
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Text="Starte die Zeiterfassung"
             Margin="10,10,10,10"
             BackgroundColor="CadetBlue"
@@ -45,7 +46,7 @@
             Command="{Binding StartTimeTracking}"/>
         <Button
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Text="Stoppe die Zeiterfassung"
             Margin="10,10,10,10"
             BackgroundColor="DarkRed"
@@ -78,18 +79,20 @@
             />
         <Button
             Grid.Row="6"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Text="Gehe zum Kalender"
             BackgroundColor="Aquamarine"
             TextColor="CadetBlue"
+            Margin="10,10,10,10"
             Command="{Binding ForwardToScheduler}"/>
 
         <Button
             Grid.Row="7"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             Text="Gehe zur Anzeige gearbeitete Stunden"
             BackgroundColor="Aquamarine"
             TextColor="CadetBlue"
+            Margin="10,10,10,10"
             Command="{Binding ForwardToWorkingHoursPage}"/>
 
 

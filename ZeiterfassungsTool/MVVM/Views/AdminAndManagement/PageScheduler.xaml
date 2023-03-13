@@ -9,7 +9,7 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout BackgroundColor="{StaticResource BGColor1}">
         <scheduler:SfScheduler View="Week"
                                FirstDayOfWeek="Monday"
                                AllowedViews="Agenda,Day,Month,TimelineDay,TimelineMonth,TimelineWeek,TimelineWorkWeek,Week,WorkWeek"

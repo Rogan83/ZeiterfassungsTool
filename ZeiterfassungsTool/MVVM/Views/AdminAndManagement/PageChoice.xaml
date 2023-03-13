@@ -23,7 +23,9 @@
     
         
 
-    <Grid x:Name="grid" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*">
+    <Grid x:Name="grid" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*"
+          BackgroundColor="{StaticResource BGColor1}"
+          >
         
         
         <Button
@@ -63,7 +65,7 @@
             Grid.Row="5"
             Margin="20"
             Text="Datenbank aus CSV Dateien wiederherstellen"
-            Command="{Binding LoadDatabaseInCSVFile}"
+            Command="{Binding LoadDatabaseFromCSVFile}"
             CommandParameter="{Binding Source={x:Reference grid}}"
             />
         <core:SfBusyIndicator Grid.Row="6" x:Name="busy" IsRunning="false"  IsVisible="true" Title="Daten werden in die Datenbank gespeichert..." SizeFactor="0.7" HeightRequest="200"></core:SfBusyIndicator >

@@ -9,7 +9,7 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
+    <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*" BackgroundColor="{StaticResource BGColor1}">
         <VerticalStackLayout x:Name="vslLogin">
             <!--Soll nur angezeigt werden, wenn sich noch keiner eingeloggt hat-->
             <inputLayout:SfTextInputLayout

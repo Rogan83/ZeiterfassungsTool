@@ -9,7 +9,7 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <ScrollView>
+    <ScrollView BackgroundColor="{StaticResource BGColor1}">
     <VerticalStackLayout>
         <!--<Label 
             Text="Wie viele Stunden arbeiten Sie pro Woche?"

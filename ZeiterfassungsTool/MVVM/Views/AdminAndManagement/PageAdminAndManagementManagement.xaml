@@ -9,7 +9,7 @@
     </Shell.BackButtonBehavior>
 
     <Grid   RowDefinitions="*,auto" 
-            BackgroundColor="AntiqueWhite"
+            BackgroundColor="{StaticResource BGColor1}"
             >
         
         <CollectionView 
@@ -36,11 +36,11 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout Spacing="10">
-                        <Label HorizontalOptions="Center">
+                        <Label HorizontalOptions="Center" Margin="0,0,0,10">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <!--<Span Text="Name: " TextColor="DarkBlue" FontSize="Medium"/>-->
-                                    <Span Text="{Binding Username}" TextColor="DarkGray" FontSize="Medium"/>
+                                    <Span Text="{Binding Username}" TextColor="Black" FontSize="Medium"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
