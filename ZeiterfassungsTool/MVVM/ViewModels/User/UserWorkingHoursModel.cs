@@ -76,12 +76,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             double isHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
             double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, employee.Timetracking);
-            double overtimeTotal = isHoursTotal - targetHoursTotal;
+            OvertimeTotal = isHoursTotal - targetHoursTotal;
 
 
             //var overtimeTotal = CalculateOvertimeTotal();
 
-            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.
+            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.s
             //if (overtimeTotal >= 0)
             //{
             //    OvertimeOrMinusHours = "Überstunden insgesamt:";
@@ -96,7 +96,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             //WorkingHoursThisMonth();
 
-            SetColorsAndLabels(WorkingHours, overtimeTotal);
+            SetColorsAndLabels(WorkingHours, OvertimeTotal);
         }
 
         //private double GetWorkingDaysPerMonth(double workingHoursPerDay)
