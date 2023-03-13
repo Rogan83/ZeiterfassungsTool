@@ -67,7 +67,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                 Password = employee.Password;
 
 
-            Margin = new Thickness(20, 20, 20, 20);
+            Margin = new Thickness(20, 5, 20, 5);
         }
 
 
@@ -80,17 +80,35 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public ICommand SaveWorkingHours =>
           new Command( async () =>
           {
+              var user = App.EmployeeRepo.GetItems().Find(name => name.Username == Username);
+              var currentEmployee = Login.WhoIsLoggedIn[0];
+
+              //Wurde ein Nutzer mit dem Benutzernamen gefunden, dann darf dieser Benutzername nicht vergeben werden
+              if (user != null && currentEmployee.Username != Username)
+              {
+                  await App.Current.MainPage.DisplayAlert("Fehler", "Dieser Benutzername wurde schon vergeben", "OK");
+                  return;
+              }
+
+
               if (Password == null || Password == String.Empty)
               {
                   await App.Current.MainPage.DisplayAlert("Fehler", "Das Passwort Feld darf nicht leer sein!", "OK");
                   return;
               }
 
-              var currentEmployee = Login.WhoIsLoggedIn[0];
+              if (Password == "0" && currentEmployee.IsResetPassword)
+              {
+                  await App.Current.MainPage.DisplayAlert("Fehler", "Sie müssen ein neues Passwort vergeben!", "OK");
+                  return;
+              }
+
+              
 
               App.EmployeeRepo.DeleteItem(currentEmployee);
 
               currentEmployee.WorkingHoursPerWeek = WorkingHoursPerWeek;
+
               currentEmployee.Username = Username;
               currentEmployee.Firstname= Firstname;
               currentEmployee.Lastname= Lastname;
@@ -101,6 +119,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               currentEmployee.Birthday = Birthday;
               currentEmployee.EMail = EMail;
               currentEmployee.Password = Password;
+
+              currentEmployee.IsResetPassword = false;
 
               App.EmployeeRepo.SaveItemWithChildren(currentEmployee);
 

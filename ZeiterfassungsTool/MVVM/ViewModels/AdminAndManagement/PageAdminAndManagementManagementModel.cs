@@ -21,6 +21,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public Employee SelectedEmployee { get; set; }
+
+        public PageAdminAndManagementManagementModel() 
+        {
+            
+        }
+
+
         #endregion
 
         #region Commands
@@ -33,6 +40,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
         public ICommand DeleteAccount =>
           new Command(async () =>
           {
+              if (SelectedEmployee == null)
+              {
+                  await App.Current.MainPage.DisplayAlert("", "Es wurde kein Acccount selektiert", "OK");
+                  return;
+              } 
+
               bool answer = await App.Current.MainPage.DisplayAlert("Benutzer löschen?", $"Möchten Sie den Benutzer {SelectedEmployee.Username} wirklich löschen?", "JA", "NEIN");
              
               if (answer == false)
@@ -44,10 +57,35 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
               {
                   App.EmployeeRepo.DeleteItem(SelectedEmployee);
                   Employees = GetAccountsWithoutLogginInAccount();
-
+                  // Wähle, nachdem der selectierte User gelöscht wurde, den ersten von der Liste und selektiere ihn
                   SelectedEmployee = Employees.FirstOrDefault();
               }
           });
+
+        public ICommand ResetPassword =>
+           new Command(async() =>
+           {
+               if (SelectedEmployee == null)
+               {
+                   await App.Current.MainPage.DisplayAlert("", "Es wurde kein Acccount selektiert", "OK");
+                   return;
+               }
+
+               bool answer = await App.Current.MainPage.DisplayAlert("Passwort zurücksetzen?", $"Möchten Sie das Passwort vom Benutzer {SelectedEmployee.Username} wirklich zurücksetzen?", "JA", "NEIN");
+
+               if (answer == false)
+               {
+                   return;
+               }
+              
+               App.EmployeeRepo.DeleteItem(SelectedEmployee);
+               SelectedEmployee.Password = "0";
+               SelectedEmployee.IsResetPassword = true;
+               App.EmployeeRepo.SaveItemWithChildren(SelectedEmployee);
+
+               await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {SelectedEmployee.Username} lautet nun '0'", "OK");
+           });
+
         #endregion
 
 

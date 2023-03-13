@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.LoginPage"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              Title="LoginPage">
 
     <Shell.BackButtonBehavior>
@@ -11,8 +12,25 @@
     <Grid RowDefinitions="auto,auto,auto,auto,auto,auto,*">
         <VerticalStackLayout x:Name="vslLogin">
             <!--Soll nur angezeigt werden, wenn sich noch keiner eingeloggt hat-->
-            <Entry x:Name="entryUsername" Grid.Row="0"  IsPassword="false" Placeholder="Benutzername hier eingeben"/>
-            <Entry x:Name="entryPassword" Grid.Row="1"  IsPassword="True" Placeholder="Passwort"/>
+            <inputLayout:SfTextInputLayout
+                x:Name="entryUsername"
+                        Hint="Benutzername"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}">
+                <Entry Text="{Binding EntryUsername}"/>
+            </inputLayout:SfTextInputLayout>
+            <inputLayout:SfTextInputLayout 
+                                x:Name="entryPassword"
+                                Hint="Passwort" 
+                                EnablePasswordVisibilityToggle="True"
+                                ErrorText="Ungültiges Passwort"
+                                HasError="False"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EE"
+                                Margin="{Binding Margin}">
+                <Entry Text="{Binding EntryPassword}"/>
+            </inputLayout:SfTextInputLayout>
             <Button x:Name="btnLogin" Grid.Row="2" Command="{Binding ToLogin}" CommandParameter="{Binding Source={x:Reference vslLogin}}" Text="Einloggen"/>
 
             <!--Soll nur angezeigt werden, wenn jemand bereits eingeloggt ist-->

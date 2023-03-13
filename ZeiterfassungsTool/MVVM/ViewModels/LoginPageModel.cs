@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 using PropertyChanged;
+using Syncfusion.Maui.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class LoginPageModel
     {
+        public Thickness Margin { get; set; }
         public string Message { get; set; }
         public string Debug { get; set; }
+
+        public string EntryUsername { get; set; }
+        public string EntryPassword { get; set; }
 
         public string TxtForwardToContent { get; set; }
 
@@ -34,6 +39,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public LoginPageModel() 
         {
             UpdateButtonForwardText();
+            Margin = new Thickness(20, 5, 20, 5);
         }
 
         public ICommand DeleteTable =>
@@ -45,39 +51,23 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand ToLogin =>
            new Command((element) =>
            {
-               string username = string.Empty;
-               string password = string.Empty;
+               var username = EntryUsername; 
+               var password = EntryPassword;
 
-               var children = ((VerticalStackLayout)element).Children;
-               foreach (var child in children)
-               {
-                   if (child is Entry)
-                   {
-                       try
-                       {
-                           username = ((Entry)((Entry)child).FindByName("entryUsername")).Text;
-                           password = ((Entry)((Entry)child).FindByName("entryPassword")).Text;
-                       }
-                       catch (NullReferenceException e)     //Fängt es nicht ab, ka wieso
-                       {
-                           //((Label)((Label)child).FindByName("DebugMessage")).Text = e.Message;
-                       }
-
-                   }
-               }
                if (username != null || password != null)
                {
                    //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
                    List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
 
                    List<Employee> results = new List<Employee>();
-                   foreach (var item in allAccounts)
-                   {
-                       if (item.Username == username && item.Password == password)
-                       {
-                           results.Add(item);
-                       }
-                   }
+                   //foreach (var item in allAccounts)
+                   //{
+                   //    if (item.Username == username && item.Password == password)
+                   //    {
+                   //        results.Add(item);
+                   //    }
+                   //}
+                   results = allAccounts.Where(a => a.Username == username && a.Password == password).ToList();
 
                    Debug = App.EmployeeRepo.GetItems().Count.ToString();
 
@@ -87,9 +77,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    {
                        Login.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
 
+                       if (Login.WhoIsLoggedIn[0].IsResetPassword)
+                       {
+                           App.Current.MainPage.DisplayAlert("Erinnerung", "Ihr Passwort wurde zurückgesetzt. Bitte ändern sie dies sofort in den Einstellungen ab.", "OK");
+                       }
+
                        DeactivateAndActivateSeveralButtonAndEntries(element, true);
 
                        UpdateButtonForwardText();
+                   }
+                   else if (count > 1)
+                   {
+                       App.Current.MainPage.DisplayAlert("Warnung", "Es existieren min. 2 Accounts mit dem selben Benutzernamen!", "OK");
                    }
                    else
                    {
@@ -113,8 +112,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             Button btnForwardToContent = (Button)verticalStackLayout.FindByName("btnForwardToContent");
             Button btnLogout = (Button)verticalStackLayout.FindByName("btnLogout");
 
-            Entry entryUsername = (Entry)verticalStackLayout.FindByName("entryUsername");
-            Entry entryPassword = (Entry)verticalStackLayout.FindByName("entryPassword");
+            SfTextInputLayout entryUsername = (SfTextInputLayout)verticalStackLayout.FindByName("entryUsername");
+            SfTextInputLayout entryPassword = (SfTextInputLayout)verticalStackLayout.FindByName("entryPassword");
             Button btnLogin = (Button)verticalStackLayout.FindByName("btnLogin");
 
             btnForwardToContent.IsVisible = activate;
@@ -173,6 +172,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
               Shell.Current.GoToAsync(nameof(LoginPage));
 
               DeactivateAndActivateSeveralButtonAndEntries(element, false);
+
+              EntryUsername = String.Empty;
+              EntryPassword = String.Empty;
           });
 
         public ICommand GoToCreateAccountSite =>
