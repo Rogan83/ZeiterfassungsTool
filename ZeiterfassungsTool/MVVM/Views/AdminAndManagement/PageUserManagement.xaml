@@ -61,14 +61,82 @@
                     <!--<Label Text="Mitarbeiter"
                        FontSize="Title"
                        TextColor="BurlyWood"/>-->
-                    <Label >
-                        <Label.FormattedText > 
-                            <FormattedString >
-                                <Span Text="Mitarbeiter: " FontSize="Title" TextColor="DarkBlue"/>
-                                <Span Text="{Binding Employee.Username}" TextColor="AliceBlue" FontSize="Title" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                    <VerticalStackLayout>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Benutzername: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Username}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Vorname: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Firstname}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Nachname: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Lastname}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Straße: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Street}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="PLZ: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.PostalCode}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Stadt: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.City}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Land: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Country}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="Geburtstag: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.Birthday}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label >
+                            <Label.FormattedText >
+                                <FormattedString >
+                                    <Span Text="E-mail: " FontSize="Title" TextColor="DarkBlue"/>
+                                    <Span Text="{Binding Employee.EMail}" TextColor="AliceBlue" FontSize="Title" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                    
+                    
                 </Frame>
             </CollectionView.Header>
 

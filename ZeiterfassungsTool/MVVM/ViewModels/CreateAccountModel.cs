@@ -10,6 +10,8 @@ using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.StaticClasses;
+using Syncfusion.Maui.Core.Hosting;
+using Syncfusion.Maui.Core;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
@@ -19,16 +21,33 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public CreateAccountModel()
         {
             CheckIfOneAccountExist();
-            LbUsername = $"Sie sind mit dem Benutzername {Login.WhoIsLoggedIn[0].Username} angemeldet.";
+            //LbUsername = $"Sie sind mit dem Benutzername {Login.WhoIsLoggedIn[0].Username} angemeldet.";
         }
 
         #region Properties
 
+
+        public string Username { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string Birthday { get; set; }
+        public string EMail { get; set; }
+        public string Password { get; set; }
+
+
+        public bool UsernameAlreadyExists { get; set; }
+
+        public Color UsernameColor { get; set; } = Color.FromArgb("#E6EEF9");
+
+
         private bool isFirstAccount = false;
 
         public string Info { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+
         public string DebugMessage { get; set; }
 
         public bool rbUser { get; set; } = true;            //Soll standardmäßig ausgewählt sein
@@ -39,7 +58,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         public bool rbsIsVisible { get; set; } = true;
 
+
+
         #endregion
+
+        string altertTextAdmin = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
 
 
         #region Commands
@@ -74,14 +97,34 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             {
                 if (ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
                 {
-                    Info = "Dieser Benutzername ist bereits schon vergeben.";
+                    App.Current.MainPage.DisplayAlert("","Dieser Benutzername ist bereits schon vergeben.","OK");
+                    UsernameAlreadyExists = true;
+                    UsernameColor = Colors.Red;
                     return;
+                }
+                else
+                {
+                    UsernameAlreadyExists = false;
+                    UsernameColor = Color.FromArgb("#E6EEF9");
                 }
                 if (Username != null && Password != null) 
                 {
+                    if (Password == String.Empty)
+                    {
+                        App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld darf nicht leer sein!", "Ok");
+                        return;
+                    }
+                    else if(Username == string.Empty)
+                    {
+                        App.Current.MainPage.DisplayAlert("", $"Sie müssen einen Benutzernamen wählen!", "Ok");
+                        return;
+                    }
+
+
                     if (isFirstAccount)
                     {
-                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = Role.Admin });
+                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Firstname = this.Firstname, Lastname = this.Lastname, Birthday = this.Birthday, City = this.City,
+                            Country = this.Country, EMail = this.EMail, PostalCode = this.PostalCode, Street = this.Street, Password = this.Password, Role = Role.Admin });
                     }
                     else
                     {
@@ -101,7 +144,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             }
                             else
                             {
-                                Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+                                //Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", altertTextAdmin, "Ok");
                                 return;
                             }
                         }
@@ -113,13 +157,26 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             }
                             else
                             {
-                                Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", altertTextAdmin, "Ok");
                                 return;
                             }
                         }
 
                         rbsIsVisible = false;
-                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Password = this.Password, Role = role });
+                        App.EmployeeRepo.SaveItem(new Employee()
+                        {
+                            Username = this.Username,
+                            Firstname = this.Firstname,
+                            Lastname = this.Lastname,
+                            Birthday = this.Birthday,
+                            City = this.City,
+                            Country = this.Country,
+                            EMail = this.EMail,
+                            PostalCode = this.PostalCode,
+                            Street = this.Street,
+                            Password = this.Password,
+                            Role = role
+                        });
                         App.Current.MainPage.DisplayAlert("Account angelegt", $"Account mit dem Namen {Username} wurde erfolgreich angelegt", "Ok");
                         Shell.Current.GoToAsync("CreateAccount/LoginPage");
 
@@ -132,7 +189,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 }
                 else
                 {
-                    Info = "Der Benutzername und das Passwort Feld darf nicht leer sein!";
+                    App.Current.MainPage.DisplayAlert("","Der Benutzername und das Passwort Feld darf nicht leer sein!","Ok");
                 }
                 
             });
@@ -173,7 +230,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     var btn = (RadioButton)child;
                     btn.IsVisible = false;
                 }
-                else
+                else if (child is SfTextInputLayout)
+                {
+                    SfTextInputLayout entry = (SfTextInputLayout)child;
+                    entry.IsVisible = false;
+                }
+                else if (child is Label)
                 {
                     var lbl = (Label)child;
                     lbl.IsVisible= false;

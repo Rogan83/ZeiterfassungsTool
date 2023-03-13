@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              x:Class="ZeiterfassungsTool.MVVM.Views.User.UserSettings"
              Title="UserSettings">
 
@@ -8,8 +9,9 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
+    <ScrollView>
     <VerticalStackLayout>
-        <Label 
+        <!--<Label 
             Text="Wie viele Stunden arbeiten Sie pro Woche?"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -17,10 +19,110 @@
             Placeholder="Stundenzahl eingeben"
             Keyboard="Numeric"
             Text="{Binding WorkingHoursPerWeek}"
-            />
+            />-->
+
+        <inputLayout:SfTextInputLayout
+                        Hint="Wöchentliche Arbeitszeit"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+                        Margin="{Binding Margin}"
+                        
+                        >
+            <Entry Text="{Binding WorkingHoursPerWeek}"/>
+        </inputLayout:SfTextInputLayout>
+
+
+        <inputLayout:SfTextInputLayout
+                        Hint="Benutzername"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}"
+                        >
+            <Entry Text="{Binding Username}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                                Hint="Vorname" 
+                                Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}"
+                                >
+            <Entry Text="{Binding Firstname}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                                Hint="Nachname" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}">
+            <Entry Text="{Binding Lastname}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                                Hint="Geburtstag" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}">
+            <Entry Text="{Binding Birthday}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                                Hint="Straße" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+                             Margin="{Binding Margin}" >
+            <Entry Text="{Binding Street}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                                Hint="PLZ" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+            Margin="{Binding Margin}">
+            <Entry  Text="{Binding PostalCode}"
+                              Keyboard="Numeric" MaxLength="5" />
+        </inputLayout:SfTextInputLayout>
+        <inputLayout:SfTextInputLayout 
+                                Hint="Stadt" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+                               Margin="{Binding Margin}">
+            <Entry Text="{Binding City}"/>
+
+        </inputLayout:SfTextInputLayout>
+        <inputLayout:SfTextInputLayout 
+                                Hint="Land" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+                              Margin="{Binding Margin}" >
+            <Entry Text="{Binding Country}"/>
+
+        </inputLayout:SfTextInputLayout>
+        <inputLayout:SfTextInputLayout 
+                                Hint="E-Mail Adresse" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9"
+                            Margin="{Binding Margin}"  >
+            <Entry Text="{Binding EMail}"/>
+        </inputLayout:SfTextInputLayout>
+
+        <inputLayout:SfTextInputLayout 
+                        
+                                Hint="Passwort" 
+                                EnablePasswordVisibilityToggle="True"
+                                
+                                ErrorText="Ungültiges Passwort"
+                                HasError="False"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EE"
+                                Margin="10,40,10,10">
+            <Entry Text="{Binding Password}"/>
+        </inputLayout:SfTextInputLayout>
+
         <Button
             Text="Speichern"
             Command="{Binding SaveWorkingHours}"
-            />
+            Margin="10,10,10,10"/>
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
