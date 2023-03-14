@@ -121,7 +121,7 @@
 
         <Button
             Text="Speichern"
-            Command="{Binding SaveWorkingHours}"
+            Command="{Binding SaveChangingData}"
             Margin="10,10,10,10"/>
     </VerticalStackLayout>
     </ScrollView>

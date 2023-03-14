@@ -68,7 +68,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    //        results.Add(item);
                    //    }
                    //}
-                   results = allAccounts.Where(a => a.Username == username && a.Password == password).ToList();
+
+                   var loginUser = allAccounts.FindAll(u => u.Username == username);
+                   if (loginUser.Count != 0) 
+                        results = allAccounts.Where(u => u.Password == Hash.HashPassword($"{password}{loginUser[0].Salt}")).ToList();
 
                    Debug = App.EmployeeRepo.GetItems().Count.ToString();
 

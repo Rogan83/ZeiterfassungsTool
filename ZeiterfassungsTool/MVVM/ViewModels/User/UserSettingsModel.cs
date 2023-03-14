@@ -63,8 +63,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             if (employee.EMail != null)
                 EMail = employee.EMail;
 
-            if (employee.Password != null) 
-                Password = employee.Password;
+            //if (employee.Password != null) 
+            //    Password = employee.Password;
 
 
             Margin = new Thickness(20, 5, 20, 5);
@@ -77,9 +77,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               Shell.Current.GoToAsync("UserSettings/UserPage");
           });
 
-        public ICommand SaveWorkingHours =>
+        public ICommand SaveChangingData =>
           new Command( async () =>
           {
+              var salt = DateTime.Now.ToString();
+              var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
+
               var user = App.EmployeeRepo.GetItems().Find(name => name.Username == Username);
               var currentEmployee = Login.WhoIsLoggedIn[0];
 
@@ -118,7 +121,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               currentEmployee.Country = Country;
               currentEmployee.Birthday = Birthday;
               currentEmployee.EMail = EMail;
-              currentEmployee.Password = Password;
+              currentEmployee.Password = hashedPW;
+              currentEmployee.Salt = salt;
+              
 
               currentEmployee.IsResetPassword = false;
 
