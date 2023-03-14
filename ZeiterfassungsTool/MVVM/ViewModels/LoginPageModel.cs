@@ -60,7 +60,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
                    List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
 
-                   List<Employee> results = new List<Employee>();
+                   //List<Employee> results = new List<Employee>();
                    //foreach (var item in allAccounts)
                    //{
                    //    if (item.Username == username && item.Password == password)
@@ -68,18 +68,22 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    //        results.Add(item);
                    //    }
                    //}
-
+                   bool isEqual = false;
                    var loginUser = allAccounts.FindAll(u => u.Username == username);
-                   if (loginUser.Count != 0) 
-                        results = allAccounts.Where(u => u.Password == Hash.HashPassword($"{password}{loginUser[0].Salt}")).ToList();
+                   if (loginUser.Count != 0)
+                   {
+                       //results = allAccounts.Where(u => u.Password == Hash.HashPassword($"{password}{loginUser[0].Salt}")).ToList();
+                       isEqual = Hash.Encoder.Compare(password, loginUser[0].Password);            //Vergleicht das eingegebene - und das gehashte Passwort. Wenn sie übereinstimmen, dann wird true zurückgegeben.  
+                   }
 
                    Debug = App.EmployeeRepo.GetItems().Count.ToString();
 
-                   var count = results.Count();
+                   //var count = results.Count();
+                   var count = loginUser.Count();
 
-                   if (count > 0)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username und Passwort hat.
+                   if (count > 0 && isEqual)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username hat und das Passwort korrekt ist.
                    {
-                       Login.WhoIsLoggedIn = results;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
+                       Login.WhoIsLoggedIn = loginUser;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
 
                        if (Login.WhoIsLoggedIn[0].IsResetPassword)
                        {

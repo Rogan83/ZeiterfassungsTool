@@ -15,6 +15,7 @@
             ColumnDefinitions="*,*,.1*">
 
         <ImageButton
+            BackgroundColor="{StaticResource BGColor1}"
             Source="settings.png"
             Grid.Column="2"
             HeightRequest="40"
@@ -32,7 +33,7 @@
             Grid.ColumnSpan="3"
             FontSize="Large"
             HorizontalOptions="Center"
-            TextColor="DarkGray"
+            TextColor="AliceBlue"
             Text="{Binding TimePassed}"
             Margin="10,10,10,10"
             />

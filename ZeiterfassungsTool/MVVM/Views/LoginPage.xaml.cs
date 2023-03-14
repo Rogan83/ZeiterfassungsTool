@@ -8,7 +8,6 @@ public partial class LoginPage : ContentPage
 	public LoginPage()
 	{
 		InitializeComponent();
-
         BindingContext = new LoginPageModel();
     }
 
@@ -26,7 +25,6 @@ public partial class LoginPage : ContentPage
 		{
             VisibiltyBtnAndEntry(true, false);
         }
-
 
 		void VisibiltyBtnAndEntry(bool isVisibleLogin, bool isVisibleLogout)
 		{

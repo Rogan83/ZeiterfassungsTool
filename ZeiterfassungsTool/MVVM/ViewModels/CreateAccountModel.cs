@@ -95,8 +95,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand ToRegister =>
             new Command((vslRegisterElements) =>
             {
-                var salt = DateTime.Now.ToString();
-                var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
+                //var salt = DateTime.Now.ToString();
+                //var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
+                var hashedPW = Hash.HashPasswordScrypt(Password);
 
                 if (ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
                 {
@@ -127,7 +128,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     if (isFirstAccount)
                     {
                         App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Firstname = this.Firstname, Lastname = this.Lastname, Birthday = this.Birthday, City = this.City,
-                            Country = this.Country, EMail = this.EMail, PostalCode = this.PostalCode, Street = this.Street, Password = hashedPW, Salt = salt, Role = Role.Admin });
+                            Country = this.Country, EMail = this.EMail, PostalCode = this.PostalCode, Street = this.Street, Password = hashedPW, /*Salt = salt,*/ Role = Role.Admin });         //Salt braucht man nur nach der anderen Hash Verschlüsselung
                     }
                     else
                     {
@@ -178,7 +179,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             PostalCode = this.PostalCode,
                             Street = this.Street,
                             Password = hashedPW,
-                            Salt = salt,
+                            //Salt = salt,
                             Role = role
                         });
                         App.Current.MainPage.DisplayAlert("Account angelegt", $"Account mit dem Namen {Username} wurde erfolgreich angelegt", "Ok");
