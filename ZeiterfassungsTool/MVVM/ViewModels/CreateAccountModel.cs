@@ -62,7 +62,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         #endregion
 
-        string altertTextAdmin = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
+        string alertTextAdmin = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
 
 
         #region Commands
@@ -149,7 +149,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             else
                             {
                                 //Info = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
-                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", altertTextAdmin, "Ok");
+                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
                                 return;
                             }
                         }
@@ -161,7 +161,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             }
                             else
                             {
-                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", altertTextAdmin, "Ok");
+                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
                                 return;
                             }
                         }
@@ -182,15 +182,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                             //Salt = salt,
                             Role = role
                         });
-                        App.Current.MainPage.DisplayAlert("Account angelegt", $"Account mit dem Namen {Username} wurde erfolgreich angelegt", "Ok");
-                        Shell.Current.GoToAsync("CreateAccount/LoginPage");
-
+                        
                         Info = $"{role} Account wurde erfolgreich angelegt";
                     }
                     DebugMessage = App.EmployeeRepo.StatusMessage;
-                    Info = "Account erfolgreich angelegt";
+                    //Info = "Account erfolgreich angelegt";
+                    App.Current.MainPage.DisplayAlert("Account angelegt", $"Der Account mit dem Benutzernamen \"{Username}\" wurde erfolgreich angelegt", "Ok");
+                    Shell.Current.GoToAsync("CreateAccount/LoginPage");
                     HideControls(vslRegisterElements);
-                    ShowBackButton(vslRegisterElements);
+                    //ShowBackButton(vslRegisterElements);
                 }
                 else
                 {
@@ -248,16 +248,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             }
         }
 
-        private void ShowBackButton(object vslRegisterElements)
-        {
-            var vsl = (VerticalStackLayout)vslRegisterElements;
-            Button btn = (Button)vsl.FindByName("btnBackToMenu");//(Button)vsl.Children[vsl.Children.Count - 1];
+        //private void ShowBackButton(object vslRegisterElements)
+        //{
+        //    var vsl = (VerticalStackLayout)vslRegisterElements;
+        //    Button btn = (Button)vsl.FindByName("btnBackToMenu");//(Button)vsl.Children[vsl.Children.Count - 1];
 
-            if (btn != null )
-            {
-                btn.IsVisible = true;   
-            }
-        }
+        //    if (btn != null )
+        //    {
+        //        btn.IsVisible = true;   
+        //    }
+        //}
 
         public void CheckIfOneAccountExist()
         {

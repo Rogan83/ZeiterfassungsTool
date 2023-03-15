@@ -46,7 +46,11 @@ public partial class PageUserManagement : ContentPage
                 
         }
 
+        //tpStartTime.Format = "MMMM dd, yyyy - dddd";
+        dpEndDate.Format = dpStartDate.Format = @"dd / MM / yyyy";
+        tpStartTime.Format = tpEndTime.Format = "HH m";
         
+
     }
 
     #region ButtonEvents

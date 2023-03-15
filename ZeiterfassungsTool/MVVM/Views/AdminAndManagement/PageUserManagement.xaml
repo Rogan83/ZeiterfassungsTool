@@ -154,9 +154,11 @@
             TextColor="DarkBlue"
             />
         <TimePicker
+            x:Name="tpStartTime"
             Grid.Row="2"
             Time="{Binding TimeStartTime}"/>
         <DatePicker
+            x:Name="dpStartDate"
             Grid.Row="3"
             Date="{Binding DateStartTime}"/>
 
@@ -168,10 +170,13 @@
             TextColor="DarkBlue"
             />
         <TimePicker
+            x:Name="tpEndTime"
             Grid.Row="2"
             Grid.Column="3"
-            Time="{Binding TimeEndTime}"/>
+            Time="{Binding TimeEndTime}"
+            />
         <DatePicker
+            x:Name="dpEndDate"
             Grid.Row="3"
             Grid.Column="3"
             Date="{Binding DateEndTime}"/>
@@ -223,7 +228,7 @@
         <RadioButton x:Name="ill"      Grid.Row="4"  Grid.Column="3"  Content="Krank"                                           GroupName ="SelectSubject"  IsChecked="{Binding rbIll}" CheckedChanged="ill_CheckedChanged" />
 
 
-        <HorizontalStackLayout x:Name="EntrySubject" Grid.Row="5">
+        <HorizontalStackLayout x:Name="EntrySubject" Grid.Row="5" HorizontalOptions="Center" Grid.Column="0" Grid.ColumnSpan="4">
             <Label
             Text="Aufgabe:"
             Grid.Column="0"
@@ -236,6 +241,8 @@
             Grid.ColumnSpan="3"
             Text="{Binding EntrySubject}"
             IsVisible="{Binding IsVisibleEntrySubject}"
+                BackgroundColor="LightBlue"
+                WidthRequest="300"
             />
         </HorizontalStackLayout>
         

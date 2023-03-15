@@ -64,7 +64,7 @@
 
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding EmployeesWorkingHours}"
-                        BackgroundColor="AliceBlue">
+                        BackgroundColor="LightCyan">
             <CollectionView.Header>
                 <Label
                     Text="Mitarbeiter"
