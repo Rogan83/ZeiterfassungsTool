@@ -39,7 +39,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public LoginPageModel() 
         {
             UpdateButtonForwardText();
-            Margin = new Thickness(20, 5, 20, 5);
+            //Margin = new Thickness(20, 5, 20, 5);
+            Margin = new Thickness(20, 10, 20, 10);
         }
 
         public ICommand DeleteTable =>
@@ -115,14 +116,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         /// <param name="activate"></param>
         private void DeactivateAndActivateSeveralButtonAndEntries(object element, bool activate)
         {
-            VerticalStackLayout verticalStackLayout = (VerticalStackLayout)element;
+            VerticalStackLayout flexLayout = (VerticalStackLayout)element;
 
-            Button btnForwardToContent = (Button)verticalStackLayout.FindByName("btnForwardToContent");
-            Button btnLogout = (Button)verticalStackLayout.FindByName("btnLogout");
+            Button btnForwardToContent = (Button)flexLayout.FindByName("btnForwardToContent");
+            Button btnLogout = (Button)flexLayout.FindByName("btnLogout");
 
-            SfTextInputLayout entryUsername = (SfTextInputLayout)verticalStackLayout.FindByName("entryUsername");
-            SfTextInputLayout entryPassword = (SfTextInputLayout)verticalStackLayout.FindByName("entryPassword");
-            Button btnLogin = (Button)verticalStackLayout.FindByName("btnLogin");
+            SfTextInputLayout entryUsername = (SfTextInputLayout)flexLayout.FindByName("entryUsername");
+            SfTextInputLayout entryPassword = (SfTextInputLayout)flexLayout.FindByName("entryPassword");
+            Button btnLogin = (Button)flexLayout.FindByName("btnLogin");
 
             btnForwardToContent.IsVisible = activate;
             btnLogout.IsVisible = activate;

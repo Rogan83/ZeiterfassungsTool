@@ -4,11 +4,41 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.StartPage"
              Title=""
              >
-    <Grid RowDefinitions="auto,auto,auto,*"
+    <!--<Grid RowDefinitions="auto,auto,auto,*"
           BackgroundColor="AliceBlue"
           RowSpacing="10">
-        <Button Grid.Row="0" Text="Einloggen" Command="{Binding GoToLoginPage}"/>
-        <Button Grid.Row="1" Text="Registrieren"  Command="{Binding GoToCreateAccountSite}"/>
-        <Button Grid.Row="2" Text="Tabelle löschen (Debug)"  Command="{Binding DeleteTable}" BackgroundColor="DarkRed" Margin="200"/>
-    </Grid>
+        --><!--<FlexLayout  Wrap="Wrap" AlignContent="Start" Grid.Row="0" JustifyContent="Center" >
+            --><!--<Button Grid.Row="0" Text="Einloggen" Command="{Binding GoToLoginPage}"/>
+            <Button Grid.Row="1" Text="Registrieren"  Command="{Binding GoToCreateAccountSite}"/>
+            <Button Grid.Row="2" Text="Tabelle löschen (Debug)"  Command="{Binding DeleteTable}" BackgroundColor="DarkRed" Margin="200"/>--><!--
+            
+        </FlexLayout>--><!--
+        
+    </Grid>-->
+
+   
+        <FlexLayout JustifyContent="Start" Direction="Column" Wrap="Wrap" >
+            <Label Text="FlexLayout" FlexLayout.Basis="100"
+                    TextColor="White" 
+                    Background="Steelblue" />
+        <Label Text="FlexLayout"  FlexLayout.Basis="100"
+                    TextColor="White" 
+                    Background="Green" />
+        <FlexLayout  Direction="Row" JustifyContent="Center" Wrap="Wrap" FlexLayout.Basis="500" >
+            <Label Text="FlexLayout" FlexLayout.Grow="1"  FlexLayout.Order="0" 
+                    TextColor="White" 
+                    Background="Red" />
+            <Label Text="FlexLayout"  FlexLayout.Order="-1" 
+                    TextColor="White" 
+                    Background="Green" />
+            <Label Text="FlexLayout" FlexLayout.Basis="100" FlexLayout.Order="1"
+                    TextColor="White" 
+                    Background="Blue" />
+        </FlexLayout>
+        <Label Text="FlexLayout" 
+                    TextColor="White" 
+                    Background="Blue" />
+        </FlexLayout>
+        
+    
 </ContentPage>

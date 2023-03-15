@@ -17,23 +17,23 @@ public partial class LoginPage : ContentPage
 
 		var loggedInEmployee = Login.WhoIsLoggedIn[0];
 		// Wenn jemand eingeloggt ist...
-		if (loggedInEmployee.Id != 0 )
+		if (loggedInEmployee.Id != 0)
 		{
-            VisibiltyBtnAndEntry(false, true);
-        }
+			VisibiltyBtnAndEntry(false, true);
+		}
 		else
 		{
-            VisibiltyBtnAndEntry(true, false);
-        }
+			VisibiltyBtnAndEntry(true, false);
+		}
 
 		void VisibiltyBtnAndEntry(bool isVisibleLogin, bool isVisibleLogout)
 		{
-            btnForwardToContent.IsVisible = isVisibleLogout;
-            btnLogout.IsVisible = isVisibleLogout;
+			btnForwardToContent.IsVisible = isVisibleLogout;
+			btnLogout.IsVisible = isVisibleLogout;
 
-            entryUsername.IsVisible = isVisibleLogin;
-            entryPassword.IsVisible = isVisibleLogin;
-            btnLogin.IsVisible = isVisibleLogin;
-        }
+			entryUsername.IsVisible = isVisibleLogin;
+			entryPassword.IsVisible = isVisibleLogin;
+			btnLogin.IsVisible = isVisibleLogin;
+		}
 	}
 }

@@ -57,7 +57,7 @@
         <Label
             Text="Thema:"
             TextDecorations="Underline"
-            TextColor="CadetBlue"
+            TextColor="Wheat"
             FontSize="Medium"
             HorizontalOptions="Center"
             VerticalOptions="Center"

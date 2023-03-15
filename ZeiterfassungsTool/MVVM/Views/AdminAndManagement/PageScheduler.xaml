@@ -3,20 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.PageScheduler"
              xmlns:scheduler="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
-             Title="PageScheduler">
+             Title="PageScheduler"
+             >
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
-
-    <VerticalStackLayout BackgroundColor="{StaticResource BGColor1}">
-        <scheduler:SfScheduler View="Week"
-                               FirstDayOfWeek="Monday"
-                               AllowedViews="Agenda,Day,Month,TimelineDay,TimelineMonth,TimelineWeek,TimelineWorkWeek,Week,WorkWeek"
-                                AppointmentsSource="{Binding SchedulerEvents}" 
-                               HeightRequest="700"
-                               >
-
+    <Grid RowDefinitions=".75*,.2*">
+    
+        <scheduler:SfScheduler 
+            Grid.Row="0"
+            View="Week"
+            FirstDayOfWeek="Monday"
+            AllowedViews="Agenda,Day,Month,TimelineDay,TimelineMonth,TimelineWeek,TimelineWorkWeek,Week,WorkWeek"
+            AppointmentsSource="{Binding SchedulerEvents}"
+            BackgroundColor="{StaticResource BGColor1}">
+            
         </scheduler:SfScheduler>
-    </VerticalStackLayout>
+        <Grid Grid.Row="1" 
+              ColumnDefinitions="*,*,*"
+              RowDefinitions="*"
+              BackgroundColor="SteelBlue">
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="4"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20"
+                TextColor="Brown"
+                TextDecorations="Underline"
+                Text="Legende"/>
+            
+            <Label
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Krank"
+                BackgroundColor="Red"
+                HeightRequest="20"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Arbeit"
+                BackgroundColor="LightBlue"
+                HeightRequest="20"/>
+            <Label
+                Grid.Column="2"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="20"
+                FontSize="Micro"
+                Padding="20,0,20,0"
+                Text="Urlaub"
+                BackgroundColor="LightGreen"
+                HeightRequest="20"/>
+        </Grid>
+    </Grid>
 </ContentPage>
