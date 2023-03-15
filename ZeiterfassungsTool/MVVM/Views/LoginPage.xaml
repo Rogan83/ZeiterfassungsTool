@@ -88,7 +88,7 @@
             <Button x:Name="btnForwardToContent" Text="{Binding TxtForwardToContent}" Grid.Row="1" IsVisible="false" Command="{Binding ForwardToContent}" Margin="{Binding Margin}" FlexLayout.Basis="1200" HeightRequest="50"/>
             <Button x:Name="btnLogout"  Text="Ausloggen"  IsVisible="false" Command="{Binding Logout}" CommandParameter="{Binding Source={x:Reference flLogin}}" Margin="{Binding Margin}" FlexLayout.Basis="1200" HeightRequest="50"/>
 
-            <Button  Text="Neuen Account anlegen"  Command="{Binding GoToCreateAccountSite}" Margin="{Binding Margin}" FlexLayout.Basis="1200"/>
+            <Button  Text="Neuen Account anlegen"  Command="{Binding GoToCreateAccountSite}" Margin="{Binding Margin}" FlexLayout.Basis="1200" HeightRequest="50"/>
         </FlexLayout>
         <FlexLayout Grid.Row="2" Wrap="Wrap" JustifyContent="Center">
             <Button  Text="Tabelle löschen (Debug)" Command="{Binding DeleteTable}" BackgroundColor="DarkRed" Margin="20,200,20,50" IsVisible="true" FlexLayout.Basis="1200" HeightRequest="50"/>

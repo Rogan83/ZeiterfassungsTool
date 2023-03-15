@@ -101,7 +101,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    }
                    else
                    {
-                       Message = "Benutzername oder Passwort sind falsch";
+                       //Message = "Benutzername oder Passwort sind falsch";
+                       App.Current.MainPage.DisplayAlert("Warnung", "Benutzername oder Passwort sind nicht korrekt.", "OK");
                    }
                }
                else

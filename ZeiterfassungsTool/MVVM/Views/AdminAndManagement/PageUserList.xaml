@@ -9,35 +9,28 @@
     </Shell.BackButtonBehavior>
 
     <Grid BackgroundColor="{StaticResource BGColor1}"
-          RowDefinitions="auto,*">
+          RowDefinitions="auto,*,auto">
         <VerticalStackLayout Grid.Row="0">
-
-            
             <Button
-            Text="Zurück zum Hauptmenu"
-            Command="{Binding BackToMainMenu}"/>
-            
+            Text="Zurück zum Hauptmenü"
+            Command="{Binding BackToMainMenu}"
+                Margin="20"/>
         </VerticalStackLayout>
-        
-
-
         <CollectionView
-            Grid.Row="1"
-            ItemsSource="{Binding Employees}"
-            SelectionMode="Single"
-            SelectedItem="{Binding SelectedEmployee}"
-            SelectionChangedCommand="{Binding EmployeeClickedCommand}">
-            
+                Grid.Row="1"
+                ItemsSource="{Binding Employees}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedEmployee}"
+                SelectionChangedCommand="{Binding EmployeeClickedCommand}">
+
             <CollectionView.Header>
                 <Frame BackgroundColor="DarkCyan"
-                       HorizontalOptions="Center"
-                       
-                       >
+                           HorizontalOptions="Center"
+                           >
                     <Label Text="Alle Mitarbeiter"
-                       FontSize="Title"
-                       TextColor="FloralWhite"
-                           
-                           />
+                           FontSize="Title"
+                           TextColor="FloralWhite"
+                               />
                 </Frame>
             </CollectionView.Header>
 
@@ -48,28 +41,22 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <!--<Frame Margin="20" 
-                           BackgroundColor="AliceBlue"
-                           WidthRequest="2000"
-                           >-->
-
-                    
-
-                            <Label  
-                                
-                                HorizontalTextAlignment="Center"
-                                WidthRequest="200"
-                                Text="{Binding Username}"
-                                TextColor="DarkBlue"
-                                FontSize="Large"/>
-                   
-
+                               BackgroundColor="AliceBlue"
+                               WidthRequest="2000"
+                               >-->
+                    <Label  
+                            HorizontalTextAlignment="Center"
+                            WidthRequest="200"
+                            Text="{Binding Username}"
+                            TextColor="DarkBlue"
+                            FontSize="Large"/>
                     <!--</Frame>-->
                 </DataTemplate>
-                
             </CollectionView.ItemTemplate>
-            
         </CollectionView>
-        </Grid>
+        <Label Grid.Row="2" Text="Klicken Sie auf einen Mitarbeiter, um in die Detailansicht von ihm zu gelangen"
+               TextColor="AliceBlue" HorizontalTextAlignment="Center" Margin="20" Padding="10" BackgroundColor="DarkBlue"/>
+    </Grid>
     
 </ContentPage>
 

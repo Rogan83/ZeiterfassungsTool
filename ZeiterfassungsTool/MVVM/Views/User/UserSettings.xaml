@@ -10,7 +10,7 @@
     </Shell.BackButtonBehavior>
 
     <ScrollView BackgroundColor="{StaticResource BGColor1}">
-    <VerticalStackLayout>
+    <VerticalStackLayout VerticalOptions="Center">
         <!--<Label 
             Text="Wie viele Stunden arbeiten Sie pro Woche?"
             VerticalOptions="Center" 
@@ -21,19 +21,40 @@
             Text="{Binding WorkingHoursPerWeek}"
             />-->
 
-        <inputLayout:SfTextInputLayout
+            <FlexLayout Direction="Row" JustifyContent="Center"  Wrap="Wrap">
+
+                <inputLayout:SfTextInputLayout
                         Hint="Wöchentliche Arbeitszeit"
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
                         Margin="{Binding Margin}"
-                        
+                        FlexLayout.Basis="590"
+                HeightRequest="80"
                         >
-            <Entry Text="{Binding WorkingHoursPerWeek}"
+                    <Entry Text="{Binding WorkingHoursPerWeek}"
                    TextColor="Black"/>
-        </inputLayout:SfTextInputLayout>
+                </inputLayout:SfTextInputLayout>
+
+                <inputLayout:SfTextInputLayout
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
+                        Hint="Benutzername"
+                        Stroke="#0450C2"
+                        ContainerBackground="{StaticResource BGContainer}"
+            Margin="{Binding Margin}"
+                    
+                        >
+                    <Entry Text="{Binding Username}"
+                   TextColor="Black"/>
+                </inputLayout:SfTextInputLayout>
 
 
+
+
+                
         <inputLayout:SfTextInputLayout
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                         Hint="Benutzername"
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -44,6 +65,8 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Vorname" 
                                 Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -54,6 +77,8 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Nachname" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -63,6 +88,8 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Geburtstag" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -72,6 +99,8 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Straße" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -81,6 +110,8 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="PLZ" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -90,6 +121,8 @@
                     Keyboard="Numeric" MaxLength="5" />
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                         Hint="Stadt" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -100,6 +133,8 @@
                         
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Land" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -109,6 +144,8 @@
 
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="E-Mail Adresse" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -117,22 +154,26 @@
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
-                        
+                        FlexLayout.Basis="590"
+                        HeightRequest="80"
                                 Hint="Neues Passwort" 
                                 EnablePasswordVisibilityToggle="True"
                                 
                                 ErrorText="Ungültiges Passwort"
                                 HasError="False"
                         Stroke="#0450C2"
-                        ContainerBackground="{StaticResource BGContainer}"
-                                Margin="20,40,20,10">
+                        ContainerBackground="#E6EE"
+                                Margin="{Binding Margin}">
             <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>
 
         <Button
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
             Text="Speichern"
             Command="{Binding SaveChangingData}"
             Margin="10,10,10,10"/>
-    </VerticalStackLayout>
+            </FlexLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
