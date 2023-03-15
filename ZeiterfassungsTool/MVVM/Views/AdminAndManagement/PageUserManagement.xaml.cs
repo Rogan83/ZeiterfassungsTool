@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 using ZeiterfassungsTool.StaticClasses;
@@ -14,6 +15,7 @@ public partial class PageUserManagement : ContentPage
         model = new PageUserManagementModel();
         BindingContext = model;
     }
+    
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -46,11 +48,8 @@ public partial class PageUserManagement : ContentPage
                 
         }
 
-        //tpStartTime.Format = "MMMM dd, yyyy - dddd";
-        dpEndDate.Format = dpStartDate.Format = @"dd / MM / yyyy";
-        tpStartTime.Format = tpEndTime.Format = "HH m";
-        
-
+        dpEndDate.Format = dpStartDate.Format = "dd.MM.yyyy";  
+        tpStartTime.Format = tpEndTime.Format = "HH:mm";   
     }
 
     #region ButtonEvents
