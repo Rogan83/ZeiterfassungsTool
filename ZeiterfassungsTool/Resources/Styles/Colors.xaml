@@ -19,7 +19,8 @@
     <Color x:Key="Gray950">#141414</Color>
 
     <!--Eigene Farben-->
-    <Color x:Key="BGColor1">#6BAEFF</Color> 
+    <Color x:Key="BGColor1">#6BAEFF</Color>
+    <Color x:Key="BGContainer">#b3cbff</Color> 
 
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

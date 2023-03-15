@@ -24,97 +24,107 @@
         <inputLayout:SfTextInputLayout
                         Hint="Wöchentliche Arbeitszeit"
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
                         Margin="{Binding Margin}"
                         
                         >
-            <Entry Text="{Binding WorkingHoursPerWeek}"/>
+            <Entry Text="{Binding WorkingHoursPerWeek}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
 
         <inputLayout:SfTextInputLayout
                         Hint="Benutzername"
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}"
                         >
-            <Entry Text="{Binding Username}"/>
+            <Entry Text="{Binding Username}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                                 Hint="Vorname" 
                                 Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}"
                                 >
-            <Entry Text="{Binding Firstname}"/>
+            <Entry Text="{Binding Firstname}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                                 Hint="Nachname" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}">
-            <Entry Text="{Binding Lastname}"/>
+            <Entry Text="{Binding Lastname}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                                 Hint="Geburtstag" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}">
-            <Entry Text="{Binding Birthday}"/>
+            <Entry Text="{Binding Birthday}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                                 Hint="Straße" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
                              Margin="{Binding Margin}" >
-            <Entry Text="{Binding Street}"/>
+            <Entry Text="{Binding Street}"
+                   TextColor="Black"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                                 Hint="PLZ" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}">
             <Entry  Text="{Binding PostalCode}"
-                              Keyboard="Numeric" MaxLength="5" />
+                    TextColor="Black"
+                    Keyboard="Numeric" MaxLength="5" />
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
-                                Hint="Stadt" 
+                        Hint="Stadt" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
-                               Margin="{Binding Margin}">
-            <Entry Text="{Binding City}"/>
-
+                        ContainerBackground="{StaticResource BGContainer}"
+                        Margin="{Binding Margin}"
+                        >
+            <Entry Text="{Binding City}"
+                   TextColor="Black"/>
+                        
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
                                 Hint="Land" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
                               Margin="{Binding Margin}" >
-            <Entry Text="{Binding Country}"/>
+            <Entry Text="{Binding Country}"
+                   TextColor="Black"/>
 
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
                                 Hint="E-Mail Adresse" 
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EEF9"
+                        ContainerBackground="{StaticResource BGContainer}"
                             Margin="{Binding Margin}"  >
             <Entry Text="{Binding EMail}"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
                         
-                                Hint="Passwort" 
+                                Hint="Neues Passwort" 
                                 EnablePasswordVisibilityToggle="True"
                                 
                                 ErrorText="Ungültiges Passwort"
                                 HasError="False"
                         Stroke="#0450C2"
-                        ContainerBackground="#E6EE"
+                        ContainerBackground="{StaticResource BGContainer}"
                                 Margin="20,40,20,10">
             <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>

@@ -39,9 +39,9 @@
                         <VerticalStackLayout >
                             <Label Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
                                     FontSize="Medium"/>
-                            <RadioButton x:Name="user"          Content="Benutzer"         GroupName ="SelectRole" IsChecked="{Binding rbUser}"/>
-                            <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}"/>
-                            <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}"/>
+                            <RadioButton x:Name="user"          Content="Benutzer"         GroupName ="SelectRole" IsChecked="{Binding rbUser}" TextColor="Black"/>
+                            <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}" TextColor="Black"/>
+                            <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}" TextColor="Black"/>
                         </VerticalStackLayout>
                     </Frame>
 
@@ -53,7 +53,8 @@
                         
                                     HasError="{Binding UsernameAlreadyExists}"
                             >
-                        <Entry Text="{Binding Username}"/>
+                        <Entry Text="{Binding Username}" 
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
@@ -61,21 +62,24 @@
                                     Stroke="#0450C2"
                             ContainerBackground="#E6EEF9"
                                     >
-                        <Entry Text="{Binding Firstname}"/>
+                        <Entry Text="{Binding Firstname}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
                                     Hint="Nachname" 
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9">
-                        <Entry Text="{Binding Lastname}"/>
+                        <Entry Text="{Binding Lastname}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
                                     Hint="Geburtstag" 
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9">
-                        <Entry Text="{Binding Birthday}"/>
+                        <Entry Text="{Binding Birthday}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
@@ -83,7 +87,8 @@
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9"
                                     >
-                        <Entry Text="{Binding Street}"/>
+                        <Entry Text="{Binding Street}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
@@ -91,14 +96,16 @@
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9">
                         <Entry  Text="{Binding PostalCode}"
-                                  Keyboard="Numeric" MaxLength="5" />
+                                  Keyboard="Numeric" MaxLength="5" 
+                                TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
                                     Hint="Stadt" 
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9"
                                     >
-                        <Entry Text="{Binding City}"/>
+                        <Entry Text="{Binding City}"
+                               TextColor="Black"/>
 
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
@@ -106,7 +113,8 @@
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9"
                                     >
-                        <Entry Text="{Binding Country}"/>
+                        <Entry Text="{Binding Country}"
+                               TextColor="Black"/>
 
                     </inputLayout:SfTextInputLayout>
                     <inputLayout:SfTextInputLayout 
@@ -114,7 +122,8 @@
                             Stroke="#0450C2"
                             ContainerBackground="#E6EEF9"
                                     >
-                        <Entry Text="{Binding EMail}"/>
+                        <Entry Text="{Binding EMail}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
@@ -127,7 +136,8 @@
                             Stroke="#0450C2"
                             ContainerBackground="#E6EE"
                                     >
-                        <Entry Text="{Binding Password}"/>
+                        <Entry Text="{Binding Password}"
+                               TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <!--<inputLayout:SfTextInputLayout 
