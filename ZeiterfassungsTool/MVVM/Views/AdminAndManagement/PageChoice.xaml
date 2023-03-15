@@ -9,19 +9,6 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
 
-    <!--<ContentPage.Content>
-        <core:SfBusyIndicator
-            x:Name="busyIndicator"
-                              IsRunning="False"
-                              AnimationType="Cupertino" />
-    </ContentPage.Content>-->
-
-    <!--<Grid RowDefinitions="auto,auto">
-        <Button Grid.Row="0" Text="fsda"/>
-        <core:SfBusyIndicator Grid.Row="1" x:Name="test" IsRunning="True" IsVisible="true" Title="Daten werden in die Datenbank gespeichert..." SizeFactor="0.7"></core:SfBusyIndicator >
-    </Grid>-->
-    
-        
 
     <Grid x:Name="grid" RowDefinitions=".7*,.3*"
           BackgroundColor="{StaticResource BGColor1}"
