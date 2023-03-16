@@ -1,9 +1,9 @@
 using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 namespace ZeiterfassungsTool.MVVM.Views;
 
-public partial class PageUserList : ContentPage
+public partial class UserList : ContentPage
 {
-	public PageUserList()
+	public UserList()
 	{
 		InitializeComponent();
 

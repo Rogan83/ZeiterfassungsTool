@@ -5,10 +5,10 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 
-public partial class PageAdminAndManagementManagement : ContentPage
+public partial class AdminAndManagementManagement : ContentPage
 {
     PageAdminAndManagementManagementModel model = new();
-    public PageAdminAndManagementManagement()
+    public AdminAndManagementManagement()
     {
         InitializeComponent();
 

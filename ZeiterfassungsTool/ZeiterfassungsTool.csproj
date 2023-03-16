@@ -74,13 +74,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageAdminAndManagementManagement.xaml">
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\AdminAndManagementManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageOvertime.xaml">
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\Overtime.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageUserList.xaml">
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\UserList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AdminAndManagement\UserManagement.xaml">
@@ -126,20 +126,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\AdminAndManagement\PageOvertime.xaml.cs">
-	    <DependentUpon>PageOvertime.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\AdminAndManagement\Overtime.xaml.cs">
+	    <DependentUpon>Overtime.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\AdminAndManagement\PageScheduler.xaml.cs">
-	    <DependentUpon>PageScheduler.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\AdminAndManagement\AdminAndManagementManagement.xaml.cs">
+	    <DependentUpon>AdminAndManagementManagement.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\AdminAndManagement\Scheduler.xaml.cs">
+	    <DependentUpon>Scheduler.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="MVVM\Views\AdminAndManagement\UserManagement.xaml.cs">
 	    <DependentUpon>UserManagement.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\AdminAndManagement\PageChoice.xaml.cs">
-	    <DependentUpon>PageChoice.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\AdminAndManagement\Choice.xaml.cs">
+	    <DependentUpon>Choice.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\AdminAndManagement\PageUserList.xaml.cs">
-	    <DependentUpon>PageUserList.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\AdminAndManagement\UserList.xaml.cs">
+	    <DependentUpon>UserList.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="MVVM\Views\User\UserPage.xaml.cs">
 	    <DependentUpon>UserPage.xaml</DependentUpon>

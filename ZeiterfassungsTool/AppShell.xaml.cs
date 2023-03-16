@@ -15,7 +15,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("StartPage", typeof(StartPage));
         Routing.RegisterRoute("CreateAccount", typeof(CreateAccount));
         Routing.RegisterRoute("LoginPage", typeof(LoginPage));
-        Routing.RegisterRoute("PageChoice", typeof(PageChoice));
+        Routing.RegisterRoute("Choice", typeof(Choice));
         Routing.RegisterRoute("Test", typeof(Test));
 
         Routing.RegisterRoute("UserPage", typeof(UserPage));
@@ -25,19 +25,19 @@ public partial class AppShell : Shell
 
 
 
-        Routing.RegisterRoute("PageUserList", typeof(PageUserList));
+        Routing.RegisterRoute("UserList", typeof(UserList));
         Routing.RegisterRoute("UserManagement", typeof(UserManagement));
-        Routing.RegisterRoute("PageScheduler", typeof(PageScheduler));
-        Routing.RegisterRoute("PageOvertime", typeof(PageOvertime));
-        Routing.RegisterRoute("PageAdminAndManagementManagement", typeof(PageAdminAndManagementManagement));
+        Routing.RegisterRoute("Scheduler", typeof(Scheduler));
+        Routing.RegisterRoute("Overtime", typeof(Overtime));
+        Routing.RegisterRoute("AdminAndManagementManagement", typeof(AdminAndManagementManagement));
 
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
-        Routing.RegisterRoute("PageUserList/StartPage", typeof(PageUserList));
-        Routing.RegisterRoute("PageUserList/UserManagement", typeof(PageUserList));
-        Routing.RegisterRoute("PageUserList/PageChoice", typeof(PageUserList));
+        Routing.RegisterRoute("UserList/StartPage", typeof(UserList));
+        Routing.RegisterRoute("UserList/UserManagement", typeof(UserList));
+        Routing.RegisterRoute("UserList/Choice", typeof(UserList));
 
-        Routing.RegisterRoute("UserManagement/PageUserList", typeof(UserManagement));
+        Routing.RegisterRoute("UserManagement/UserList", typeof(UserManagement));
 
         Routing.RegisterRoute("UserPage/LoginPage", typeof(UserPage));
         Routing.RegisterRoute("CreateAccount/LoginPage", typeof(UserPage));

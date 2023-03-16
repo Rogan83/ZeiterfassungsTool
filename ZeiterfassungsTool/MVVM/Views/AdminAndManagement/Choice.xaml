@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.PageChoice"
-             Title="PageChoice">
+             x:Class="ZeiterfassungsTool.MVVM.Views.Admin.Choice"
+             Title="Choice">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>

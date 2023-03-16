@@ -2,9 +2,9 @@ using ZeiterfassungsTool.MVVM.ViewModels.Admin;
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
-public partial class PageOvertime : ContentPage
+public partial class Overtime : ContentPage
 {
-	public PageOvertime()
+	public Overtime()
 	{
 		InitializeComponent();
 

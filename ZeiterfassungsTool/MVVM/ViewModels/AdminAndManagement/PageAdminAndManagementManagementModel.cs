@@ -29,7 +29,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync(nameof(PageChoice));
+               Shell.Current.GoToAsync(nameof(Choice));
            });
 
         public ICommand DeleteAccount =>

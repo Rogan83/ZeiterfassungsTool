@@ -36,38 +36,38 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageChoice/LoginPage");
+               Shell.Current.GoToAsync("Choice/LoginPage");
            });
         public ICommand BackToMainMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageChoice/LoginPage");
+               Shell.Current.GoToAsync("Choice/LoginPage");
            });
         
 
         public ICommand GoToUserListView =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageChoice/PageUserList");
+               Shell.Current.GoToAsync("Choice/UserList");
            });
 
         public ICommand GoToAccountsListView =>
           new Command(() =>
           {
-              Shell.Current.GoToAsync(nameof(PageAdminAndManagementManagement));
+              Shell.Current.GoToAsync(nameof(AdminAndManagementManagement));
           });
 
         public ICommand GoToOvertimeView =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync(nameof(PageOvertime));
+               Shell.Current.GoToAsync(nameof(Overtime));
            });
 
         public ICommand GoToScheduler =>
            new Command(() =>
            {
                //Shell.Current.GoToAsync("AdminPageChoice/AdminPageScheduler");
-               Shell.Current.GoToAsync(nameof(PageScheduler));
+               Shell.Current.GoToAsync(nameof(Scheduler));
            });
 
         public ICommand SaveDatabaseInCSVFile =>

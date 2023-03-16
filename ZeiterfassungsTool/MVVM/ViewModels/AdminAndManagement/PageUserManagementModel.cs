@@ -60,7 +60,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("UserManagement/PageUserList");
+               Shell.Current.GoToAsync("UserManagement/UserList");
            });
 
         public ICommand BackToMenu =>
@@ -72,14 +72,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Back =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("UserManagement/PageUserList");
+               Shell.Current.GoToAsync("UserManagement/UserList");
            });
 
         public ICommand Logout =>
            new Command(() =>
            {
                Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };             // Zurücksetzen
-               Shell.Current.GoToAsync("PageUserList/StartPage");
+               Shell.Current.GoToAsync("UserList/StartPage");
            });
 
         public ICommand Update =>
@@ -129,7 +129,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                }
 
                App.EmployeeRepo.DeleteItem(Employee);
-               await Shell.Current.GoToAsync("UserManagement/PageUserList");
+               await Shell.Current.GoToAsync("UserManagement/UserList");
            });
 
         public ICommand DeleteTime =>

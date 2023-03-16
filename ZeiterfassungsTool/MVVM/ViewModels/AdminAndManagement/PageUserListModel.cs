@@ -31,7 +31,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserList/PageChoice");
+               Shell.Current.GoToAsync("UserList/Choice");
            });
 
 
@@ -39,14 +39,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackToMainMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserList/LoginPage");
+               Shell.Current.GoToAsync("UserList/LoginPage");
            });
 
         public ICommand Logout =>
            new Command(() =>
            {
                Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
-               Shell.Current.GoToAsync("PageUserList/StartPage");
+               Shell.Current.GoToAsync("UserList/StartPage");
            });
 
         public ICommand EmployeeClickedCommand =>

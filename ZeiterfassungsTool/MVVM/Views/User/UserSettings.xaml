@@ -42,23 +42,6 @@
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
             Margin="{Binding Margin}"
-                    
-                        >
-                    <Entry Text="{Binding Username}"
-                   TextColor="Black"/>
-                </inputLayout:SfTextInputLayout>
-
-
-
-
-                
-        <inputLayout:SfTextInputLayout
-                FlexLayout.Basis="590"
-                        HeightRequest="80"
-                        Hint="Benutzername"
-                        Stroke="#0450C2"
-                        ContainerBackground="{StaticResource BGContainer}"
-            Margin="{Binding Margin}"
                         >
             <Entry Text="{Binding Username}"
                    TextColor="Black"/>
@@ -167,13 +150,17 @@
             <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>
 
-        <Button
-                FlexLayout.Basis="590"
+        
+            </FlexLayout>
+            <Button
+                WidthRequest="590"
                         HeightRequest="80"
             Text="Speichern"
             Command="{Binding SaveChangingData}"
-            Margin="10,10,10,10"/>
-            </FlexLayout>
+            Margin="10,30,10,10"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+                    TextColor="{StaticResource ButtonColorLightBlue}"
+                    FontSize="Medium"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

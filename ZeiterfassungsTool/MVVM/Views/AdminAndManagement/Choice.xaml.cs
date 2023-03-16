@@ -3,9 +3,9 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
-public partial class PageChoice : ContentPage
+public partial class Choice : ContentPage
 {
-	public PageChoice()
+	public Choice()
 	{
 		InitializeComponent();
 

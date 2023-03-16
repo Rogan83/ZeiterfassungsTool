@@ -165,10 +165,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                       Shell.Current.GoToAsync(nameof(UserPage));
                       break;
                   case Role.Management:
-                      Shell.Current.GoToAsync(nameof(PageChoice));
+                      Shell.Current.GoToAsync(nameof(Choice));
                       break;
                   case Role.Admin:
-                       Shell.Current.GoToAsync(nameof(PageChoice));
+                       Shell.Current.GoToAsync(nameof(Choice));
                        break;
                   default:
                       Shell.Current.GoToAsync(nameof(UserPage));
