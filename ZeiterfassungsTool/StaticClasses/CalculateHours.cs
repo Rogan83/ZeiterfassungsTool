@@ -1,10 +1,13 @@
-﻿using Syncfusion.Maui.Gauges;
+﻿
+using Syncfusion.Maui.Gauges;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeiterfassungsTool.Models;
+
 
 namespace ZeiterfassungsTool.StaticClasses
 {
@@ -39,7 +42,7 @@ namespace ZeiterfassungsTool.StaticClasses
             {
                 if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
                     continue;
-
+                // Wenn der Start- und Endzeitpunkt im selben Monat und Jahr sind ...
                 if (timetracking.StartTime.Month == currentMonth && timetracking.EndTime.Month == currentMonth && timetracking.StartTime.Year == currentYear && timetracking.EndTime.Year == currentYear)
                 {
                     TimeSpan timeSpan = timetracking.EndTime - timetracking.StartTime;
@@ -47,15 +50,17 @@ namespace ZeiterfassungsTool.StaticClasses
                     hours += timeSpan.TotalHours;
 
                 }
+                // Wenn nur der Startzeitpunkt im selben Monat und Jahr sind ...
                 else if (timetracking.StartTime.Month == currentMonth && timetracking.StartTime.Year == currentYear)
                 {
                     TimeOnly timeInTimetrackingStart = TimeOnly.FromDateTime(timetracking.StartTime);
                     TimeOnly endOfDay = new TimeOnly(0, 0);
-
+                    // ... dann bedeutet das, dass (normalerweise) der Endzeitpunkt mindestens 1 Monat später liegt, also dass z.B. über die Nacht vom 31.01 von 20 Uhr bis zum 01.02 um 6 Uhr gearbeitet wurde. Da aber nur die Summe von den Arbeitszeiten von einen Monat bestimmt werden soll, darf nicht die Differenz zwischen End- udn Startzeitpunkt ermitteltbestimme nur die Differenz zwischen Ende und Startzeitpunkt ermittelt werden, sondern zwischen dem Ende des Tages und dem Start.
                     TimeSpan difference = endOfDay - timeInTimetrackingStart;                // Wenn der Start von der Aufzeichnung am heutigen Datum ist, aber das Ende der Aufzeichnung nicht, dann kann es nur bedeuten, dass über die Nacht hinweg bis zum nächsten Tag gearbeitet wurde. Da aber nur die Zeit vom heutigen Tag angezeigt werden soll, muss die Differenz zwischen 0 Uhr und dem Startzeitpunkt der Aufzeichnung ermittelt werden und zum Schluss dazuaddiert werden.     
 
                     hours += difference.TotalHours;
                 }
+                // ... und wenn nur der Endzeitpunkt im selben Jahr und Monat sind ...
                 else if (timetracking.EndTime.Month == currentMonth && timetracking.EndTime.Year == currentYear)
                 {
                     TimeOnly timeInTimetrackingEnd = TimeOnly.FromDateTime(timetracking.EndTime);
@@ -111,6 +116,24 @@ namespace ZeiterfassungsTool.StaticClasses
             }
 
             return Math.Round(workingHoursTotal);
+        }
+
+        public static double CalculateVacationHoursTotal(List<Timetracking> timetrackingList)
+        {
+            if (timetrackingList == null)
+                return 0;
+
+            // Sortiert die Einträge heraus, wo Urlaub genommen wurde, ermittel von diesen die Zeitdifferenzen und summiere diese zusammen.
+            var totalHoursVacationList = timetrackingList.Where(employee => employee.Subject == "Urlaub").Select(x => (x.EndTime - x.StartTime).TotalHours);
+            double totalHoursVacation = 0;
+            //Nur wenn auch Zeiten ermittelt wurden, dann sollen diese zusammensummiert werden.
+            if (totalHoursVacationList.Count() != 0)
+            {
+                totalHoursVacation = totalHoursVacationList.Aggregate((sum, val) => sum + val);
+            }
+            //var test = timetrackingList.Where(employee => employee.Subject == "Urlaub");
+            //var count = test.Count();
+            return totalHoursVacation;
         }
     }
 }

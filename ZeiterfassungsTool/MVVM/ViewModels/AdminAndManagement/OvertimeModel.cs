@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using Syncfusion.Maui.Gauges;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,6 +82,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand CreateEmployeeListCommand =>
            new Command(() =>
            {
+               //Ich wollte hier auf einen Balken zugreifen, hat aber nicht geklappt
+               //SfLinearGauge sfLinearGauge = element as SfLinearGauge;
+               //if (sfLinearGauge != null)
+               //{
+               //    var childs = sfLinearGauge.BarPointers;
+               //    childs[3].Value = 100;
+               //}
+
                if (rbChooseMonth)
                {
                     CreateEmployeeListForOneMonth();
@@ -131,14 +140,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                 Color color;
                 if (overtime >= 0)
-                    color = Colors.Green;
+                    color = Colors.LightGreen;
                 else
                 {
                     overtime = overtime * -1;       // wandelt es in diesen Fall eig. in Minusstunden um, deswegen soll als Farbe auch Rot ausgewählt werden, um das zu verdeutlichen
                     color = Colors.Red;
                 }
 
-                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursThisMonth, TargetHours = targetHoursPerMonth, Overtime = overtime, Color = color });
+                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursThisMonth, TargetHours = targetHoursPerMonth, Overtime = overtime, ColorOvertime = color });
             }
 
             try
@@ -166,17 +175,21 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 if (targetHoursTotal > biggestNumber) biggestNumber = (int)targetHoursTotal;
                 double overtimeTotal = actualHoursTotal - targetHoursTotal;
                 if (overtimeTotal > biggestNumber) biggestNumber = (int)overtimeTotal;
+                double vacationHoursTotal = CalculateHours.CalculateVacationHoursTotal(employee.Timetracking);
+                if (vacationHoursTotal > biggestNumber) biggestNumber = (int)vacationHoursTotal;
+                double overtimeLeft = overtimeTotal - vacationHoursTotal;
 
-                Color color;
+                Color colorOvertime;
                 if (overtimeTotal >= 0)
-                    color = Colors.Green;
+                    colorOvertime = Colors.LightGreen;
                 else
                 {
                     overtimeTotal = overtimeTotal * -1;       // wandelt es in diesen Fall eig. in Minusstunden um, deswegen soll als Farbe auch Rot ausgewählt werden, um das zu verdeutlichen
-                    color = Colors.Red;
+                    colorOvertime = Colors.Red;
                 }
                 // Wenn ich hier die BiggestNumber direkt zuweise, dann kommt eine NaN Fehlermeldung. K.a. wieso
-                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal, Color = color });
+                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal, 
+                    VacationHoursTotal = vacationHoursTotal, OvertimeLeft = overtimeLeft, ColorOvertime = colorOvertime });
             }
             try
             {
@@ -192,11 +205,22 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
     public class EmployeeWorkingHours
     {
+        private double overtimeLeft;
+
         public string Username { get; set; }
         public double WorkingHours { get; set; }
         public double TargetHours { get; set; }
         public double Overtime { get; set; }
+        public double VacationHoursTotal { get; set; }
+        public double OvertimeLeft
+        {
+            get => overtimeLeft; set
+            {
+                if (value < 0) value = 0;
+                    overtimeLeft = value;
+            }
+        }            // Die übrig gebliebenen Überstunden, wenn vorhanden
 
-        public Color Color { get; set; }
+        public Color ColorOvertime { get; set; }
     }
 }

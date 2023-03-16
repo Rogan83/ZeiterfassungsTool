@@ -36,7 +36,7 @@
 
     <Color x:Key="ButtonColorDarkBlue">#002080</Color>
     <Color x:Key="ButtonColorDarkBlue2">#00004d</Color>
-    <Color x:Key="ButtonColorLightBlue">#b3b3ff</Color>
+    <Color x:Key="ButtonColorLightBlue">#c8c8ea</Color>
     <!--Ende-->
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
