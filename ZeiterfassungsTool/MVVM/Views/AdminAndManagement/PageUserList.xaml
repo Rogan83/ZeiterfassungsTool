@@ -14,7 +14,10 @@
             <Button
             Text="Zurück zum Hauptmenü"
             Command="{Binding BackToMainMenu}"
-                Margin="20"/>
+                Margin="20"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"/>
         </VerticalStackLayout>
         <CollectionView
                 Grid.Row="1"
@@ -54,8 +57,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label Grid.Row="2" Text="Klicken Sie auf einen Mitarbeiter, um in die Detailansicht von ihm zu gelangen"
-               TextColor="AliceBlue" HorizontalTextAlignment="Center" Margin="20" Padding="10" BackgroundColor="DarkBlue"/>
+        <Label  Grid.Row="2" Text="Klicken Sie auf einen Mitarbeiter, um in die Detailansicht von ihm zu gelangen"
+                HorizontalTextAlignment="Center" Margin="20" Padding="10" BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"/>
     </Grid>
     
 </ContentPage>

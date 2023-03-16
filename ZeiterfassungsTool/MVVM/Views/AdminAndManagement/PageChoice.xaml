@@ -25,6 +25,9 @@
                 Margin="20,100,20,20"
                 Text="zur Arbeitszeiten Ansicht "
                 Command="{Binding GoToUserListView}"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}"
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"
                 />
             <Button
                 x:Name="btnShowAllAccounts"
@@ -32,18 +35,27 @@
                 Margin="20"
                 Text="zur Listenansicht von allen Accounts"
                 Command="{Binding GoToAccountsListView}"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}"
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"
                 />
             <Button
                 Grid.Row="2"
                 Margin="20"
                 Text="zur Überstundenansicht"
                 Command="{Binding GoToOvertimeView}"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}"
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"
                 />
             <Button
                 Grid.Row="3"
                 Margin="20"
                 Text="zur Kalenderansicht"
                 Command="{Binding GoToScheduler}"
+                BackgroundColor="{StaticResource ButtonColorDarkBlue}"
+                TextColor="{StaticResource ButtonColorLightBlue}"
+                FontSize="Medium"
                 />
 
         </Grid>
@@ -55,7 +67,9 @@
                 Margin="20"
                 Text="Datenbank in CSV Dateien speichern"
                 Command="{Binding SaveDatabaseInCSVFile}"
-                BackgroundColor="BlueViolet"
+                BackgroundColor="{StaticResource ButtonColorDarkGreen}"
+                 TextColor="{StaticResource ButtonColorLightGreen}"
+                FontSize="Medium"
                 />
 
             <Button
@@ -64,7 +78,9 @@
                 Text="Datenbank aus CSV Dateien wiederherstellen"
                 Command="{Binding LoadDatabaseFromCSVFile}"
                 CommandParameter="{Binding Source={x:Reference grid}}"
-                BackgroundColor="BlueViolet"
+                BackgroundColor="{StaticResource ButtonColorDarkGreen2}"
+                TextColor="{StaticResource ButtonColorLightGreen}"
+                FontSize="Medium"
                 />
             <core:SfBusyIndicator Grid.Row="2" x:Name="busy" IsRunning="false"  IsVisible="true" Title="Daten werden in die Datenbank gespeichert..." SizeFactor="0.7" HeightRequest="200"></core:SfBusyIndicator >
         </Grid>

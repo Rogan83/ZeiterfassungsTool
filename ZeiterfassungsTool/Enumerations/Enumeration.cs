@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace ZeiterfassungsTool.Enumerations
 {
-    
-        public enum Role
-        {
-            User,
-            Management,
-            Admin
-        }
-    
+    public enum Role
+    {
+        User,
+        Management,
+        Admin
+    }
 }

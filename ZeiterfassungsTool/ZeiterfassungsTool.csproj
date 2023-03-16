@@ -83,7 +83,7 @@
 	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageUserList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\AdminAndManagement\PageUserManagement.xaml">
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\UserManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\CreateAccount.xaml">
@@ -132,8 +132,8 @@
 	  <Compile Update="MVVM\Views\AdminAndManagement\PageScheduler.xaml.cs">
 	    <DependentUpon>PageScheduler.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\AdminAndManagement\PageUserManagement.xaml.cs">
-	    <DependentUpon>PageUserManagement.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\AdminAndManagement\UserManagement.xaml.cs">
+	    <DependentUpon>UserManagement.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="MVVM\Views\AdminAndManagement\PageChoice.xaml.cs">
 	    <DependentUpon>PageChoice.xaml</DependentUpon>

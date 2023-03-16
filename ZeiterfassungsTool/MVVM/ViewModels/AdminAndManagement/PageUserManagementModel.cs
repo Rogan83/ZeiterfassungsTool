@@ -60,19 +60,19 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand BackButton =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserManagement/PageUserList");
+               Shell.Current.GoToAsync("UserManagement/PageUserList");
            });
 
         public ICommand BackToMenu =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserManagement/LoginPage");
+               Shell.Current.GoToAsync("UserManagement/LoginPage");
            });
 
         public ICommand Back =>
            new Command(() =>
            {
-               Shell.Current.GoToAsync("PageUserManagement/PageUserList");
+               Shell.Current.GoToAsync("UserManagement/PageUserList");
            });
 
         public ICommand Logout =>
@@ -129,7 +129,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                }
 
                App.EmployeeRepo.DeleteItem(Employee);
-               await Shell.Current.GoToAsync("PageUserManagement/PageUserList");
+               await Shell.Current.GoToAsync("UserManagement/PageUserList");
            });
 
         public ICommand DeleteTime =>

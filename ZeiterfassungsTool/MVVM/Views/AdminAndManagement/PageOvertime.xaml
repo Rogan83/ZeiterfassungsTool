@@ -82,6 +82,7 @@
                             HorizontalOptions="Center"
                             FontSize="Medium"
                             Margin="0,0,0,0"
+                            TextColor="DarkBlue"
                             />
                         <gauge:SfLinearGauge Orientation="Horizontal" Minimum="0" Maximum="{Binding Source={RelativeSource AncestorType={x:Type local:PageOvertimeModel}}, Path=BiggestNumber}" Margin="40"  HorizontalOptions="Start" Opacity="1" >
                             <!--<gauge:SfLinearGauge.Ranges >

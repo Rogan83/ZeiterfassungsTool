@@ -19,8 +19,24 @@
     <Color x:Key="Gray950">#141414</Color>
 
     <!--Eigene Farben-->
+    <!--Background-->
     <Color x:Key="BGColor1">#6BAEFF</Color>
     <Color x:Key="BGContainer">#b3cbff</Color> 
+    
+    <!--Buttons-->
+    
+    <Color x:Key="ButtonColorLightGreen">#ccffcc</Color>
+    <Color x:Key="ButtonColorDarkYellow">#999900</Color>
+    <Color x:Key="ButtonColorDarkYellow2">#333300</Color>
+    <Color x:Key="ButtonColorBrown">#995c00</Color>
+    
+    <Color x:Key="ButtonColorDarkGreen">#006600</Color>
+    <Color x:Key="ButtonColorDarkGreen2">#194d19</Color>
+    <Color x:Key="ButtonColorLightYellow">#ffffcc</Color>
+
+    <Color x:Key="ButtonColorDarkBlue">#002080</Color>
+    <Color x:Key="ButtonColorDarkBlue2">#00004d</Color>
+    <Color x:Key="ButtonColorLightBlue">#b3b3ff</Color>
 
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

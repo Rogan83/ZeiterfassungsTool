@@ -26,7 +26,7 @@ public partial class AppShell : Shell
 
 
         Routing.RegisterRoute("PageUserList", typeof(PageUserList));
-        Routing.RegisterRoute("PageUserManagement", typeof(PageUserManagement));
+        Routing.RegisterRoute("UserManagement", typeof(UserManagement));
         Routing.RegisterRoute("PageScheduler", typeof(PageScheduler));
         Routing.RegisterRoute("PageOvertime", typeof(PageOvertime));
         Routing.RegisterRoute("PageAdminAndManagementManagement", typeof(PageAdminAndManagementManagement));
@@ -34,10 +34,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
         Routing.RegisterRoute("PageUserList/StartPage", typeof(PageUserList));
-        Routing.RegisterRoute("PageUserList/PageUserManagement", typeof(PageUserList));
+        Routing.RegisterRoute("PageUserList/UserManagement", typeof(PageUserList));
         Routing.RegisterRoute("PageUserList/PageChoice", typeof(PageUserList));
 
-        Routing.RegisterRoute("PageUserManagement/PageUserList", typeof(PageUserManagement));
+        Routing.RegisterRoute("UserManagement/PageUserList", typeof(UserManagement));
 
         Routing.RegisterRoute("UserPage/LoginPage", typeof(UserPage));
         Routing.RegisterRoute("CreateAccount/LoginPage", typeof(UserPage));

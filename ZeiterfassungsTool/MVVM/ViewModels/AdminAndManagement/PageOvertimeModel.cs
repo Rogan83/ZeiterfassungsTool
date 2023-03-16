@@ -51,19 +51,19 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public PageOvertimeModel()
         {
-            //Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));         //Verursacht aus irgendeinen Grund folgende Fehlermeldung, die sich auf die Eigenschaft "BiggestNumber" bezieht: 'Cannot access a disposed object.' 
-            var Allaccounts = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren());
+            Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));        
+            //var Allaccounts = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren());
 
-            List<Employee> users = new List<Employee>();
+            //List<Employee> users = new List<Employee>();
 
-            foreach (var account in Allaccounts)
-            {
-                if (account.Role == Enumerations.Role.User) 
-                {
-                    users.Add(account);
-                }
-            }
-            Employees = new ObservableCollection<Employee>(users);
+            //foreach (var account in Allaccounts)
+            //{
+            //    if (account.Role == Enumerations.Role.User) 
+            //    {
+            //        users.Add(account);
+            //    }
+            //}
+            //Employees = new ObservableCollection<Employee>(users);
 
 
             Month = DateTime.Now.Month.ToString();
@@ -144,11 +144,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             try
             {
                 BiggestNumber= biggestNumber;               // in dem Augenblick, wo eine kleinere Zahl zugewiesen wird, kommt die Fehlermeldung: "Cannot access a disposed object." und es wird in den Catch Block gesprungen. Komischerweise weist es trotzdem den Wert zu und dieser wird dann auch genutzt. 
-
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine("Exception: " + e);
             }
             EmployeesWorkingHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
         }
@@ -181,12 +180,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             }
             try
             {
-                BiggestNumber = biggestNumber;
-
+                BiggestNumber = biggestNumber;      // in dem Augenblick, wo eine kleinere Zahl zugewiesen wird, kommt die Fehlermeldung: "Cannot access a disposed object." und es wird in den Catch Block gesprungen. Komischerweise weist es trotzdem den Wert zu und dieser wird dann auch genutzt. 
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine("Exception: " + e);
             }
             EmployeesWorkingHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
         }
