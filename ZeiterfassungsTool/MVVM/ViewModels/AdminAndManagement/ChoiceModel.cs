@@ -30,7 +30,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public ChoiceModel() 
         {
-            
+            path = DeterminePath();
         }
 
         public ICommand BackButton =>
@@ -73,7 +73,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand SaveDatabaseInCSVFile =>
            new Command(async() =>
            {
-               bool answer = await App.Current.MainPage.DisplayAlert("Backup", $"Wenn Sie fortfahren, dann werden die Daten im Verzeichnis '{pathWindows}' geschrieben. Wenn sich dort schon ein Backup befindet, wird dieses überschrieben. Möchten Sie fortfahren? Dieser Vorgang kann nicht rückgängig gemacht werden.", "Ja", "Nein");
+               path = DeterminePath();
+               
+               bool answer = await App.Current.MainPage.DisplayAlert("Backup", $"Wenn Sie fortfahren, dann werden die Daten im Verzeichnis '{path}' geschrieben. Wenn sich dort schon ein Backup befindet, wird dieses überschrieben. Möchten Sie fortfahren? Dieser Vorgang kann nicht rückgängig gemacht werden.", "Ja", "Nein");
+               
                if (!answer) return;
 
                List<Employee> employees = App.EmployeeRepo.GetItems();
@@ -86,7 +89,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand LoadDatabaseFromCSVFile =>
            new Command(async(grid) =>
            {
-               var answer = await App.Current.MainPage.DisplayAlert("Achtung", $"Möchten Sie wirklich die Datenbank mit den Daten im Verzeichnis '{pathWindows}' überschreiben? Dieser Vorgang kann nicht rückgängig gemacht werden.", "Ja","Nein");               
+               path = DeterminePath();
+
+               var answer = await App.Current.MainPage.DisplayAlert("Achtung", $"Möchten Sie wirklich die Datenbank mit den Daten im Verzeichnis '{path}' überschreiben? Dieser Vorgang kann nicht rückgängig gemacht werden.", "Ja","Nein");               
                if (!answer) return;
 
                var elements = (Grid)grid;

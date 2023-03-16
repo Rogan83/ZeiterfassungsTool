@@ -98,6 +98,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 //var salt = DateTime.Now.ToString();
                 //var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
                 var hashedPW = Hash.HashPasswordScrypt(Password);
+               
 
                 if (ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
                 {
@@ -127,6 +128,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                     if (isFirstAccount)
                     {
+                        if (hashedPW == null)
+                        {
+                            App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld ist leer!", "Ok");
+                            return;
+                        }
                         App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Firstname = this.Firstname, Lastname = this.Lastname, Birthday = this.Birthday, City = this.City,
                             Country = this.Country, EMail = this.EMail, PostalCode = this.PostalCode, Street = this.Street, Password = hashedPW, /*Salt = salt,*/ Role = Role.Admin });         //Salt braucht man nur nach der anderen Hash Verschlüsselung
                     }
@@ -195,6 +201,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 else
                 {
                     App.Current.MainPage.DisplayAlert("","Der Benutzername und das Passwort Feld darf nicht leer sein!","Ok");
+                    return;
                 }
                 
             });

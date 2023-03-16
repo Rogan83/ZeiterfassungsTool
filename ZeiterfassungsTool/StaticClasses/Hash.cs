@@ -32,7 +32,10 @@ namespace ZeiterfassungsTool.StaticClasses
         /// <returns></returns>
         public static string HashPasswordScrypt(string password)
         {
-            return Encoder.Encode(password); 
+            if (password != null)
+                return Encoder.Encode(password);
+            else
+                return null;
         }
     }
 }
