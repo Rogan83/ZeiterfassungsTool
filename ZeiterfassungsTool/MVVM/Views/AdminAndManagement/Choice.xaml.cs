@@ -9,7 +9,7 @@ public partial class Choice : ContentPage
 	{
 		InitializeComponent();
 
-		BindingContext = new PageChoiceModel();
+		BindingContext = new ChoiceModel();
 	}
 
     protected override void OnAppearing()

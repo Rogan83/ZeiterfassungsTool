@@ -7,12 +7,12 @@ namespace ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 
 public partial class AdminAndManagementManagement : ContentPage
 {
-    PageAdminAndManagementManagementModel model = new();
+    AdminAndManagementManagementModel model = new();
     public AdminAndManagementManagement()
     {
         InitializeComponent();
 
-        model = new PageAdminAndManagementManagementModel();
+        model = new AdminAndManagementManagementModel();
         BindingContext = model;
     }
 

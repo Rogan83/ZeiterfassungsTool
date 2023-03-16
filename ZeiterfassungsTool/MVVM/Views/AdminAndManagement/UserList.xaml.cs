@@ -7,7 +7,7 @@ public partial class UserList : ContentPage
 	{
 		InitializeComponent();
 
-		BindingContext = new PageUserListModel();
+		BindingContext = new UserListModel();
 	}
 
    

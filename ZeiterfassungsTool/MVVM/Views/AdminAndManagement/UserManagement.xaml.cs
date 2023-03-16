@@ -8,11 +8,11 @@ namespace ZeiterfassungsTool.MVVM.Views.Admin;
 
 public partial class UserManagement : ContentPage
 {
-    PageUserManagementModel model = new PageUserManagementModel();
+    UserManagementModel model = new UserManagementModel();
     public UserManagement()
     {
         InitializeComponent();
-        model = new PageUserManagementModel();
+        model = new UserManagementModel();
         BindingContext = model;
     }
     

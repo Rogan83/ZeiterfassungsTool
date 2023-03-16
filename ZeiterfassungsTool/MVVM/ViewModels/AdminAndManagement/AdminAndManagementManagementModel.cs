@@ -14,7 +14,7 @@ using ZeiterfassungsTool.StaticClasses;
 namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 {
     [AddINotifyPropertyChangedInterface]
-    public class PageAdminAndManagementManagementModel
+    public class AdminAndManagementManagementModel
     {
 
         #region Properties

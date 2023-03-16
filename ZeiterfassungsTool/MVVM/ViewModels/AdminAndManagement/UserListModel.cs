@@ -6,7 +6,7 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
-    public class PageUserListModel
+    public class UserListModel
     {
         
 
@@ -15,7 +15,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ObservableCollection<Employee> Employees { get; set; }
             = new ObservableCollection<Employee>();
 
-        public PageUserListModel()
+        public UserListModel()
         {
             var employees = App.EmployeeRepo.GetItemsWithChildren();
             foreach (var employee in employees)

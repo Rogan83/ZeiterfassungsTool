@@ -8,7 +8,7 @@ public partial class Overtime : ContentPage
 	{
 		InitializeComponent();
 
-		BindingContext = new PageOvertimeModel();
+		BindingContext = new OvertimeModel();
 	}
 
 

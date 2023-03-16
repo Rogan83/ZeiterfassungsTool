@@ -14,7 +14,7 @@ using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
-    public class PageChoiceModel
+    public class ChoiceModel
     {
         public bool IsRunningBusyIndicator { get; set; } = false;
         public bool IsVisible { get; set; } = false;
@@ -28,7 +28,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         static bool IsAndroid() => DeviceInfo.Current.Platform == DevicePlatform.Android;
 
-        public PageChoiceModel() 
+        public ChoiceModel() 
         {
             
         }

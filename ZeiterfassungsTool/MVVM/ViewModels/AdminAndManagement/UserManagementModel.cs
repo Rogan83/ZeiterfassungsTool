@@ -13,7 +13,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     [AddINotifyPropertyChangedInterface]
     [QueryProperty(nameof(Employee), "employee")]
-    public class PageUserManagementModel
+    public class UserManagementModel
     {
 
         #region Properties
@@ -50,7 +50,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         #endregion
 
 
-        public PageUserManagementModel()
+        public UserManagementModel()
         {
 
         }
@@ -85,7 +85,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Update =>
            new Command( async() =>
            {
-               bool answer = await App.Current.MainPage.DisplayAlert("Aktualisieren", "Möchten Sie wirklich diesen Datensatz aktualisieren?", "JA", "NEIN");
+               bool answer = await App.Current.MainPage.DisplayAlert("Aktualisieren", $"Möchten Sie wirklich den Datensatz mit der Id {SelectedTime.Id} aktualisieren?", "JA", "NEIN");
 
                if (answer == false)
                {
@@ -120,7 +120,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand DeleteUser =>
            new Command(async () =>
            {
-               bool answer = await App.Current.MainPage.DisplayAlert("Benutzer löschen?", "Möchten Sie diesen Benutzer wirklich löschen?", "JA", "NEIN");
+               bool answer = await App.Current.MainPage.DisplayAlert("Benutzer löschen?", $"Möchten Sie den Benutzer {Employee.Username} wirklich löschen?", "JA", "NEIN");
                Console.WriteLine("antwort: " + answer);
 
                if (answer == false)
@@ -135,7 +135,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand DeleteTime =>
             new Command(async () =>
             {
-                bool answer = await App.Current.MainPage.DisplayAlert("Datensatz löschen", "Möchten Sie wirklich diesen Datensatz löschen?", "JA", "NEIN");
+                bool answer = await App.Current.MainPage.DisplayAlert("Datensatz löschen", $"Möchten Sie wirklich diesen Datensatz mit der Id {SelectedTime.Id} löschen?", "JA", "NEIN");
 
                 if (answer == false)
                 {
@@ -208,7 +208,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand AddTime =>
            new Command(async () =>
            {
-               bool answer = await App.Current.MainPage.DisplayAlert("Hinzufügen", "Möchten Sie wirklich diesen Datensatz hinzufügen?", "JA", "NEIN");
+               bool answer = await App.Current.MainPage.DisplayAlert("Hinzufügen", "Möchten Sie wirklich einen Datensatz mit der unten ausgewählten Start- und Endzeit hinzufügen?", "JA", "NEIN");
 
                if (answer == false)
                {

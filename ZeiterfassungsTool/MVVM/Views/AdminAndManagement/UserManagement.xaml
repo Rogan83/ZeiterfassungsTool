@@ -149,7 +149,7 @@
         
         <Label
             Grid.Row="1"
-            Text="Beginn"
+            Text="Start Zeit/Datum"
             FontSize="Medium"
             TextColor="DarkBlue"
             />
@@ -165,7 +165,7 @@
         <Label
             Grid.Row="1"
             Grid.Column="3"
-            Text="Ende"
+            Text="Ende Zeit/Datum"
             FontSize="Medium"
             TextColor="DarkBlue"
             />
