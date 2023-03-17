@@ -4,110 +4,117 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin">
 
-    <DataTemplate x:Key="EmployeeStyleWork">
-        <Frame Margin="50" BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:UserManagementModel}}, Path=BackgroundColorFrameWork}" >
-            <VerticalStackLayout>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Arbeitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Arbeitsende: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Thema: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding Subject}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding Id}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+    <!--BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:UserManagementModel}}, Path=BackgroundColorFrameWork}"-->
+    <DataTemplate x:Key="EmployeeStyleWork" >
+        <Grid>
+            <Frame Margin="85"  Padding="10" BackgroundColor="SteelBlue" >
+                <VerticalStackLayout Padding="10" BackgroundColor="#b3ccff">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Arbeitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
+                                <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="SteelBlue" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Arbeitsende: " TextColor="DarkBlue" FontSize="Medium"/>
+                                <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="SteelBlue" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Thema: " TextColor="DarkBlue" FontSize="Medium"/>
+                                <Span Text="{Binding Subject}" TextColor="SteelBlue" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
+                                <Span Text="{Binding Id}" TextColor="SteelBlue" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-            </VerticalStackLayout>
-        </Frame>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="EmployeeStyleIll">
-        <Frame Margin="50" BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:UserManagementModel}}, Path=BackgroundColorFrameIll}">
-            <VerticalStackLayout>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Krankheitsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Krankheitsende: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding Id}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+        <Grid>
+            <Frame Margin="85"  Padding="10" BackgroundColor="PaleVioletRed" >
+                <VerticalStackLayout Padding="10" BackgroundColor="Pink">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Krankheitsbeginn: " TextColor="DarkRed" FontSize="Medium"/>
+                                <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="PaleVioletRed" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Krankheitsende: " TextColor="DarkRed" FontSize="Medium"/>
+                                <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="PaleVioletRed" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-            </VerticalStackLayout>
-        </Frame>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Id: " TextColor="DarkRed" FontSize="Medium"/>
+                                <Span Text="{Binding Id}" TextColor="PaleVioletRed" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="EmployeeStyleHoliday">
-        <Frame Margin="50" BackgroundColor="{Binding Source={RelativeSource AncestorType={x:Type local:UserManagementModel}}, Path=BackgroundColorFrameHoliday}">
-            <VerticalStackLayout>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Urlaubsbeginn: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Urlaubsende: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Id: " TextColor="DarkBlue" FontSize="Medium"/>
-                            <Span Text="{Binding Id}" TextColor="DarkGray" FontSize="Medium"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+        <Grid>
+            <Frame Margin="85"  Padding="10" BackgroundColor="LightSeaGreen" >
+                <VerticalStackLayout Padding="10" BackgroundColor="LightGreen">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Urlaubsbeginn: " TextColor="DarkGreen" FontSize="Medium"/>
+                                <Span Text="{Binding StartTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="LightSeaGreen" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Urlaubsende: " TextColor="DarkGreen" FontSize="Medium"/>
+                                <Span Text="{Binding EndTime, StringFormat='Am {0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" TextColor="LightSeaGreen" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-            </VerticalStackLayout>
-        </Frame>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Id: " TextColor="DarkGreen" FontSize="Medium"/>
+                                <Span Text="{Binding Id}" TextColor="LightSeaGreen" FontSize="Medium"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

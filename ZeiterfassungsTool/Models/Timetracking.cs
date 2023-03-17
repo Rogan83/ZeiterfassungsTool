@@ -17,9 +17,9 @@ namespace ZeiterfassungsTool.Models
         public DateTime StartTime { get; set; } = new DateTime();
         public DateTime EndTime { get; set; } = new DateTime();
         public string Subject { get; set; } = String.Empty;              //Hier kann beschrieben werden, was heute gemacht wurde. WICHTIG: vorher Initialisieren, so dass es nicht NULL ist, sonst stürzt das Programm ab, wenn man es für Android kompiliert. Bei WIndows funktioniert es komischerweise aber.
-        public TimeSpan WorkingTime { get; set; } = TimeSpan.Zero;
+        //public TimeSpan WorkingTime { get; set; } = TimeSpan.Zero;
 
-        public bool IsCurrentlyWorking { get; set; } = false;
+        //public bool IsCurrentlyWorking { get; set; } = false;
 
         [ForeignKey(typeof(Employee))]
         public int EmployeeID { get; set; } = 1;

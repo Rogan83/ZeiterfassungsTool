@@ -160,7 +160,6 @@
                 Margin="0,0,0,20"
                 TextColor="{StaticResource ButtonColorLightBlue}"
                 TextDecorations="Underline"
-               
                 Text="Legende"
                 />
             
@@ -173,7 +172,7 @@
                 FontSize="Medium"
                 Padding="20,0,20,0"
                 Text="Ist Stunden"
-                WidthRequest="400" 
+                
                 BackgroundColor="Blue"
                 TextColor="White"/>
             <Label
@@ -206,7 +205,8 @@
                 FontSize="Medium"
                 Padding="20,0,20,0"
                 Text="Minusstunden"
-                BackgroundColor="LightPink"/>
+                BackgroundColor="Red"
+                TextColor="White"/>
             <Label
                 Grid.Column="0"
                 Grid.Row="3"
@@ -228,7 +228,7 @@
                 Text="verbliebene Überstunden"
                 BackgroundColor="DarkGreen"
                 TextColor="White"
-                WidthRequest="315" />
+                 />
 
         </Grid>
     </Grid>

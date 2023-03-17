@@ -40,7 +40,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public bool IsVisibleEntrySubject { get; set; } = true;
 
-        public Color BackgroundColorFrameWork { get; set; } = Colors.LightSkyBlue;        
+        public Color BackgroundColorFrameWork { get; set; } = Color.FromArgb("b3ccff");       
         public Color BackgroundColorFrameHoliday { get; set; } = Colors.LightGreen;        
         public Color BackgroundColorFrameIll { get; set; } = Colors.LightPink;        
 
@@ -237,10 +237,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                Employee.Timetracking.Add(new Timetracking
                {
                    EmployeeID = Employee.Id,
-                   IsCurrentlyWorking = false,
+                   //IsCurrentlyWorking = false,
                    StartTime = DateAndTimeStartTime,
                    EndTime = DateAndTimeEndTime,
-                   WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
+                   //WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
                    Subject = ChooseSubject(),
                    Id = id
                });

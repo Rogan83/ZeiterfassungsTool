@@ -8,6 +8,26 @@
 
     <ContentPage.Resources>
         <Datatemplates:EmployeeDataTemplateSelector x:Key="EmployeeTemplates"/>
+
+
+        <!--<Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>-->
+
+
+
     </ContentPage.Resources>
 
     <Shell.BackButtonBehavior>
@@ -53,6 +73,7 @@
             EmptyView="Keine Daten vorhanden!"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedTime}"
+           
             SelectionChangedCommand="{Binding }"
             ItemsUpdatingScrollMode="KeepLastItemInView"
             BackgroundColor="AliceBlue">

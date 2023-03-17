@@ -46,8 +46,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand DeleteTable =>
             new Command(() =>
             {
-                App.EmployeeRepo.DeleteTable();
-                App.TimetrackingRepo.DeleteTable();
+                //App.EmployeeRepo.DeleteTable();
+                //App.TimetrackingRepo.DeleteTable();
+                App.EmployeeRepo.DropTable(); App.EmployeeRepo.CreateTable();
+                App.TimetrackingRepo.DropTable(); App.TimetrackingRepo.CreateTable();
             });
 
         public ICommand ToLogin =>

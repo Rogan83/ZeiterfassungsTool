@@ -40,7 +40,7 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <!--<Span Text="Name: " TextColor="DarkBlue" FontSize="Medium"/>-->
-                                    <Span Text="{Binding Username}" TextColor="Black" FontSize="Medium"/>
+                                    <Span Text="{Binding Username}" TextColor="Black" FontSize="Large"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>

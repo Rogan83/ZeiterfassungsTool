@@ -52,7 +52,7 @@
                             WidthRequest="200"
                             Text="{Binding Username}"
                             TextColor="DarkBlue"
-                            FontSize="Large"/>
+                            FontSize="Title"/>
                     <!--</Frame>-->
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -25,7 +25,7 @@ namespace ZeiterfassungsTool.Models
         public string Password { get; set; } = string.Empty;
         public int WorkingHoursPerWeek { get; set; } = 40;       //Legt fest, wie viele Stunden dieser Mitarbeiter pro Woche planmäßig arbeiten soll.
         public bool IsResetPassword { get; set; } = false;
-        public string Salt { get; set; }
+        //public string Salt { get; set; }                      // Braucht man bei den jetzt ausgewählten Hash Verschlüsselungsverfahren nicht mehr ...
         public Role Role { get; set; }                        //Rollen: Benutzer, Geschäftsleitung oder Admin
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Timetracking> Timetracking { get; set; } = new List<Timetracking>();

@@ -18,6 +18,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     {
 
         private static System.Timers.Timer aTimer;
+        private DateTime workbegin;
+        private DateTime workend;
+
         #region Properties
 
         public bool ShowStartTimer { get; set; }
@@ -47,8 +50,25 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             if (index >= 0)  //Ist überhaupt ein Datensatz vorhanden?
             {
-                ShowStartTimer = !user.Timetracking[index].IsCurrentlyWorking;
-                ShowStopTimer = user.Timetracking[index].IsCurrentlyWorking;
+                bool isCurrentlyWorking = false;
+                if (user.Timetracking[index] != null)
+                {
+                    // Wenn der Mitarbeiter auf den Stopbutton gedrückt hat, wurde ja die EndTime ermittelt, was bedeutet, dass er momentan nicht arbeitet
+                    if (user.Timetracking[index].EndTime > user.Timetracking[index].StartTime)
+                    {
+                        isCurrentlyWorking = false;
+                    }
+                    else
+                    {
+                        isCurrentlyWorking = true;
+                    }
+                }
+
+                //ShowStartTimer = !user.Timetracking[index].IsCurrentlyWorking;
+                //ShowStopTimer = user.Timetracking[index].IsCurrentlyWorking;
+                
+                ShowStartTimer = !isCurrentlyWorking;
+                ShowStopTimer = isCurrentlyWorking;
 
                 workbegin = user.Timetracking[index].StartTime;
                 workend = user.Timetracking[index].EndTime;
@@ -101,7 +121,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                Shell.Current.GoToAsync("UserPage/UserPageScheduler");
            });
 
-        private DateTime workbegin;
+       
         private int index = 0;
         public ICommand StartTimeTracking =>
            new Command(() =>
@@ -119,13 +139,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                //user.Timetracking[count].Workbegin = DateTime.Now;
 
                user.Timetracking[index].StartTime = workbegin;
-               user.Timetracking[index].IsCurrentlyWorking = true;
+               //user.Timetracking[index].IsCurrentlyWorking = true;
 
                //InitTimer(100, true);
 
                SaveEmployeeInDataBase();
            });
-        private DateTime workend;
+        
         public ICommand StopTimeTracking =>
            new Command(() =>
            {
@@ -138,8 +158,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                // In Datenbank hinzufügen
                //user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
                user.Timetracking[index].EndTime = workend;
-               user.Timetracking[index].WorkingTime = workend - workbegin;
-               user.Timetracking[index].IsCurrentlyWorking = false;
+               //user.Timetracking[index].WorkingTime = workend - workbegin;
+               //user.Timetracking[index].IsCurrentlyWorking = false;
                user.Timetracking[index].Subject = EntrySubject;
 
                EntrySubject = string.Empty;
@@ -217,28 +237,27 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             determinePastTime = DeterminePastTime();
 
             // ... und addiere nach dem Start noch zusätzlich die Zeit, die vergangen ist, wenn die Zeit noch nicht gestoppt wurde. (Was bedeutet, dass noch momentan gearbeitet wird.
-            //if (workbegin > workend)
-
-            if (index >= 0)
+            if (workbegin > workend)
             {
-                if (user.Timetracking[index].IsCurrentlyWorking)
-                {
-                    var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
-                    determinePastTime += passedTimeSinceStartTimeTracking;
-                }
+                var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
+                determinePastTime += passedTimeSinceStartTimeTracking;
             }
-            else
-            {
-                TimePassed = "0h : 0m : 0s";
-                return;
-            }
+            //if (index >= 0)
+            //{
+            //    //if (user.Timetracking[index].IsCurrentlyWorking)
+            //    {
+            //        var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
+            //        determinePastTime += passedTimeSinceStartTimeTracking;
+            //    }
+            //}
+            //else
+            //{
+            //    TimePassed = "0h : 0m : 0s";
+            //    return;
+            //}
 
             //var workingTimeTotal = DateTime.Now - workbegin;
             TimePassed = $"{determinePastTime.Hours.ToString()}h : {determinePastTime.Minutes.ToString()}m : {determinePastTime.Seconds.ToString()}s";
-
-            //TODO:
-            //Noch extra hinzufügen, wie lange ich HEUTE gearbeitet habe und nicht in der Summe von allen Arbeitszeiten
-
         }
 
         void SaveEmployeeInDataBase()

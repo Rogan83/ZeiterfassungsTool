@@ -351,6 +351,19 @@ namespace SQLiteDemo.Repositories
             }
         }
 
+        public void CreateTable()
+        {
+            try
+            {
+                connection.CreateTable<T>();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage =
+                    $"Error: {ex.Message}";
+            }
+        }
+
         public List<T> GetItemsWithChildren()
         {
             try

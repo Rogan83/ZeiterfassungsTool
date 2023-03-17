@@ -132,13 +132,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         private string ToCSVEmployee(Employee employee)
         {
             //return employee.Id + ";" + employee.Username + ";" + employee.Role + ";" + employee.WorkingHoursPerWeek + ";" + employee.Password;
-            return employee.Id + ";" + employee.Username + ";" + employee.Firstname + ";" + employee.Lastname + ";" + employee.Street + ";" + employee.PostalCode + ";" + employee.City + ";" + employee.Country + ";" + employee.Birthday
-                 + ";" + employee.EMail + ";" + employee.Password + ";" + employee.WorkingHoursPerWeek + ";" + employee.IsResetPassword + ";" + employee.Salt + ";" + employee.Role;
+            return employee.Id + ";" + employee.Username + ";" + employee.Firstname + ";" + employee.Lastname + ";" + employee.Street + ";" + employee.PostalCode + ";" + employee.City + ";" + employee.Country
+                + ";" + employee.Birthday + ";" + employee.EMail + ";" + employee.Password + ";" + employee.WorkingHoursPerWeek + ";" + employee.IsResetPassword /*+ ";" + employee.Salt*/ + ";" + employee.Role;
         }
 
         private string ToCSVTimetracking(Timetracking timetracking)
         {
-            return timetracking.Id + ";" + timetracking.StartTime + ";" + timetracking.EndTime + ";" + timetracking.Subject + ";" + timetracking.WorkingTime + ";" + timetracking.IsCurrentlyWorking + ";" + timetracking.EmployeeID;
+            return timetracking.Id + ";" + timetracking.StartTime + ";" + timetracking.EndTime + ";" + timetracking.Subject/* + ";" + timetracking.WorkingTime + ";"*/ 
+                /*+ timetracking.IsCurrentlyWorking*/ + ";" + timetracking.EmployeeID;
         }
 
         private void ToCSV(List<Employee> employees, List<Timetracking> timetrackingList)
@@ -177,8 +178,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         {
             path = DeterminePath();
 
-            App.EmployeeRepo.DeleteTable();
-            App.TimetrackingRepo.DeleteTable();
+            //App.EmployeeRepo.DeleteTable();   
+            //App.TimetrackingRepo.DeleteTable();
+
+            App.EmployeeRepo.DropTable(); App.EmployeeRepo.CreateTable();
+            App.TimetrackingRepo.DropTable(); App.TimetrackingRepo.CreateTable();
 
             List<Timetracking> timetrackinglist = new List<Timetracking>();
             try
@@ -195,13 +199,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                             StartTime = Convert.ToDateTime(parts[1]),
                             EndTime = Convert.ToDateTime(parts[2]),
                             Subject = Convert.ToString(parts[3]),
-                            WorkingTime = TimeSpan.Parse(parts[4]),
-                            IsCurrentlyWorking = Convert.ToBoolean(parts[5]),
-                            EmployeeID = Convert.ToInt32(parts[6])
+                            //WorkingTime = TimeSpan.Parse(parts[4]),
+                            //IsCurrentlyWorking = Convert.ToBoolean(parts[5]),
+                            EmployeeID = Convert.ToInt32(parts[4])
                         };
 
                         timetrackinglist.Add(timetracking);
-                        App.TimetrackingRepo.SaveItemWithChildren(timetracking);
+                        App.TimetrackingRepo.SaveItem(timetracking);
                     }
                 }
 
@@ -212,7 +216,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     while (!sr.EndOfStream)
                     {
                         string[] parts = sr.ReadLine().Split(';');
-                        Role role = (Role)Enum.Parse(typeof(Role), parts[14]);
+                        Role role = (Role)Enum.Parse(typeof(Role), parts[13]);
                         int iDEmployee = Convert.ToInt32(parts[0]);
 
                         List<Timetracking> timetrackingsForThisUser = new List<Timetracking>();
@@ -239,8 +243,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                             Password = Convert.ToString(parts[10]),
                             WorkingHoursPerWeek = Convert.ToInt32(parts[11]),
                             IsResetPassword= Convert.ToBoolean(parts[12]),
-                            Salt = Convert.ToString(parts[13]),
-                            Role = role, //14
+                            //Salt = Convert.ToString(parts[13]),
+                            Role = role, //13
                             Timetracking = timetrackingsForThisUser
                         };
 

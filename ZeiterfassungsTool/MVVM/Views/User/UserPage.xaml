@@ -44,7 +44,9 @@
             Margin="10,10,10,10"
             BackgroundColor="CadetBlue"
             IsVisible="{Binding ShowStartTimer}"
-            Command="{Binding StartTimeTracking}"/>
+            Command="{Binding StartTimeTracking}"
+            TextColor="{StaticResource ButtonColorLightBlue}" 
+            FontSize="Medium"/>
         <Button
             Grid.Row="3"
             Grid.ColumnSpan="3"
@@ -52,7 +54,9 @@
             Margin="10,10,10,10"
             BackgroundColor="DarkRed"
             IsVisible="{Binding ShowStopTimer}"
-            Command="{Binding StopTimeTracking}"/>
+            Command="{Binding StopTimeTracking}"
+            TextColor="{StaticResource ButtonColorLightBlue}" 
+            FontSize="Medium"/>
 
         <Label
             Text="Thema:"
@@ -82,19 +86,21 @@
             Grid.Row="6"
             Grid.ColumnSpan="3"
             Text="Gehe zum Kalender"
-            BackgroundColor="Aquamarine"
-            TextColor="CadetBlue"
             Margin="10,10,10,10"
-            Command="{Binding ForwardToScheduler}"/>
+            Command="{Binding ForwardToScheduler}"
+            BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+            TextColor="{StaticResource ButtonColorLightBlue}" 
+            FontSize="Medium"/>
 
         <Button
             Grid.Row="7"
             Grid.ColumnSpan="3"
             Text="Gehe zur Anzeige gearbeitete Stunden"
-            BackgroundColor="Aquamarine"
-            TextColor="CadetBlue"
             Margin="10,10,10,10"
-            Command="{Binding ForwardToWorkingHoursPage}"/>
+            Command="{Binding ForwardToWorkingHoursPage}"
+            BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+            TextColor="{StaticResource ButtonColorLightBlue}" 
+            FontSize="Medium"/>
 
 
 
