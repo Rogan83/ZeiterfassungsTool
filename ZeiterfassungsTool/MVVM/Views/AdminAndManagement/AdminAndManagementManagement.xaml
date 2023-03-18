@@ -52,7 +52,7 @@
                 <LinearItemsLayout Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Grid Grid.Row="1"
+        <!--<Grid Grid.Row="1"
               BackgroundColor="LightCoral"
               ColumnDefinitions="*,*,*">
             <ImageButton 
@@ -75,7 +75,7 @@
                 Command="{Binding ResetPassword}"
             />
 
-        </Grid>
+        </Grid>-->
 
     </Grid>
 </ContentPage>

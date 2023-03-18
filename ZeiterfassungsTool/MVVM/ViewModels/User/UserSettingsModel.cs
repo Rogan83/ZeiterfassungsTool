@@ -22,13 +22,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public Employee Employee { get; set; }
 
-
-        public bool IsVisibleWorkingTimePerHour { get; set; } = true;
-        public bool IsVisibleDeleteAccount { get; set; }
-        public bool IsVisibleResetPassword { get; set; }
-        public bool IsVisibleAdminStuff { get; set; } = true;
-
-
         public string Username { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -103,20 +96,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             //if (employee.Password != null) 
             //    Password = employee.Password;
 
-            if (Employee.Role == Enumerations.Role.User)
-            {
-                IsVisibleWorkingTimePerHour = false;
-                IsVisibleDeleteAccount = false;
-                IsVisibleResetPassword = false;
-                IsVisibleAdminStuff = false;
-            }
-            else
-            {
-                IsVisibleWorkingTimePerHour = true; 
-                IsVisibleDeleteAccount = true;
-                IsVisibleResetPassword = true;
-                IsVisibleAdminStuff = true;
-            }
 
             Margin = new Thickness(20, 5, 20, 5);
 

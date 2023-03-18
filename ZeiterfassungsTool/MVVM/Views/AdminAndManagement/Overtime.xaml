@@ -215,7 +215,7 @@
                 Margin="20"
                 FontSize="Medium"
                 Padding="20,0,20,0"
-                Text="Urlaub"
+                Text="genommener Urlaub"
                 BackgroundColor="Orange"/>
             <Label
                 Grid.Column="1"
