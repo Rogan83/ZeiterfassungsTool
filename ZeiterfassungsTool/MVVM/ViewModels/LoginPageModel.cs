@@ -58,8 +58,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                var username = EntryUsername; 
                var password = EntryPassword;
 
-               if (username != null || password != null)
+               if ((username != null && password != null) ) 
                {
+                   if (password == string.Empty || username == string.Empty)
+                   {
+                       App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
+                       return;
+                   }
+
                    //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
                    List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
 
@@ -109,7 +115,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                }
                else
                {
-                   Message = "Es müssen beide Felder ausgefüllt sein.";
+                   App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
+                   //Message = "Es müssen beide Felder ausgefüllt sein.";
                }
            });
         /// <summary>
