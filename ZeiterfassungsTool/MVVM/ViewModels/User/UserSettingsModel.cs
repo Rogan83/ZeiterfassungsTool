@@ -1,16 +1,33 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
+using ZeiterfassungsTool.Models;
+using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.User
 {
+    [AddINotifyPropertyChangedInterface]
+    [QueryProperty(nameof(Employee), "employee")]
     public class UserSettingsModel
     {
+
+        private  System.Timers.Timer aTimer;
+
+        public Employee Employee { get; set; }
+
+
+        public bool IsVisibleWorkingTimePerHour { get; set; } = true;
+        public bool IsVisibleDeleteAccount { get; set; }
+        public bool IsVisibleResetPassword { get; set; }
+        public bool IsVisibleAdminStuff { get; set; } = true;
+
 
         public string Username { get; set; }
         public string Firstname { get; set; }
@@ -23,6 +40,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string EMail { get; set; }
         public string Password { get; set; }
 
+        public int VacationDays { get; set; }
+
 
         public Thickness Margin { get; set; }
 
@@ -31,51 +50,148 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserSettingsModel()
         {
-            var employee = Login.WhoIsLoggedIn[0];
+            //Bevor die Eingabefelder mit den Startwerten initialsiert werden können, muss ein kurzer Augenblick gewartet werden, weil vorher noch nicht die Employee Eigenschaft mit den Wert aktualisert wurde, welche von der "USerPageModel" Klasse übergeben wurde 
+            InitTimerForInitialisationInputFields(50, true);
+        }
 
-            if (employee.WorkingHoursPerWeek != 0)
-                WorkingHoursPerWeek = employee.WorkingHoursPerWeek;
+        private void InitTimerForInitialisationInputFields(int duration, bool isActivate)
+        {
+            aTimer = new System.Timers.Timer(duration);
+            aTimer.Elapsed += OnInitInputFields;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = isActivate;
+        }
 
-            if (employee.Username != null)
-                Username = employee.Username;
+        private void OnInitInputFields(object source, ElapsedEventArgs e)
+        {
+            if (Employee == null)
+                return;
 
-            if (employee.Firstname != null)
-                Firstname = employee.Firstname;
 
-            if(employee.Lastname != null)
-                Lastname = employee.Lastname;
+            if (Employee.WorkingHoursPerWeek != 0)
+                WorkingHoursPerWeek = Employee.WorkingHoursPerWeek;
 
-            if (employee.Street != null)
-                Street = employee.Street;
+            if (Employee.Username != null)
+                Username = Employee.Username;
 
-            if (employee.PostalCode != null)
-                PostalCode = employee.PostalCode;
+            if (Employee.Firstname != null)
+                Firstname = Employee.Firstname;
 
-            if (employee.City != null)  
-                City = employee.City;
+            if (Employee.Lastname != null)
+                Lastname = Employee.Lastname;
 
-            if (employee.Country != null)
-                Country = employee.Country;
+            if (Employee.Street != null)
+                Street = Employee.Street;
 
-            if (employee.Birthday != null)
-                Birthday = employee.Birthday;
+            if (Employee.PostalCode != null)
+                PostalCode = Employee.PostalCode;
 
-            if (employee.EMail != null)
-                EMail = employee.EMail;
+            if (Employee.City != null)
+                City = Employee.City;
+
+            if (Employee.Country != null)
+                Country = Employee.Country;
+
+            if (Employee.Birthday != null)
+                Birthday = Employee.Birthday;
+
+            if (Employee.EMail != null)
+                EMail = Employee.EMail;
+
+            VacationDays = Employee.VacationDays;
 
             //if (employee.Password != null) 
             //    Password = employee.Password;
 
+            if (Employee.Role == Enumerations.Role.User)
+            {
+                IsVisibleWorkingTimePerHour = false;
+                IsVisibleDeleteAccount = false;
+                IsVisibleResetPassword = false;
+                IsVisibleAdminStuff = false;
+            }
+            else
+            {
+                IsVisibleWorkingTimePerHour = true; 
+                IsVisibleDeleteAccount = true;
+                IsVisibleResetPassword = true;
+                IsVisibleAdminStuff = true;
+            }
 
             Margin = new Thickness(20, 5, 20, 5);
+
+            aTimer.Enabled = false;
         }
 
+        private void Back()
+        {
+            if (Login.WhoIsLoggedIn[0].Role == Enumerations.Role.User)
+                Shell.Current.GoToAsync("UserSettings/UserPage");
+            else
+                Shell.Current.GoToAsync(nameof(Choice));
+        }
 
         public ICommand BackButton =>
           new Command(() =>
           {
-              Shell.Current.GoToAsync("UserSettings/UserPage");
+              Back();
           });
+        public ICommand DeleteAccount =>
+            new Command(async() =>
+            {
+                try
+                {
+                    bool answer = await App.Current.MainPage.DisplayAlert("Benutzer löschen?", $"Möchten Sie den Benutzer {Employee.Username} wirklich löschen?", "JA", "NEIN");
+
+                    if (answer == false)
+                    {
+                        return;
+                    }
+
+                    App.EmployeeRepo.DeleteItem(Employee);
+                    await App.Current.MainPage.DisplayAlert("", $"Der Account mit dem Benutzernamen '{Employee.Username}' wurde gelöscht", "OK");
+                    await Shell.Current.GoToAsync(nameof(Choice));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error: " + ex);
+                }
+            });
+
+        public ICommand ResetPassword =>
+            new Command(async() =>
+            {
+                try
+                {
+                    App.EmployeeRepo.DeleteItem(Employee);
+
+                    bool answer = await App.Current.MainPage.DisplayAlert("Passwort zurücksetzen?", $"Möchten Sie das Passwort vom Benutzer {Employee.Username} wirklich zurücksetzen?", "JA", "NEIN");
+
+                    if (answer == false)
+                    {
+                        return;
+                    }
+
+                    App.EmployeeRepo.DeleteItem(Employee);
+                    var password = "0";
+
+                    //var salt = DateTime.Now.ToString();
+                    //var hashedPW = Hash.HashPassword($"{password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
+                    var hashedPW = Hash.HashPasswordScrypt(password);
+
+                    Employee.Password = hashedPW;
+                    //SelectedEmployee.Salt = salt;
+
+                    Employee.IsResetPassword = true;
+                    App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+                    await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {Employee.Username} lautet nun '0'.", "OK");
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine("Error: " + ex);
+                }
+            });
 
         public ICommand SaveChangingData =>
           new Command( async () =>
@@ -87,10 +203,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                 hashedPW = Hash.HashPasswordScrypt(Password);
 
               var user = App.EmployeeRepo.GetItems().Find(name => name.Username == Username);
-              var currentEmployee = Login.WhoIsLoggedIn[0];
+              //var currentEmployee = Login.WhoIsLoggedIn[0];
+              
 
               //Wurde ein Nutzer mit dem Benutzernamen gefunden, dann darf dieser Benutzername nicht vergeben werden
-              if (user != null && currentEmployee.Username != Username)
+              if (user != null && Employee.Username != Username)
               {
                   await App.Current.MainPage.DisplayAlert("Fehler", "Dieser Benutzername wurde schon vergeben", "OK");
                   return;
@@ -102,38 +219,38 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               //    return;
               //}
 
-              if (Password == "0" && currentEmployee.IsResetPassword)
+              if (Password == "0" && Employee.IsResetPassword)
               {
                   await App.Current.MainPage.DisplayAlert("Fehler", "Sie müssen ein neues Passwort vergeben!", "OK");
                   return;
               }
 
-              App.EmployeeRepo.DeleteItem(currentEmployee);
+              App.EmployeeRepo.DeleteItem(Employee);
 
-              currentEmployee.WorkingHoursPerWeek = WorkingHoursPerWeek;
+              Employee.WorkingHoursPerWeek = WorkingHoursPerWeek;
 
-              currentEmployee.Username = Username;
-              currentEmployee.Firstname= Firstname;
-              currentEmployee.Lastname= Lastname;
-              currentEmployee.Street = Street;
-              currentEmployee.PostalCode = PostalCode;
-              currentEmployee.City = City;
-              currentEmployee.Country = Country;
-              currentEmployee.Birthday = Birthday;
-              currentEmployee.EMail = EMail;
+              Employee.Username = Username;
+              Employee.Firstname= Firstname;
+              Employee.Lastname= Lastname;
+              Employee.Street = Street;
+              Employee.PostalCode = PostalCode;
+              Employee.City = City;
+              Employee.Country = Country;
+              Employee.Birthday = Birthday;
+              Employee.EMail = EMail;
+              Employee.VacationDays = VacationDays;
               if (hashedPW != null)
-                currentEmployee.Password = hashedPW;
+                  Employee.Password = hashedPW;
               //currentEmployee.Salt = salt;
-              
 
-              currentEmployee.IsResetPassword = false;
 
-              App.EmployeeRepo.SaveItemWithChildren(currentEmployee);
+              Employee.IsResetPassword = false;
+
+              App.EmployeeRepo.SaveItemWithChildren(Employee);
 
               await App.Current.MainPage.DisplayAlert("", "Die Einstellungen wurden gespeichert.", "OK");
 
-              await Shell.Current.GoToAsync("UserSettings/UserPage");
-
+              Back();
           });
     }
 }

@@ -20,10 +20,11 @@
             Keyboard="Numeric"
             Text="{Binding WorkingHoursPerWeek}"
             />-->
-
+            <!--IsVisible="{Binding IsVisibleWorkingTimePerHour}"-->
             <FlexLayout Direction="Row" JustifyContent="Center"  Wrap="Wrap">
 
                 <inputLayout:SfTextInputLayout
+                    x:Name="inputWorkTime"
                         Hint="Wöchentliche Arbeitszeit"
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
@@ -117,11 +118,11 @@
         </inputLayout:SfTextInputLayout>
         <inputLayout:SfTextInputLayout 
                 FlexLayout.Basis="590"
-                        HeightRequest="80"
-                                Hint="Land" 
-                        Stroke="#0450C2"
-                        ContainerBackground="{StaticResource BGContainer}"
-                              Margin="{Binding Margin}" >
+                    HeightRequest="80"
+                    Hint="Land" 
+                    Stroke="#0450C2"
+                    ContainerBackground="{StaticResource BGContainer}"
+                    Margin="{Binding Margin}" >
             <Entry Text="{Binding Country}"
                    TextColor="Black"/>
 
@@ -129,38 +130,72 @@
         <inputLayout:SfTextInputLayout 
                 FlexLayout.Basis="590"
                         HeightRequest="80"
-                                Hint="E-Mail Adresse" 
+                        Hint="E-Mail Adresse" 
                         Stroke="#0450C2"
                         ContainerBackground="{StaticResource BGContainer}"
-                            Margin="{Binding Margin}"  >
+                        Margin="{Binding Margin}"  >
             <Entry Text="{Binding EMail}"/>
+        </inputLayout:SfTextInputLayout>
+                
+        <inputLayout:SfTextInputLayout 
+                x:Name="inputVacationDays"
+                FlexLayout.Basis="590"
+                        HeightRequest="80"
+                        Hint="Urlaubstage/Jahr" 
+                        Stroke="#0450C2"
+                        ContainerBackground="{StaticResource BGContainer}"
+                        Margin="{Binding Margin}"  >
+            <Entry Text="{Binding VacationDays}"/>
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
-                        FlexLayout.Basis="590"
-                        HeightRequest="80"
-                                Hint="Neues Passwort" 
-                                EnablePasswordVisibilityToggle="True"
-                                
-                                ErrorText="Ungültiges Passwort"
-                                HasError="False"
-                        Stroke="#0450C2"
-                        ContainerBackground="#E6EE"
-                                Margin="{Binding Margin}">
-            <Entry Text="{Binding Password}"/>
+                    x:Name="inputNewPassword"
+                    FlexLayout.Basis="590"
+                    HeightRequest="80"
+                    Hint="Neues Passwort" 
+                    EnablePasswordVisibilityToggle="True"
+                    ErrorText="Ungültiges Passwort"
+                    HasError="False"
+                    Stroke="#0450C2"
+                    ContainerBackground="#E6EE"
+                    Margin="{Binding Margin}">
+                <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>
-
-        
-            </FlexLayout>
+    </FlexLayout>
             <Button
-                WidthRequest="590"
-                        HeightRequest="80"
-            Text="Speichern"
-            Command="{Binding SaveChangingData}"
-            Margin="10,30,10,10"
-                BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
+                    WidthRequest="590"
+                    HeightRequest="80"
+                    Text="Speichern"
+                    Command="{Binding SaveChangingData}"
+                    Margin="10,30,10,10"
+                    BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
                     TextColor="{StaticResource ButtonColorLightBlue}"
                     FontSize="Medium"/>
+            
+            <Button
+                    x:Name="btnDeletePassword"
+                    WidthRequest="590"
+                    HeightRequest="80"
+                    Text="Account löschen"
+                    Command="{Binding DeleteAccount}"
+                    Margin="10,30,10,10"
+                    BackgroundColor="Red" 
+                    TextColor="LightPink"
+                    FontSize="Medium"
+                    />
+            <Button
+                    x:Name="btnResetPassword"
+                    WidthRequest="590"
+                    HeightRequest="80"
+                    Text="Passwort zurücksetzen"
+                    Command="{Binding ResetPassword}"
+                    Margin="10,30,10,10"
+                    BackgroundColor="Red" 
+                    TextColor="LightPink"
+                    FontSize="Medium"
+                    />
+
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

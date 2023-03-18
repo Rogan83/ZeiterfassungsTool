@@ -18,7 +18,7 @@
             EmptyView="Keine Daten vorhanden!"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedEmployee}"
-            
+            SelectionChangedCommand="{Binding EmployeeClickedCommand}"
             ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.Header>
                 <Frame BackgroundColor="{StaticResource Primary}">

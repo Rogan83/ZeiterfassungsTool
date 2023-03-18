@@ -54,24 +54,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
           {
               var employee = SelectedEmployee;
 
-
               var Parameter = new Dictionary<string, object>
               {
                     {"employee", employee }
               };
 
-
-
               if (employee != null)
               {
                   //Shell.Current.GoToAsync(nameof(AdminPageUserManagement), employeeParameter);            // Geht nicht...
                   //Shell.Current.GoToAsync($"AdminPage/AdminPageUserManagement", employeeParameter);            // Geht nicht...
-                  await Shell.Current.GoToAsync($"UserManagement", Parameter);            // Geht nicht...
-
+                  await Shell.Current.GoToAsync($"UserManagement", Parameter);            
               }
-
-
-
           });
     }
 }

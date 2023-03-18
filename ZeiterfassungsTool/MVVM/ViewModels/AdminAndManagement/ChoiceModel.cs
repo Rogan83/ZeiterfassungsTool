@@ -133,7 +133,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         {
             //return employee.Id + ";" + employee.Username + ";" + employee.Role + ";" + employee.WorkingHoursPerWeek + ";" + employee.Password;
             return employee.Id + ";" + employee.Username + ";" + employee.Firstname + ";" + employee.Lastname + ";" + employee.Street + ";" + employee.PostalCode + ";" + employee.City + ";" + employee.Country
-                + ";" + employee.Birthday + ";" + employee.EMail + ";" + employee.Password + ";" + employee.WorkingHoursPerWeek + ";" + employee.IsResetPassword /*+ ";" + employee.Salt*/ + ";" + employee.Role;
+                + ";" + employee.Birthday + ";" + employee.EMail + ";" + employee.Password + ";" + employee.WorkingHoursPerWeek + ";" + employee.VacationDays + ";" + employee.IsResetPassword /*+ ";" + employee.Salt*/ + ";" + employee.Role;
         }
 
         private string ToCSVTimetracking(Timetracking timetracking)
@@ -216,7 +216,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     while (!sr.EndOfStream)
                     {
                         string[] parts = sr.ReadLine().Split(';');
-                        Role role = (Role)Enum.Parse(typeof(Role), parts[13]);
+                        Role role = (Role)Enum.Parse(typeof(Role), parts[14]);
                         int iDEmployee = Convert.ToInt32(parts[0]);
 
                         List<Timetracking> timetrackingsForThisUser = new List<Timetracking>();
@@ -242,9 +242,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                             EMail= Convert.ToString(parts[9]),
                             Password = Convert.ToString(parts[10]),
                             WorkingHoursPerWeek = Convert.ToInt32(parts[11]),
-                            IsResetPassword= Convert.ToBoolean(parts[12]),
+                            VacationDays = Convert.ToInt32(parts[12]),
+                            IsResetPassword= Convert.ToBoolean(parts[13]),
                             //Salt = Convert.ToString(parts[13]),
-                            Role = role, //13
+                            Role = role, //14
                             Timetracking = timetrackingsForThisUser
                         };
 

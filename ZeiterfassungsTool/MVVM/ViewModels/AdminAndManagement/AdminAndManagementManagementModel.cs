@@ -53,7 +53,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
                   App.EmployeeRepo.DeleteItem(SelectedEmployee);
                   Employees = GetAccountsWithoutLogginInAccount();
                   // Wähle, nachdem der selectierte User gelöscht wurde, den ersten von der Liste und selektiere ihn
-                  SelectedEmployee = Employees.FirstOrDefault();
               }
           });
 
@@ -89,6 +88,22 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 
                await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {SelectedEmployee.Username} lautet nun '0'.", "OK");
            });
+
+        public ICommand EmployeeClickedCommand =>
+          new Command(async () =>
+          {
+              var employee = SelectedEmployee;
+
+              var Parameter = new Dictionary<string, object>
+              {
+                    {"employee", employee }
+              };
+
+              if (employee != null)
+              {
+                  await Shell.Current.GoToAsync($"UserSettings", Parameter);
+              }
+          });
 
         #endregion
 

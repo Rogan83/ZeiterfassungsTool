@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,9 +97,24 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
            });
 
         public ICommand Settings =>
-           new Command(() =>
+           new Command(async() =>
            {
-               Shell.Current.GoToAsync("UserPage/UserSettings");
+               //Shell.Current.GoToAsync("UserPage/UserSettings");
+               var employee = Login.WhoIsLoggedIn[0];
+
+               var Parameter = new Dictionary<string, object>
+               {
+                    {"employee", employee }
+               };
+
+               if (employee != null)
+               {
+                   await Shell.Current.GoToAsync($"UserSettings", Parameter);      
+               }
+               else
+               {
+                   Debug.WriteLine("Es ist niemand eingeloggt bzw. es wurde der statischen Eigenschaft 'WhoIsLoggedIn nichts zugewiesen'");
+               }
            });
 
         public ICommand ForwardToWorkingHoursPage =>

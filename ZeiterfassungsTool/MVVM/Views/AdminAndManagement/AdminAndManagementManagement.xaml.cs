@@ -22,9 +22,6 @@ public partial class AdminAndManagementManagement : ContentPage
         //Holt alle Mitarbeiter in die Liste (inkl. Admins und Geschäftsleitung). Es soll aber NICHT der Account erscheinen, mit dem man sich eingeloggt hat, damit dieser auch nicht gelöscht werden kann
 
         model.Employees = model.GetAccountsWithoutLogginInAccount();
-        if (model.Employees != null )
-        {
-            model.SelectedEmployee = model.Employees.FirstOrDefault();
-        }
+        
     }
 }
