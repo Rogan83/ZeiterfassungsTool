@@ -23,18 +23,7 @@
             <!--IsVisible="{Binding IsVisibleWorkingTimePerHour}"-->
             <FlexLayout Direction="Row" JustifyContent="Center"  Wrap="Wrap">
 
-                <inputLayout:SfTextInputLayout
-                    x:Name="inputWorkTime"
-                        Hint="Wöchentliche Arbeitszeit"
-                        Stroke="#0450C2"
-                        ContainerBackground="{StaticResource BGContainer}"
-                        Margin="{Binding Margin}"
-                        FlexLayout.Basis="590"
-                HeightRequest="80"
-                        >
-                    <Entry Text="{Binding WorkingHoursPerWeek}"
-                   TextColor="Black"/>
-                </inputLayout:SfTextInputLayout>
+                
 
                 <inputLayout:SfTextInputLayout
                 FlexLayout.Basis="590"
@@ -136,16 +125,30 @@
                         Margin="{Binding Margin}"  >
             <Entry Text="{Binding EMail}"/>
         </inputLayout:SfTextInputLayout>
-                
+
+        <inputLayout:SfTextInputLayout
+                x:Name="inputWorkTime"
+                Hint="Wöchentliche Arbeitszeit"
+                Stroke="#0450C2"
+                ContainerBackground="{StaticResource BGContainer}"
+                Margin="{Binding Margin}"
+                FlexLayout.Basis="590"
+                HeightRequest="80"
+            >
+            <Entry  Text="{Binding WorkingHoursPerWeek}"
+                    TextColor="Black"/>
+        </inputLayout:SfTextInputLayout>
+
         <inputLayout:SfTextInputLayout 
                 x:Name="inputVacationDays"
                 FlexLayout.Basis="590"
-                        HeightRequest="80"
-                        Hint="Urlaubstage/Jahr" 
-                        Stroke="#0450C2"
-                        ContainerBackground="{StaticResource BGContainer}"
-                        Margin="{Binding Margin}"  >
-            <Entry Text="{Binding VacationDays}"/>
+                HeightRequest="80"
+                Hint="Urlaubstage/Jahr" 
+                Stroke="#0450C2"
+                ContainerBackground="{StaticResource BGContainer}"
+                Margin="{Binding Margin}"  >
+                <Entry Text="{Binding VacationDays}"/>
+                    
         </inputLayout:SfTextInputLayout>
 
         <inputLayout:SfTextInputLayout 
@@ -161,7 +164,27 @@
                     Margin="{Binding Margin}">
                 <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>
-    </FlexLayout>
+
+
+                <!--SelectedIndex="{Binding SelectedRoleIndex}"-->
+                <Picker x:Name="picker"
+                    Title="Rolle"
+                        ItemsSource="{Binding RoleList}"
+                        ItemDisplayBinding="{Binding Role}"
+                        SelectedIndex="{Binding SelectedRoleIndex}"
+                        
+                        BackgroundColor="AliceBlue">
+                    <!--<Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>"Benutzer"</x:String>
+                            <x:String>"Admin"</x:String>
+                            <x:String>"Geschäftsleitung"</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>-->
+                    
+                </Picker>
+                <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem.Role}" BackgroundColor="GreenYellow"/>-->
+            </FlexLayout>
             <Button
                     WidthRequest="590"
                     HeightRequest="80"

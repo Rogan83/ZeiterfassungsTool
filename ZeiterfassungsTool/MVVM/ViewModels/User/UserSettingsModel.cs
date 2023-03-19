@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
+using ZeiterfassungsTool.MVVM.Models;
 using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.StaticClasses;
 
@@ -34,7 +36,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string Password { get; set; }
 
         public int VacationDays { get; set; }
+        public List<RoleName> RoleList { get; set; } = new List<RoleName>()
+        {
+            new RoleName { Role = Enumerations.Role.User},
+            new RoleName { Role = Enumerations.Role.Admin},
+            new RoleName { Role = Enumerations.Role.Management},
+        };
 
+        public Enumerations.Role SelectedRole { get; set; }
+
+        public int SelectedRoleIndex { get; set; }
 
         public Thickness Margin { get; set; }
 
@@ -92,6 +103,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                 EMail = Employee.EMail;
 
             VacationDays = Employee.VacationDays;
+
+            //SelectedRole = Employee.Role;
+            SelectedRoleIndex = RoleList.FindIndex(x => x.Role == Employee.Role);
 
             //if (employee.Password != null) 
             //    Password = employee.Password;
@@ -218,6 +232,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               Employee.Birthday = Birthday;
               Employee.EMail = EMail;
               Employee.VacationDays = VacationDays;
+              Employee.Role = RoleList[SelectedRoleIndex].Role;
+
               if (hashedPW != null)
                   Employee.Password = hashedPW;
               //currentEmployee.Salt = salt;

@@ -122,10 +122,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Compile Update="MVVM\Views\AdminAndManagement\Overtime.xaml.cs">
 	    <DependentUpon>Overtime.xaml</DependentUpon>
 	  </Compile>

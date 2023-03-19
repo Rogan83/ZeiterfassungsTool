@@ -25,6 +25,7 @@ public partial class UserSettings : ContentPage
         HideInputField(inputNewPassword, Role.Admin, Role.Management);
         HideInputField(inputVacationDays, Role.User);
         HideInputField(inputWorkTime, Role.User);
+        HidePicker(picker, Role.User);
     }
 
     private static void HideButton(object sender, Role role)
@@ -69,6 +70,23 @@ public partial class UserSettings : ContentPage
         if (currentUser != null)
         {
             if (currentUser.Role == role || currentUser.Role == role2)
+            {
+                element.IsVisible = false;
+            }
+            else
+            {
+                element.IsVisible = true;
+            }
+        }
+    }
+    private static void HidePicker(object sender, Role role)
+    {
+        var element = sender as Picker;
+
+        var currentUser = Login.WhoIsLoggedIn[0];
+        if (currentUser != null)
+        {
+            if (currentUser.Role == role)
             {
                 element.IsVisible = false;
             }
