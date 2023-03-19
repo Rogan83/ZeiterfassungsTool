@@ -165,26 +165,24 @@
                 <Entry Text="{Binding Password}"/>
         </inputLayout:SfTextInputLayout>
 
-
-                <!--SelectedIndex="{Binding SelectedRoleIndex}"-->
-                <Picker x:Name="picker"
+                <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem.Role}" BackgroundColor="GreenYellow"/>-->
+            </FlexLayout>
+           
+            <Picker x:Name="picker"
+                        FlexLayout.Basis="Auto"  HeightRequest="70"
+                        BackgroundColor="{StaticResource BGContainer}"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center"
                     Title="Rolle"
+                        TextColor="Black"
                         ItemsSource="{Binding RoleList}"
                         ItemDisplayBinding="{Binding Role}"
                         SelectedIndex="{Binding SelectedRoleIndex}"
-                        
-                        BackgroundColor="AliceBlue">
-                    <!--<Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>"Benutzer"</x:String>
-                            <x:String>"Admin"</x:String>
-                            <x:String>"Geschäftsleitung"</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>-->
-                    
-                </Picker>
-                <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem.Role}" BackgroundColor="GreenYellow"/>-->
-            </FlexLayout>
+                       >
+                
+            </Picker>
+
+
             <Button
                     WidthRequest="590"
                     HeightRequest="80"

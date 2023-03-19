@@ -13,7 +13,7 @@ using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.StaticClasses;
-using static SQLite.SQLite3;
+
 
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
@@ -155,7 +155,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     TxtForwardToContent = "Weiter zur Benutzerseite";
                     break;
                 case Role.Management:
-                    TxtForwardToContent = "Weiter zur Geschäftsführungsseite";
+                    TxtForwardToContent = "Weiter zur Geschäftsführung";
                     break;
                 case Role.Admin:
                     TxtForwardToContent = "Weiter zur Adminseite";

@@ -6,13 +6,18 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.Views.User;
 
+
 public partial class UserSettings : ContentPage
 {
-	public UserSettings()
+    UserSettingsModel model;
+    Color color = new();
+    public UserSettings()
 	{
 		InitializeComponent();
 
-		BindingContext = new UserSettingsModel();
+		model = new UserSettingsModel();
+
+        BindingContext = model;
 	}
 
     
@@ -26,6 +31,8 @@ public partial class UserSettings : ContentPage
         HideInputField(inputVacationDays, Role.User);
         HideInputField(inputWorkTime, Role.User);
         HidePicker(picker, Role.User);
+
+        PreventDamageOwnAccount(btnDeletePassword.BackgroundColor, Colors.Grey);
     }
 
     private static void HideButton(object sender, Role role)
@@ -95,5 +102,29 @@ public partial class UserSettings : ContentPage
                 element.IsVisible = true;
             }
         }
+    }
+    /// <summary>
+    /// Verhindert, dass weder der eigene Adminaccount gelöscht - noch die Adminrechte (versehentlich) entzogen werden können
+    /// </summary>
+    /// <param name="bgColorAktivate"></param>
+    /// <param name="bgColorDeactivate"></param>
+    private void PreventDamageOwnAccount(Color bgColorAktivate, Color bgColorDeactivate)
+    {
+        var loggedInAccount = Login.WhoIsLoggedIn[0];
+        
+
+        if (model.Employee.Username == loggedInAccount.Username)
+        {
+            btnDeletePassword.IsEnabled= false;
+            btnDeletePassword.BackgroundColor = bgColorDeactivate;
+
+            picker.IsVisible= false;
+        }
+        else
+        {
+            btnDeletePassword.IsEnabled = true;
+            picker.IsVisible = true;
+        }
+
     }
 }

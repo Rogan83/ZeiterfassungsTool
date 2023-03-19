@@ -11,6 +11,7 @@ using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Models;
 using ZeiterfassungsTool.MVVM.Views.Admin;
+using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.User
@@ -121,7 +122,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             if (Login.WhoIsLoggedIn[0].Role == Enumerations.Role.User)
                 Shell.Current.GoToAsync("UserSettings/UserPage");
             else
-                Shell.Current.GoToAsync(nameof(Choice));
+                Shell.Current.GoToAsync(nameof(AdminAndManagementManagement));
         }
 
         public ICommand BackButton =>

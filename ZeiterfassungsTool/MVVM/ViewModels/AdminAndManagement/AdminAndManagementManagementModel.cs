@@ -71,5 +71,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
             return new ObservableCollection<Employee>(employeeWithoutLogginInAccount);
         }
 
+        public ObservableCollection<Employee> GetAllAccounts()
+        {
+            Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
+            List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
+            
+            return new ObservableCollection<Employee>(employees);
+        }
+
     }
 }
