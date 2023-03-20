@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.Maui.Controls;
 using Syncfusion.Maui.Gauges;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using ZeiterfassungsTool.Models;
@@ -123,17 +125,45 @@ namespace ZeiterfassungsTool.StaticClasses
             if (timetrackingList == null)
                 return 0;
 
-            // Sortiert die Einträge heraus, wo Urlaub genommen wurde, ermittel von diesen die Zeitdifferenzen und summiere diese zusammen.
-            var totalHoursVacationList = timetrackingList.Where(tt => tt.Subject == "Urlaub").Select(x => (x.EndTime - x.StartTime).TotalHours);
+           // Sortiert die Einträge heraus, wo Urlaub genommen wurde, ermittel von diesen die Zeitdifferenzen und summiere diese zusammen.
+            var totalHoursVacationList = timetrackingList.Where(tt => tt.Subject == "Urlaub").Select(x => (x.EndTime - x.StartTime).TotalHours).ToList();
             double totalHoursVacation = 0;
             //Nur wenn auch Zeiten ermittelt wurden, dann sollen diese zusammensummiert werden.
             if (totalHoursVacationList.Count() != 0)
             {
-                totalHoursVacation = totalHoursVacationList.Aggregate((sum, val) => sum + val);
+                bool isSetSum = false;
+                // Zum Start wird die Summe mit den ersten Wert initialsiert, der gefunden wurde. Dieser darf aber nicht größer als 8 sein, weil am Tag nur 8 Stunden gearbeitet werden und dem Mitarbeiter sollen auch nur 8 Stunden als Urlaub angerechnet werden und nicht volle 24 Stunden, wenn er nicht arbeitet. Deswegen muss der "sum" Wert (Summe) auch einmalig überprüft werden, ob dieser größer als 8 ist. Wenn das der Fall ist, dann auf 8 setzen, weil dann schon den ganzen Tag lang Urlaub gemacht wurde.
+                totalHoursVacation = totalHoursVacationList.Aggregate((sum, val) => {
+                    if (!isSetSum)
+                    {
+                        if (sum > 8)
+                            sum = 8;
+                        isSetSum = true;
+                    }
+                    //Dieser Wert darf aber nicht größer als 8 sein, weil am Tag nur 8 Stunden gearbeitet werden und dem Mitarbeiter sollen auch nur 8 Stunden als Urlaub angerechnet werden und nicht volle 24 Stunden, wenn er nicht arbeitet. Deswegen muss der "sum" Wert(Summe) auch einmalig überprüft werden, ob dieser größer als 8 ist.Wenn das der Fall ist, dann auf 8 setzen, weil dann schon den ganzen Tag lang Urlaub gemacht wurde.
+                    if (val > 8)
+                    {
+                        val = 8;
+                    }
+                    return (sum + val);
+                });
+
             }
             //var test = timetrackingList.Where(employee => employee.Subject == "Urlaub");
             //var count = test.Count();
-            return totalHoursVacation;
+            return totalHoursVacation;                  // Wenn z.B. 3 Tage lang Urlaub genommen wurde, dann wird eine Differenz von 3 * 24 Stunden ermittelt. Da aber pro Tag nur 8 Stunden gearbeitet werden, sollen als Urlaub auch nur 8 Stunden, also 1/3 der Zeit als Urlaub verbucht werden, in den man nicht da ist. Deswegen muss die gesamte Zeit durch 3 geteilt werden.
+
+            //foreach (var t in timetrackingList)
+            //{
+            //    double sum = 0;
+            //    double duration = (t.EndTime - t.StartTime).TotalHours;
+            //    if (duration > 8f)
+            //    {
+            //        duration = 8;
+            //        sum += duration;
+            //    }
+            //}
+
         }
 
         //public static double CalculateVacationTime(Employee employee)
