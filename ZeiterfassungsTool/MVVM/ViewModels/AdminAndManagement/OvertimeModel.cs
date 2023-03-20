@@ -177,12 +177,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, employee.Timetracking);
                 if (targetHoursTotal > biggestNumber) biggestNumber = (int)targetHoursTotal;
                 double overtimeTotal = actualHoursTotal - targetHoursTotal;
-                if (overtimeTotal > biggestNumber) biggestNumber = (int)overtimeTotal;
+                if (Math.Abs(overtimeTotal) > biggestNumber) biggestNumber = Math.Abs((int)overtimeTotal);              // Weil overtimeTotal auch negativ sein kann, aber dieser später umgewandelt wird ins positive für die Minusstunden, muss, um die Minusstunden richtig anzeigen zu können, der absolute Wert genommen werden
                 double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
                 if (takenVacationHoursTotal > biggestNumber) biggestNumber = (int)takenVacationHoursTotal;
                 //double overtimeLeft = overtimeTotal - takenVacationHoursTotal;
 
-                double vacationTimeInHours = employee.VacationDays * 8;
+                double vacationTimeInHours = CalculateHours.CalculateVacationHoursTotal(employee);//employee.VacationDaysPerYear * 8;
                 if (vacationTimeInHours > biggestNumber) biggestNumber = (int)vacationTimeInHours;
 
                 double freeTimeTotal = vacationTimeInHours + overtimeTotal;

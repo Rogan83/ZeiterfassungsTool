@@ -103,7 +103,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             if (Employee.EMail != null)
                 EMail = Employee.EMail;
 
-            VacationDays = Employee.VacationDays;
+            VacationDays = Employee.VacationDaysPerYear;
 
             //SelectedRole = Employee.Role;
             SelectedRoleIndex = RoleList.FindIndex(x => x.Role == Employee.Role);
@@ -232,7 +232,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               Employee.Country = Country;
               Employee.Birthday = Birthday;
               Employee.EMail = EMail;
-              Employee.VacationDays = VacationDays;
+              Employee.VacationDaysPerYear = VacationDays;
               Employee.Role = RoleList[SelectedRoleIndex].Role;
 
               if (hashedPW != null)
