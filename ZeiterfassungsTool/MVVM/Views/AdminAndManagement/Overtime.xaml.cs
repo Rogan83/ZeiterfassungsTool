@@ -14,14 +14,14 @@ public partial class Overtime : ContentPage
 
     private void chooseMonth_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        LblInfo.IsVisible = true;
+        //LblInfo.IsVisible = true;
         EntryMonth.IsVisible = true;
         EntryYear.IsVisible = true;
     }
 
     private void total_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        LblInfo.IsVisible = false;
+        //LblInfo.IsVisible = false;
         EntryMonth.IsVisible = false;
         EntryYear.IsVisible = false;
     }

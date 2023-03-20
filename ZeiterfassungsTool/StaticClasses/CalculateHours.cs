@@ -86,7 +86,7 @@ namespace ZeiterfassungsTool.StaticClasses
 
             foreach (var timetracking in timetrackingList)
             {
-                if (timetracking.Subject == "Krank" || timetracking.Subject == "Urlaub")
+                if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
                     continue;
 
                 workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;
@@ -118,13 +118,13 @@ namespace ZeiterfassungsTool.StaticClasses
             return Math.Round(workingHoursTotal);
         }
 
-        public static double CalculateVacationHoursTotal(List<Timetracking> timetrackingList)
+        public static double CalculateTakenVacationHoursTotal(List<Timetracking> timetrackingList)
         {
             if (timetrackingList == null)
                 return 0;
 
             // Sortiert die Einträge heraus, wo Urlaub genommen wurde, ermittel von diesen die Zeitdifferenzen und summiere diese zusammen.
-            var totalHoursVacationList = timetrackingList.Where(employee => employee.Subject == "Urlaub").Select(x => (x.EndTime - x.StartTime).TotalHours);
+            var totalHoursVacationList = timetrackingList.Where(tt => tt.Subject == "Urlaub").Select(x => (x.EndTime - x.StartTime).TotalHours);
             double totalHoursVacation = 0;
             //Nur wenn auch Zeiten ermittelt wurden, dann sollen diese zusammensummiert werden.
             if (totalHoursVacationList.Count() != 0)
@@ -135,5 +135,13 @@ namespace ZeiterfassungsTool.StaticClasses
             //var count = test.Count();
             return totalHoursVacation;
         }
+
+        //public static double CalculateVacationTime(Employee employee)
+        //{
+        //    if (timetrackingList == null)
+        //        return 0;
+
+        //    var totalHoursVacationList = timetrackingList.Where(tt => tt)
+        //}
     }
 }

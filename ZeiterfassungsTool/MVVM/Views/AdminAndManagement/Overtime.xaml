@@ -10,32 +10,32 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
     
-    <Grid RowDefinitions="auto,*,auto">
+    <Grid RowDefinitions="auto,*,.4*">
 
         <Grid   
             Grid.Row="0"
-            RowDefinitions="auto,auto,auto,auto"
+            RowDefinitions="*,*,2*"
             ColumnDefinitions="*,*"
             BackgroundColor="{StaticResource BGColor1}"
             >
             <RadioButton x:Name="chooseMonth"   Grid.Row="0"    Grid.Column="0"     Content="Monat auswählen"   GroupName ="SelectMode"  IsChecked="{Binding rbChooseMonth}" CheckedChanged="chooseMonth_CheckedChanged"  />
             <RadioButton x:Name="total"         Grid.Row="0"    Grid.Column="1"     Content="Gesamt"            GroupName ="SelectMode"  IsChecked="{Binding rbTotal}" CheckedChanged="total_CheckedChanged"/>
-            
-            <Label
+            <!--Text="Geben sie den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden der Mitarbeiter in diesen Zeitraum gearbeitet hat."-->
+            <!--<Label
                 x:Name="LblInfo"
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Text="Geben sie den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden der Mitarbeiter in diesen Zeitraum gearbeitet hat."
-                FontSize="Medium"
+                
+                FontSize="Small"
                 HorizontalOptions="Center"
                 TextColor="Black"
                 Margin="10"
-                />
+                />-->
 
             <Entry
                 x:Name="EntryMonth"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="0"
                 Placeholder="Monat"
                 MaxLength="2"
@@ -45,7 +45,7 @@
 
             <Entry
                 x:Name="EntryYear"
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="1"
                 Placeholder="Jahr"
                 MaxLength="4"
@@ -54,13 +54,14 @@
                 
                 />
             <Button
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.ColumnSpan="2"
-                Margin="10,30,10,0"
+                Margin="10,10,10,10"
                 Text="Bestätigen"
                 BackgroundColor="{StaticResource ButtonColorDarkBlue}"
                 TextColor="{StaticResource ButtonColorLightBlue}"
                 Command="{Binding CreateEmployeeListCommand}"
+                HeightRequest="40"
                 />
             <!--CommandParameter="{Binding Source={x:Reference sfLinearGauge}}"-->
         </Grid>
@@ -92,44 +93,8 @@
                                 <gauge:LinearRange  StartValue="0" EndValue="200" Fill="transparent" Position="Cross"></gauge:LinearRange >
                             </gauge:SfLinearGauge.Ranges>-->
 
-                            <gauge:SfLinearGauge.BarPointers>
-                                <gauge:BarPointer Value="{Binding WorkingHours}" PointerSize="20" 
-                                      Offset="125"
-                                      Position="Outside" 
-                                      CornerStyle="BothCurve" Fill="blue"
-                                  EnableAnimation="True" AnimationDuration="500" >
-                                    <gauge:BarPointer.Child>
-                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
-                                    </gauge:BarPointer.Child>
-                                </gauge:BarPointer>
-                                <gauge:BarPointer Value="{Binding TargetHours}" PointerSize="20" 
-                                      Offset="100"
-                                      Position="Outside" 
-                                      CornerStyle="BothCurve" Fill="yellow"
-                                  EnableAnimation="True" AnimationDuration="500">
-                                    <gauge:BarPointer.Child>
-                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="Caption"/>
-                                    </gauge:BarPointer.Child>
-                                </gauge:BarPointer>
-                                <gauge:BarPointer Value="{Binding Overtime}" PointerSize="20" 
-                                      Offset="75"
-                                      Position="Outside" 
-                                      CornerStyle="BothCurve" Fill="{Binding ColorOvertime}"
-                                  EnableAnimation="True" AnimationDuration="500">
-                                    <gauge:BarPointer.Child>
-                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
-                                    </gauge:BarPointer.Child>
-                                </gauge:BarPointer>
-                                <gauge:BarPointer Value="{Binding VacationHoursTotal}" PointerSize="20"
-                                      Offset="50"
-                                      Position="Outside" 
-                                      CornerStyle="BothCurve" Fill="orange"
-                                      EnableAnimation="True" AnimationDuration="500">
-                                    <gauge:BarPointer.Child>
-                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
-                                    </gauge:BarPointer.Child>
-                                </gauge:BarPointer>
-                                <gauge:BarPointer Value="{Binding OvertimeLeft}" PointerSize="20" 
+
+                            <!--<gauge:BarPointer Value="{Binding OvertimeLeft}" PointerSize="20" 
                                       Offset="25"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="darkgreen"
@@ -137,7 +102,80 @@
                                     <gauge:BarPointer.Child>
                                         <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
                                     </gauge:BarPointer.Child>
+                                </gauge:BarPointer>-->
+
+
+                            <gauge:SfLinearGauge.BarPointers>
+                                <gauge:BarPointer Value="{Binding WorkingHours}" PointerSize="20" 
+                                      Offset="175"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="blue"
+                                  EnableAnimation="True" AnimationDuration="500" >
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
                                 </gauge:BarPointer>
+                                
+                                <gauge:BarPointer Value="{Binding TargetHours}" PointerSize="20" 
+                                      Offset="150"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="yellow"
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+                                
+                                <gauge:BarPointer Value="{Binding Overtime}" PointerSize="20" 
+                                      Offset="125"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="{Binding ColorOvertime}" 
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+
+                                <gauge:BarPointer Value="{Binding VacationTimeTotal }" PointerSize="20"
+                                      Offset="100"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="green"
+                                      EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+
+                                <gauge:BarPointer Value="{Binding FreeTimeTotal}" PointerSize="20" 
+                                      Offset="75"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="darkgreen"
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+
+                                <gauge:BarPointer Value="{Binding TakenVacationHoursTotal}" PointerSize="20" 
+                                      Offset="50"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="orange"
+                                  EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+
+                                <gauge:BarPointer Value="{Binding FreeTimeLeft}" PointerSize="20"
+                                      Offset="25"
+                                      Position="Outside" 
+                                      CornerStyle="BothCurve" Fill="Turquoise "
+                                      EnableAnimation="True" AnimationDuration="500">
+                                    <gauge:BarPointer.Child>
+                                        <Label Text="{Binding Value}" Margin="0,0,0,0" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" FontSize="Caption"/>
+                                    </gauge:BarPointer.Child>
+                                </gauge:BarPointer>
+                                
                             </gauge:SfLinearGauge.BarPointers>
 
                         </gauge:SfLinearGauge>
@@ -148,29 +186,30 @@
         </CollectionView>
 
         <Grid Grid.Row="2" 
-              ColumnDefinitions="*,*"
-              RowDefinitions="*,*,*,*"
+              ColumnDefinitions="*,*,*"
+              RowDefinitions="*,*,*,1*"
               BackgroundColor="{StaticResource BGColor1}"
               >
             <Label
                 Grid.Row="0"
                 Grid.ColumnSpan="4"
-                FontSize="Title"
+                FontSize="Large"
                 HorizontalOptions="Center"
-                Margin="0,0,0,20"
+                Margin="0,0,0,0"
                 TextColor="{StaticResource ButtonColorLightBlue}"
                 TextDecorations="Underline"
                 Text="Legende"
                 />
+            
             
             <Label
                 Grid.Column="0"
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
+                Margin="5"
+                FontSize="Default"
+                Padding="0,0,0,0"
                 Text="Ist Stunden"
                 
                 BackgroundColor="Blue"
@@ -180,55 +219,89 @@
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
+                Margin="5"
+                FontSize="Default"
+                Padding="0,0,0,0"
                 Text="Soll Stunden"
                 TextColor="Black"
                 BackgroundColor="Yellow"/>
             <Label
+                Grid.Column="2"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="10"
+                FontSize="Small"
+                Padding="0,0,0,0"
+                Text="Überstunden"
+                BackgroundColor="LightGreen"/> 
+
+            
+
+            <Label
                 Grid.Column="0"
                 Grid.Row="2"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
-                Text="Überstunden"
-                BackgroundColor="LightGreen"/>
-            <Label
-                Grid.Column="1"
-                Grid.Row="2"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
-                Text="Minusstunden"
+                Margin="5"
+                FontSize="Small"
+                Padding="0,0,0,0"
+                Text="Minus Stunden"
                 BackgroundColor="Red"
                 TextColor="White"/>
-            <Label
-                Grid.Column="0"
-                Grid.Row="3"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
-                Text="genommener Urlaub"
-                BackgroundColor="Orange"/>
+
             <Label
                 Grid.Column="1"
-                Grid.Row="3"
+                Grid.Row="2"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="20"
-                FontSize="Medium"
-                Padding="20,0,20,0"
-                Text="verbliebene Überstunden"
+                Margin="5"
+                FontSize="Default"
+                Padding="0,0,0,0"
+                Text="Urlaubsanspruch"
+                BackgroundColor="green"
+                TextColor="White"/>
+
+            <Label
+                Grid.Column="2"
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="5"
+                FontSize="Default"
+                Padding="0,0,0,0"
+                Text="Freizeit Summe"
                 BackgroundColor="DarkGreen"
-                TextColor="White"
+                TextColor="White"/>
+
+
+            <Grid Grid.Row="3"
+                  Grid.ColumnSpan="3"
+                  ColumnDefinitions="*,*">
+                
+                <Label
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="5"
+                FontSize="Small"
+                Padding="10,0,10,0"
+                Text="genommener Urlaub"
+                BackgroundColor="Orange"/>
+                
+                <Label
+                    Grid.Column="1"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Margin="5"
+                FontSize="Small"
+                Padding="10,0,10,0"
+                Text="verbliebene Freizeit"
+                BackgroundColor="Turquoise"
+                TextColor="Black"
                  />
+            </Grid>
+            
 
         </Grid>
     </Grid>

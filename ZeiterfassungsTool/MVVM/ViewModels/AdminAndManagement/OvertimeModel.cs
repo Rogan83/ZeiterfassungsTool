@@ -175,9 +175,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 if (targetHoursTotal > biggestNumber) biggestNumber = (int)targetHoursTotal;
                 double overtimeTotal = actualHoursTotal - targetHoursTotal;
                 if (overtimeTotal > biggestNumber) biggestNumber = (int)overtimeTotal;
-                double vacationHoursTotal = CalculateHours.CalculateVacationHoursTotal(employee.Timetracking);
-                if (vacationHoursTotal > biggestNumber) biggestNumber = (int)vacationHoursTotal;
-                double overtimeLeft = overtimeTotal - vacationHoursTotal;
+                double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
+                if (takenVacationHoursTotal > biggestNumber) biggestNumber = (int)takenVacationHoursTotal;
+                double overtimeLeft = overtimeTotal - takenVacationHoursTotal;
+
+                double vacationTimeInHours = employee.VacationDays * 8;
+                if (vacationTimeInHours > biggestNumber) biggestNumber = (int)vacationTimeInHours;
+
+                double freeTimeTotal = vacationTimeInHours + overtimeTotal;
+                if (freeTimeTotal > biggestNumber) biggestNumber = (int)freeTimeTotal;
+                double freeTimeLeft = freeTimeTotal - takenVacationHoursTotal;
+
 
                 Color colorOvertime;
                 if (overtimeTotal >= 0)
@@ -189,7 +197,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 }
                 // Wenn ich hier die BiggestNumber direkt zuweise, dann kommt eine NaN Fehlermeldung. K.a. wieso
                 employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal, 
-                    VacationHoursTotal = vacationHoursTotal, OvertimeLeft = overtimeLeft, ColorOvertime = colorOvertime });
+                    TakenVacationHoursTotal = takenVacationHoursTotal, OvertimeLeft = overtimeLeft, ColorOvertime = colorOvertime, VacationTimeTotal = vacationTimeInHours, FreeTimeTotal = freeTimeTotal, FreeTimeLeft = freeTimeLeft});
             }
             try
             {
@@ -211,7 +219,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public double WorkingHours { get; set; }
         public double TargetHours { get; set; }
         public double Overtime { get; set; }
-        public double VacationHoursTotal { get; set; }
+        public double TakenVacationHoursTotal { get; set; }
         public double OvertimeLeft
         {
             get => overtimeLeft; set
@@ -220,6 +228,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     overtimeLeft = value;
             }
         }            // Die übrig gebliebenen Überstunden, wenn vorhanden
+
+        public double VacationTimeTotal { get; set; }
+        public double FreeTimeTotal { get; set; }
+        public double FreeTimeLeft { get; set; }
+
+
 
         public Color ColorOvertime { get; set; }
     }
