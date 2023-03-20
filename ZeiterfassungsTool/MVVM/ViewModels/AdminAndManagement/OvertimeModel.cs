@@ -45,6 +45,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public bool rbChooseMonth { get; set; } = true;
         public bool rbTotal { get; set; }
 
+        public double PointerSize { get; set; } = 0;
+
         #endregion
 
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
@@ -92,7 +94,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                if (rbChooseMonth)
                {
-                    CreateEmployeeListForOneMonth();
+                   CreateEmployeeListForOneMonth();
                }
                else
                {
@@ -147,7 +149,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     color = Colors.Red;
                 }
 
-                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursThisMonth, TargetHours = targetHoursPerMonth, Overtime = overtime, ColorOvertime = color });
+                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursThisMonth, TargetHours = targetHoursPerMonth, Overtime = overtime, 
+                    ColorOvertime = color, PointerSize = 0, OffsetOvertime=25, OffsetTargetHours=50, OffsetWorkingHours=75});
             }
 
             try
@@ -177,7 +180,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 if (overtimeTotal > biggestNumber) biggestNumber = (int)overtimeTotal;
                 double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
                 if (takenVacationHoursTotal > biggestNumber) biggestNumber = (int)takenVacationHoursTotal;
-                double overtimeLeft = overtimeTotal - takenVacationHoursTotal;
+                //double overtimeLeft = overtimeTotal - takenVacationHoursTotal;
 
                 double vacationTimeInHours = employee.VacationDays * 8;
                 if (vacationTimeInHours > biggestNumber) biggestNumber = (int)vacationTimeInHours;
@@ -197,7 +200,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 }
                 // Wenn ich hier die BiggestNumber direkt zuweise, dann kommt eine NaN Fehlermeldung. K.a. wieso
                 employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal, 
-                    TakenVacationHoursTotal = takenVacationHoursTotal, OvertimeLeft = overtimeLeft, ColorOvertime = colorOvertime, VacationTimeTotal = vacationTimeInHours, FreeTimeTotal = freeTimeTotal, FreeTimeLeft = freeTimeLeft});
+                    TakenVacationHoursTotal = takenVacationHoursTotal, ColorOvertime = colorOvertime, VacationTimeTotal = vacationTimeInHours, FreeTimeTotal = freeTimeTotal, 
+                    FreeTimeLeft = freeTimeLeft, PointerSize = 20, OffsetOvertime=125, OffsetTargetHours=150, OffsetWorkingHours=175});
             }
             try
             {
@@ -216,24 +220,32 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         private double overtimeLeft;
 
         public string Username { get; set; }
+
         public double WorkingHours { get; set; }
+        public double OffsetWorkingHours { get; set; }
+
         public double TargetHours { get; set; }
+        public double OffsetTargetHours { get; set; }
+
         public double Overtime { get; set; }
+        public double OffsetOvertime { get; set; }
+
+
         public double TakenVacationHoursTotal { get; set; }
-        public double OvertimeLeft
-        {
-            get => overtimeLeft; set
-            {
-                if (value < 0) value = 0;
-                    overtimeLeft = value;
-            }
-        }            // Die übrig gebliebenen Überstunden, wenn vorhanden
+        //public double OvertimeLeft
+        //{
+        //    get => overtimeLeft; set
+        //    {
+        //        if (value < 0) value = 0;
+        //            overtimeLeft = value;
+        //    }
+        //}            // Die übrig gebliebenen Überstunden, wenn vorhanden
 
         public double VacationTimeTotal { get; set; }
         public double FreeTimeTotal { get; set; }
         public double FreeTimeLeft { get; set; }
 
-
+        public double PointerSize { get; set; }
 
         public Color ColorOvertime { get; set; }
     }

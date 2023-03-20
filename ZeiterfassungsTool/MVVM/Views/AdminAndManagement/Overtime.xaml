@@ -10,7 +10,7 @@
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
     
-    <Grid RowDefinitions="auto,*,.4*">
+    <Grid RowDefinitions="auto,*,auto">
 
         <Grid   
             Grid.Row="0"
@@ -107,7 +107,7 @@
 
                             <gauge:SfLinearGauge.BarPointers>
                                 <gauge:BarPointer Value="{Binding WorkingHours}" PointerSize="20" 
-                                      Offset="175"
+                                      Offset="{Binding OffsetWorkingHours}"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="blue"
                                   EnableAnimation="True" AnimationDuration="500" >
@@ -117,7 +117,7 @@
                                 </gauge:BarPointer>
                                 
                                 <gauge:BarPointer Value="{Binding TargetHours}" PointerSize="20" 
-                                      Offset="150"
+                                      Offset="{Binding OffsetTargetHours}"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="yellow"
                                   EnableAnimation="True" AnimationDuration="500">
@@ -127,7 +127,7 @@
                                 </gauge:BarPointer>
                                 
                                 <gauge:BarPointer Value="{Binding Overtime}" PointerSize="20" 
-                                      Offset="125"
+                                      Offset="{Binding OffsetOvertime}"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="{Binding ColorOvertime}" 
                                   EnableAnimation="True" AnimationDuration="500">
@@ -136,7 +136,7 @@
                                     </gauge:BarPointer.Child>
                                 </gauge:BarPointer>
 
-                                <gauge:BarPointer Value="{Binding VacationTimeTotal }" PointerSize="20"
+                                <gauge:BarPointer Value="{Binding VacationTimeTotal }" PointerSize="{Binding PointerSize}"
                                       Offset="100"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="green"
@@ -146,7 +146,7 @@
                                     </gauge:BarPointer.Child>
                                 </gauge:BarPointer>
 
-                                <gauge:BarPointer Value="{Binding FreeTimeTotal}" PointerSize="20" 
+                                <gauge:BarPointer Value="{Binding FreeTimeTotal}" PointerSize="{Binding PointerSize}"
                                       Offset="75"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="darkgreen"
@@ -156,7 +156,7 @@
                                     </gauge:BarPointer.Child>
                                 </gauge:BarPointer>
 
-                                <gauge:BarPointer Value="{Binding TakenVacationHoursTotal}" PointerSize="20" 
+                                <gauge:BarPointer Value="{Binding TakenVacationHoursTotal}" PointerSize="{Binding PointerSize}"
                                       Offset="50"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="orange"
@@ -166,7 +166,7 @@
                                     </gauge:BarPointer.Child>
                                 </gauge:BarPointer>
 
-                                <gauge:BarPointer Value="{Binding FreeTimeLeft}" PointerSize="20"
+                                <gauge:BarPointer Value="{Binding FreeTimeLeft}" PointerSize="{Binding PointerSize}"
                                       Offset="25"
                                       Position="Outside" 
                                       CornerStyle="BothCurve" Fill="Turquoise "
@@ -195,6 +195,7 @@
                 Grid.ColumnSpan="4"
                 FontSize="Large"
                 HorizontalOptions="Center"
+                VerticalOptions="Center"
                 Margin="0,0,0,0"
                 TextColor="{StaticResource ButtonColorLightBlue}"
                 TextDecorations="Underline"
@@ -207,9 +208,10 @@
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
                 Margin="5"
-                FontSize="Default"
-                Padding="0,0,0,0"
+                FontSize="Small"
+                Padding="10,0,10,0"
                 Text="Ist Stunden"
                 
                 BackgroundColor="Blue"
@@ -219,9 +221,10 @@
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
                 Margin="5"
-                FontSize="Default"
-                Padding="0,0,0,0"
+                FontSize="Small"
+                Padding="10,0,10,0"
                 Text="Soll Stunden"
                 TextColor="Black"
                 BackgroundColor="Yellow"/>
@@ -230,9 +233,10 @@
                 Grid.Row="1"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                Margin="10"
+                VerticalOptions="Center"
+                Margin="5"
                 FontSize="Small"
-                Padding="0,0,0,0"
+                Padding="10,0,10,0"
                 Text="Überstunden"
                 BackgroundColor="LightGreen"/> 
 
@@ -243,9 +247,10 @@
                 Grid.Row="2"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
                 Margin="5"
                 FontSize="Small"
-                Padding="0,0,0,0"
+                Padding="10,0,10,0"
                 Text="Minus Stunden"
                 BackgroundColor="Red"
                 TextColor="White"/>
@@ -255,10 +260,11 @@
                 Grid.Row="2"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
                 Margin="5"
-                FontSize="Default"
-                Padding="0,0,0,0"
-                Text="Urlaubsanspruch"
+                FontSize="Small"
+                Padding="10,0,10,0"
+                Text="Urlaub"
                 BackgroundColor="green"
                 TextColor="White"/>
 
@@ -267,10 +273,11 @@
                 Grid.Row="2"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
                 Margin="5"
-                FontSize="Default"
-                Padding="0,0,0,0"
-                Text="Freizeit Summe"
+                FontSize="Small"
+                Padding="10,0,10,0"
+                Text="Freizeit ins."
                 BackgroundColor="DarkGreen"
                 TextColor="White"/>
 
@@ -278,27 +285,29 @@
             <Grid Grid.Row="3"
                   Grid.ColumnSpan="3"
                   ColumnDefinitions="*,*">
-                
+
                 <Label
-                Grid.Column="0"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="5"
-                FontSize="Small"
-                Padding="10,0,10,0"
-                Text="genommener Urlaub"
-                BackgroundColor="Orange"/>
-                
+                    Grid.Column="0"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    Margin="5"
+                    FontSize="Small"
+                    Padding="10,0,10,0"
+                    Text="genommener Urlaub"
+                    BackgroundColor="Orange"/>
+
                 <Label
                     Grid.Column="1"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Margin="5"
-                FontSize="Small"
-                Padding="10,0,10,0"
-                Text="verbliebene Freizeit"
-                BackgroundColor="Turquoise"
-                TextColor="Black"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    Margin="5"
+                    FontSize="Small"
+                    Padding="10,0,10,0"
+                    Text="verbliebene Freizeit"
+                    BackgroundColor="Turquoise"
+                    TextColor="Black"
                  />
             </Grid>
             
