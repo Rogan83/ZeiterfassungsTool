@@ -122,9 +122,14 @@ namespace ZeiterfassungsTool.StaticClasses
         
         public static double CalculateVacationHoursTotal(Employee employee)
         {
-            DateTime firstTime = employee.Timetracking[0].StartTime;
-            DateTime lastTime = employee.Timetracking[0].EndTime;
-
+            DateTime firstTime = new DateTime();
+            DateTime lastTime = new DateTime();
+            if (employee.Timetracking.Count > 0)
+            {
+                firstTime = employee.Timetracking[0].StartTime;
+                lastTime = employee.Timetracking[0].EndTime;
+            }
+             
             foreach (var t in employee.Timetracking)
             {
                 if ( firstTime > t.StartTime)

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin"
              xmlns:Datatemplates="clr-namespace:ZeiterfassungsTool.Selectors"
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.UserManagement"
-             Title="UserManagement">
+             Title="">
 
     <ContentPage.Resources>
         <Datatemplates:EmployeeDataTemplateSelector x:Key="EmployeeTemplates"/>
@@ -215,7 +215,7 @@
         <!--CommandParameter="{Binding Source={x:Reference imgBtnAdd}}"-->
         <ImageButton 
             x:Name="imgBtnUpdate"
-            Source="save.png"
+            Source="update.png"
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="2"

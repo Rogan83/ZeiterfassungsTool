@@ -183,8 +183,6 @@ namespace SQLiteDemo.Repositories
         //}
         #endregion
 
-
-
         public SQLiteConnection connection;
 
         public BaseRepository(string dbPath)
@@ -201,7 +199,7 @@ namespace SQLiteDemo.Repositories
             if (connection == null)
                 connection = new SQLiteConnection(_dbPath);
 
-             connection.CreateTable<T>();         // nicht ideal, weil auf diese Weise die Tabelle Timetracking ohne Fremdschlüssel hinzugefügt wird. Eig. wollte ich es so lösen, dass die "CreateTableAsync<T>" Methode nur dann ausgelöst wird, wenn T nicht vom Typ Timetracking ist, aber ich weiß nicht, wie man das umsetzt.
+            connection.CreateTable<T>();         // nicht ideal, weil auf diese Weise die Tabelle Timetracking ohne Fremdschlüssel hinzugefügt wird. Eig. wollte ich es so lösen, dass die "CreateTableAsync<T>" Methode nur dann ausgelöst wird, wenn T nicht vom Typ Timetracking ist, aber ich weiß nicht, wie man das umsetzt.
 
         }
 

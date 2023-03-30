@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.User.UserWorkingHours"
              xmlns:control="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
-             Title="UserWorkingHours">
+             Title="">
+
+    <!--Title="UserWorkingHours">-->
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
@@ -22,7 +24,9 @@
                 Grid.ColumnSpan="2"
                 Text="Geben sie den Monat und das Jahr an, von dem sie wissen wollen, wie viele Stunden Sie dort gearbeitet haben."
                 TextColor="Black"
-                Margin="10"/>
+                Margin="10"
+                HorizontalOptions="Center"
+                FontSize="Large"/>
             <Entry
                 Grid.Row="1"
                 Grid.Column="0"
@@ -30,6 +34,7 @@
                 MaxLength="2"
                 Keyboard="Numeric"
                 Text="{Binding Month}"
+                FontSize="Medium"
                 />
             
             <Entry
@@ -39,6 +44,7 @@
                 MaxLength="4"
                 Keyboard="Numeric"
                 Text="{Binding Year}"
+                FontSize="Medium"
                 />
             <Button
                 Grid.Row="2"

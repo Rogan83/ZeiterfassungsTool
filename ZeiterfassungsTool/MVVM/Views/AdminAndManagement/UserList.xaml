@@ -29,6 +29,7 @@
             <CollectionView.Header>
                 <Frame BackgroundColor="DarkCyan"
                            HorizontalOptions="Center"
+                        
                            >
                     <Label Text="Alle Mitarbeiter"
                            FontSize="Title"
@@ -58,8 +59,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Label  Grid.Row="2" Text="Klicken Sie auf einen Mitarbeiter, um in die Detailansicht von ihm zu gelangen"
-                HorizontalTextAlignment="Center" Margin="20" Padding="10" BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
-                TextColor="{StaticResource ButtonColorLightBlue}"
+                HorizontalTextAlignment="Center" Margin="20" Padding="10" BackgroundColor="{StaticResource BGColor1}" 
+                 TextColor="{StaticResource ButtonColorLightBlue}"
                 FontSize="Medium"/>
     </Grid>
     

@@ -39,7 +39,7 @@
                         <VerticalStackLayout >
                             <Label Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
                                         FontSize="Medium"/>
-                            <RadioButton x:Name="user"          Content="Benutzer"         GroupName ="SelectRole" IsChecked="{Binding rbUser}" TextColor="Black"/>
+                            <RadioButton x:Name="user"          Content="Mitarbeiter"      GroupName ="SelectRole" IsChecked="{Binding rbUser}" TextColor="Black"/>
                             <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}" TextColor="Black"/>
                             <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}" TextColor="Black"/>
                         </VerticalStackLayout>
@@ -51,7 +51,7 @@
                                 ContainerBackground="{Binding UsernameColor}"
                                 ErrorText="Benutzername schon vergeben"
                         
-                                        HasError="{Binding UsernameAlreadyExists}"
+                                HasError="{Binding UsernameAlreadyExists}"
                                 >
                         <Entry Text="{Binding Username}" 
                                    TextColor="Black"/>

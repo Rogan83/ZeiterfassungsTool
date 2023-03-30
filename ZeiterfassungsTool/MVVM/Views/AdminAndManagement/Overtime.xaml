@@ -4,7 +4,7 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.Overtime"
              xmlns:local="clr-namespace:ZeiterfassungsTool.MVVM.ViewModels.Admin"
              xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
-             Title="Overtime">
+             >
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>

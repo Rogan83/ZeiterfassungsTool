@@ -48,8 +48,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             {
                 //App.EmployeeRepo.DeleteTable();
                 //App.TimetrackingRepo.DeleteTable();
-                App.EmployeeRepo.DropTable(); App.EmployeeRepo.CreateTable();
-                App.TimetrackingRepo.DropTable(); App.TimetrackingRepo.CreateTable();
+                App.EmployeeRepo.DropTable(); 
+                App.EmployeeRepo.CreateTable();
+
+                App.TimetrackingRepo.DropTable(); 
+                App.TimetrackingRepo.CreateTable();
             });
 
         public ICommand ToLogin =>

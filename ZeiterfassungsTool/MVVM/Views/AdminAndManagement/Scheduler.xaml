@@ -9,7 +9,7 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
     </Shell.BackButtonBehavior>
-    <Grid RowDefinitions=".75*,.2*">
+    <Grid RowDefinitions=".75*,.25*">
     
         <scheduler:SfScheduler 
             Grid.Row="0"
@@ -43,7 +43,7 @@
                 Padding="20,0,20,0"
                 Text="Krank"
                 BackgroundColor="Red"
-                HeightRequest="20"/>
+                HeightRequest="30"/>
             <Label
                 Grid.Column="1"
                 Grid.Row="1"
@@ -53,7 +53,7 @@
                 Padding="20,0,20,0"
                 Text="Arbeit"
                 BackgroundColor="LightBlue"
-                HeightRequest="20"/>
+                HeightRequest="30"/>
             <Label
                 Grid.Column="2"
                 Grid.Row="1"
@@ -63,7 +63,7 @@
                 Padding="20,0,20,0"
                 Text="Urlaub"
                 BackgroundColor="LightGreen"
-                HeightRequest="20"/>
+                HeightRequest="30"/>
         </Grid>
     </Grid>
 </ContentPage>

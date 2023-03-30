@@ -24,7 +24,7 @@ namespace ZeiterfassungsTool.Models
         public string EMail { get; set; }
         public string Password { get; set; } = string.Empty;
         public int WorkingHoursPerWeek { get; set; } = 40;       //Legt fest, wie viele Stunden dieser Mitarbeiter pro Woche planmäßig arbeiten soll.
-        public int VacationDaysPerYear { get; set; } = 20;             //Legt die Urlaubstage fest, die dem Mitarbeiter pro Jahr zur Verfügung stehen.
+        public int VacationDaysPerYear { get; set; } = 30;             //Legt die Urlaubstage fest, die dem Mitarbeiter pro Jahr zur Verfügung stehen.
         public bool IsResetPassword { get; set; } = false;
         //public string Salt { get; set; }                      // Braucht man bei den jetzt ausgewählten Hash Verschlüsselungsverfahren nicht mehr ...
         public Role Role { get; set; }                        //Rollen: Benutzer, Geschäftsleitung oder Admin

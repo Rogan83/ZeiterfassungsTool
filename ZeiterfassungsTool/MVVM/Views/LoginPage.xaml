@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ZeiterfassungsTool.MVVM.Views.LoginPage"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-             Title="LoginPage"
+             Title=""
              BackgroundColor="{StaticResource BGColor1}">
 
     <Shell.BackButtonBehavior>
@@ -104,10 +104,7 @@
                     FontSize="Medium"/>
         </FlexLayout>
         <FlexLayout Grid.Row="2" Wrap="Wrap" JustifyContent="Center">
-            <Button  Text="Tabelle löschen (Debug)" Command="{Binding DeleteTable}" BackgroundColor="DarkRed" TextColor="LightPink" Margin="20,200,20,50" IsVisible="true" FlexLayout.Basis="590" HeightRequest="50"/>
-
-            
-
+            <!--<Button  Text="Tabelle löschen (Debug)" Command="{Binding DeleteTable}" BackgroundColor="DarkRed" TextColor="LightPink" Margin="20,200,20,50" IsVisible="true" FlexLayout.Basis="590" HeightRequest="50"/>-->
         </FlexLayout>
 
         <FlexLayout Grid.Row="3" Wrap="Wrap" JustifyContent="Center">
