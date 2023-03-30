@@ -35,8 +35,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     else
                         background = Colors.DarkBlue;
 
+                    string concateUsernameAndSubject;
+                    if (subject != "")
+                        concateUsernameAndSubject = $"{employee.Username} - {subject}";
+                    else
+                        concateUsernameAndSubject = employee.Username;
 
-                    SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = employee.Username, Background = background});
+                    SchedulerEvents.Add(new SchedulerAppointment { StartTime = timetracking.StartTime, EndTime = timetracking.EndTime, Subject = concateUsernameAndSubject, Background = background});
                 }
             }
         }

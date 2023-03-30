@@ -37,11 +37,17 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string Password { get; set; }
 
         public int VacationDays { get; set; }
-        public List<RoleName> RoleList { get; set; } = new List<RoleName>()
+        //public List<RoleName> RoleList { get; set; } = new List<RoleName>()
+        //{
+        //    new RoleName { Role = Enumerations.Role.User},
+        //    new RoleName { Role = Enumerations.Role.Admin},
+        //    new RoleName { Role = Enumerations.Role.Management},
+        //};
+        public List<Role> RoleList { get; set; } = new List<Role>()
         {
-            new RoleName { Role = Enumerations.Role.User},
-            new RoleName { Role = Enumerations.Role.Admin},
-            new RoleName { Role = Enumerations.Role.Management},
+            Role.User, 
+            Role.Management,
+            Role.Admin, 
         };
 
         public Enumerations.Role SelectedRole { get; set; }
@@ -106,7 +112,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             VacationDays = Employee.VacationDaysPerYear;
 
             //SelectedRole = Employee.Role;
-            SelectedRoleIndex = RoleList.FindIndex(x => x.Role == Employee.Role);
+            SelectedRoleIndex = RoleList.FindIndex(x => x == Employee.Role);
 
             //if (employee.Password != null) 
             //    Password = employee.Password;
@@ -233,7 +239,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               Employee.Birthday = Birthday;
               Employee.EMail = EMail;
               Employee.VacationDaysPerYear = VacationDays;
-              Employee.Role = RoleList[SelectedRoleIndex].Role;
+              Employee.Role = RoleList[SelectedRoleIndex];
 
               if (hashedPW != null)
                   Employee.Password = hashedPW;

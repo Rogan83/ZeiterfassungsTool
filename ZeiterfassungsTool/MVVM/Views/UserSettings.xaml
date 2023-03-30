@@ -2,8 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:converters="clr-namespace:ZeiterfassungsTool.MVVM.Converters"
              x:Class="ZeiterfassungsTool.MVVM.Views.User.UserSettings"
              Title="">
+
+    <ContentPage.Resources>
+        <converters:EnglishToGermanConverter x:Key="englishToGermanConverter"/>
+    </ContentPage.Resources>
 
     <!--Title="UserSettings">-->
     
@@ -177,13 +182,13 @@
                         HorizontalOptions="Center"
                     Title="Rolle"
                         TextColor="Black"
-                        ItemsSource="{Binding RoleList}"
-                        ItemDisplayBinding="{Binding Role}"
+                        
+                        ItemsSource="{Binding RoleList, Converter={StaticResource englishToGermanConverter}}"  
+                        ItemDisplayBinding="{Binding .}"
                         SelectedIndex="{Binding SelectedRoleIndex}"
                        >
-                
+                <!--Konvertiert das Array mit Enums mit den englischen Begriffen in eine Liste von Strings mit deutschen Begriffen. Um den Konverter nutzen zu können, muss der Ordner, wo sich dieser befinded, im Namespace eingebunden sein und zusätzlich muss in <ContentPage.Resources> direkt auf diese Klasse zugegriffen werden und einen x:Key zugewiesen werden -->
             </Picker>
-
 
             <Button
                     WidthRequest="590"

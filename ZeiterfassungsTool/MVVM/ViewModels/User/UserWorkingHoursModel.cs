@@ -16,6 +16,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         #region Properties
 
+        public Employee Employee { get; set; }
+
         private string month;
         public string Month
         {
@@ -36,23 +38,28 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             }
         }
         public string Year { get; set; }
+        
 
-        public string OvertimeOrMinusHours { get; set; }
+        public string OvertimeOrMinusHoursTotalText { get; set; }
 
         public string Percent { get; set; }
+        public string OvertimeOrMinusHoursText { get; set; }
+
+
 
         public double TargetHoursPerMonth { get; set; }
 
         public double WorkingHours { get; set; }
         public double ShapePointer { get; set; }
 
-        public double HoursLeft { get; set; }
+        public double OvertimeOrMinusHours { get; set; }
+        public double VacationDaysLeft { get; set; }
 
-        public double Overtime { get; set; }
 
         public double OvertimeTotal { get; set; }
 
         public Color ColorOvertimeTotal { get; set; }
+        public Color ColorOvertimeOrHoursLeft { get; set; }
 
         public Color ColorRadial { get; set; }
         public Color ColorPointer { get; set; }
@@ -62,41 +69,15 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public UserWorkingHoursModel()
         {
+            Employee = Login.WhoIsLoggedIn[0];  
+            
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
 
             ColorRadial = Colors.Red;
             ColorPointer = Colors.DarkRed;
 
-            var employee = Login.WhoIsLoggedIn[0];
-
-            TargetHoursPerMonth = employee.WorkingHoursPerWeek * 4.3f;
-
-            WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
-
-            double isHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
-            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, employee.Timetracking);
-            OvertimeTotal = isHoursTotal - targetHoursTotal;
-
-
-            //var overtimeTotal = CalculateOvertimeTotal();
-
-            //Zeige an, ob in der Summe Minus- oder Überstunden angefallen sind.s
-            //if (overtimeTotal >= 0)
-            //{
-            //    OvertimeOrMinusHours = "Überstunden insgesamt:";
-            //}
-            //else
-            //{
-            //    OvertimeOrMinusHours = "Minusstunden insgesamt:";
-            //    overtimeTotal = overtimeTotal * -1;
-            //}
-
-            //OvertimeTotal = overtimeTotal;
-
-            //WorkingHoursThisMonth();
-
-            SetColorsAndLabels(WorkingHours, OvertimeTotal);
+            SetWorkingHours();
         }
 
         //private double GetWorkingDaysPerMonth(double workingHoursPerDay)
@@ -125,47 +106,64 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         //}
 
 
-        private void SetColorsAndLabels(double workingHoursThisMonth, double overtimeTotal)
+        private void SetColorsAndLabels(double workingHoursThisMonth)
         {
-            SetColorsAndLabels(workingHoursThisMonth);
+            double isHoursTotal = CalculateHours.CalculateIsHoursTotal(Employee.Timetracking);
+            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, Employee.Timetracking);
+            OvertimeTotal = isHoursTotal - targetHoursTotal;
 
-            if (overtimeTotal >= 0)
+            TargetHoursPerMonth = Employee.WorkingHoursPerWeek * 4.3;
+            //CalculateHours.CalculateVacationHoursTotal();
+
+            if (OvertimeTotal >= 0)
             {
                 ColorOvertimeTotal = Colors.DarkGreen;
-                OvertimeOrMinusHours = "Überstunden insgesamt:";
+                OvertimeOrMinusHoursTotalText = "Überstunden insgesamt: ";
             }
             else
             {
                 ColorOvertimeTotal = Colors.DarkRed;
-                OvertimeOrMinusHours = "Minusstunden insgesamt:";
-                OvertimeTotal = overtimeTotal * -1;
+                OvertimeOrMinusHoursTotalText = "Minusstunden insgesamt: ";
+                OvertimeTotal = OvertimeTotal * -1;
             }
-        }
 
-        private void SetColorsAndLabels(double workingHoursThisMonth)
-        {
+
+            VacationDaysLeft = (CalculateHours.CalculateVacationHoursTotal(Employee) - CalculateHours.CalculateTakenVacationHoursTotal(Employee.Timetracking)) / 8;
+
+           
+
             if (workingHoursThisMonth < TargetHoursPerMonth)
             {
+                //Minusstunden
                 ColorRadial = Colors.Red;
                 ColorPointer = Colors.Red;
+                ColorOvertimeOrHoursLeft = Colors.DarkRed;
 
-                Overtime = 0;
+                OvertimeOrMinusHoursText = "Minusstunden: ";
+                OvertimeOrMinusHours = (int)(TargetHoursPerMonth - workingHoursThisMonth);
+
+
+
                 ShapePointer = workingHoursThisMonth;
-                HoursLeft = (int)(TargetHoursPerMonth - workingHoursThisMonth);
             }
             else
             {
                 ColorRadial = Colors.Green;
                 ColorPointer = Colors.DarkGreen;
+                ColorOvertimeOrHoursLeft = Colors.Green;
 
-                Overtime = (int)(workingHoursThisMonth - TargetHoursPerMonth);
-                ShapePointer = Overtime;
-                HoursLeft = 0;
+                OvertimeOrMinusHoursText = "Überstunden: ";
+                OvertimeOrMinusHours = (int)(workingHoursThisMonth - TargetHoursPerMonth);
+
+                ShapePointer = OvertimeOrMinusHours;
             }
+
             var percent = (int)(workingHoursThisMonth / TargetHoursPerMonth * 100);
-            Percent = $"{percent}%";
+            Percent = $"{percent} %";
+
         }
 
+       
 
         //private double WorkingHoursThisMonth()
         //{
@@ -305,11 +303,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public ICommand ShowWorkingHours =>
          new Command(() =>
          {
-             //WorkingHours = WorkingHoursThisMonth();
-             var employee = Login.WhoIsLoggedIn[0];
-             WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
-
-             SetColorsAndLabels(WorkingHours);
+             SetWorkingHours();
          });
+
+        private void SetWorkingHours()
+        {
+            
+            WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, Employee.Timetracking);
+
+            //SetColorsAndLabels(WorkingHours);
+            SetColorsAndLabels(WorkingHours);
+        }
     }
 }

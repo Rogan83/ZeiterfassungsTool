@@ -12,7 +12,7 @@
     </Shell.BackButtonBehavior>
 
     <Grid BackgroundColor="{StaticResource BGColor1}"
-        RowDefinitions="auto,*,auto"
+        RowDefinitions="auto,auto,*,auto"
           >
         <Grid   
             Grid.Row="0"
@@ -55,8 +55,23 @@
                 />
         </Grid>
 
+        <!--<Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Employee.Username}" HorizontalTextAlignment="Center" Margin="10" FontSize="Large"/>-->
+
+        <Label  Margin="10"
+                HorizontalTextAlignment="Center"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Mitarbeiter: " TextColor="DarkBlue" FontSize="Large"/>
+                    <Span Text="{Binding Employee.Username}" TextColor="Black"   FontSize="Large"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
         <Label
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             Text="{Binding Percent}"
@@ -75,7 +90,7 @@
 
         </Label>
 
-        <control:SfRadialGauge Grid.Row="1" >
+        <control:SfRadialGauge Grid.Row="2" >
             <control:SfRadialGauge.Axes>
                 <control:RadialAxis Minimum="0" Maximum="{Binding TargetHoursPerMonth}"
                                     StartAngle="180" EndAngle="360"
@@ -130,62 +145,62 @@
             </control:SfRadialGauge.Axes>
 
         </control:SfRadialGauge>
-        <Grid Grid.Row="2"
-            ColumnDefinitions="*,*,*"
-             RowDefinitions="*,*,auto"
+        <Grid Grid.Row="4"
+            ColumnDefinitions="*,*"
+             RowDefinitions="auto,auto,auto"
               Margin="20">
-            <Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="DarkBlue" HorizontalOptions="Center"/>
-            <Label Grid.Column="1" Text="fehlend:" FontSize="Medium" TextColor="DarkRed" HorizontalOptions="Center"/>
-            <Label Grid.Column="2" Text="Überstunden: " FontSize="Medium" TextColor="DarkGreen" HorizontalOptions="Center"/>
+            <!--<Label Grid.Column="0" Text="gearbeitetet: " FontSize="Medium" TextColor="DarkBlue" HorizontalOptions="Center"/>-->
+            <!--<Label Grid.Column="1" Text="{Binding OvertimeOrMinusHoursText}" FontSize="Medium" TextColor="{Binding ColorOvertimeOrHoursLeft}" HorizontalOptions="Center"/>-->
+            <!--<Label Grid.Column="1" Grid.Row="1" Text="Urlaub übrig" FontSize="Medium" TextColor="{Binding ColorOvertimeOrHoursLeft}" HorizontalOptions="Center"/>-->
+            <!--<Label Grid.Column="2" Text="Überstunden: " FontSize="Medium" TextColor="DarkGreen" HorizontalOptions="Center"/>-->
             <Label
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="0"
                 HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
+                        <Span Text="gearbeitetet: "  FontSize="Medium" TextColor="DarkBlue"/>
                         <Span Text="{Binding WorkingHours}" FontSize="Medium"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
             <Label
-                 Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="1"
                 HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding HoursLeft}" FontSize="Medium"/>
+                        <Span Text="{Binding OvertimeOrMinusHoursText}"  FontSize="Medium" TextColor="{Binding ColorOvertimeOrHoursLeft}"/>
+                        <Span Text="{Binding OvertimeOrMinusHours}" FontSize="Medium"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
             <Label
-                 Grid.Row="1"
-                Grid.Column="2"
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="0"
                 HorizontalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding Overtime}" FontSize="Medium"/>
+                        <Span Text="{Binding OvertimeOrMinusHoursTotalText}"  FontSize="Medium" TextColor="{Binding ColorOvertimeTotal}" TextDecorations="Underline"/>
+                        <Span Text="{Binding OvertimeTotal}" FontSize="Medium"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Urlaubstage übrig: "  FontSize="Medium" TextColor="Black" TextDecorations="Underline"/>
+                        <Span Text="{Binding VacationDaysLeft}" FontSize="Medium"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
 
-            <Grid Grid.Row="2" Grid.ColumnSpan="3"
-                  RowDefinitions="*,*"
-                  Margin="20">
-                <Label
-                HorizontalOptions="Center"
-                Text="{Binding OvertimeOrMinusHours}"
-                FontSize="Large"
-                TextColor="Black"
-                TextDecorations="Underline"
-                />
-                <Label
-                Grid.Row="1"
-                HorizontalOptions="Center"
-                Text="{Binding OvertimeTotal}"
-                FontSize="Large"
-                TextColor="{Binding ColorOvertimeTotal}"
-                />
-            </Grid>
+            
         </Grid>
     </Grid>
 </ContentPage>
