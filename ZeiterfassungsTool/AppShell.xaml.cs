@@ -33,7 +33,9 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
-        Routing.RegisterRoute("UserList/StartPage", typeof(UserList));
+
+
+        //Routing.RegisterRoute("UserList/StartPage", typeof(UserList));
         Routing.RegisterRoute("UserList/UserManagement", typeof(UserList));
         Routing.RegisterRoute("UserList/Choice", typeof(UserList));
 

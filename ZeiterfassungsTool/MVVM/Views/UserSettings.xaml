@@ -7,7 +7,7 @@
              Title="">
 
     <ContentPage.Resources>
-        <converters:EnglishToGermanConverter x:Key="englishToGermanConverter"/>
+        <converters:EnglishRoleNameToGermanConverter x:Key="englishRoleNameToGermanConverter"/>
     </ContentPage.Resources>
 
     <!--Title="UserSettings">-->
@@ -183,8 +183,8 @@
                     Title="Rolle"
                         TextColor="Black"
                         
-                        ItemsSource="{Binding RoleList, Converter={StaticResource englishToGermanConverter}}"  
-                        ItemDisplayBinding="{Binding .}"
+                        ItemsSource="{Binding RoleList, Converter={StaticResource englishRoleNameToGermanConverter}}"  
+                        ItemDisplayBinding="{Binding}"
                         SelectedIndex="{Binding SelectedRoleIndex}"
                        >
                 <!--Konvertiert das Array mit Enums mit den englischen Begriffen in eine Liste von Strings mit deutschen Begriffen. Um den Konverter nutzen zu können, muss der Ordner, wo sich dieser befinded, im Namespace eingebunden sein und zusätzlich muss in <ContentPage.Resources> direkt auf diese Klasse zugegriffen werden und einen x:Key zugewiesen werden -->

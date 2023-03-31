@@ -9,7 +9,6 @@ using System.Timers;
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
-using ZeiterfassungsTool.MVVM.Models;
 using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.StaticClasses;
@@ -37,12 +36,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string Password { get; set; }
 
         public int VacationDays { get; set; }
-        //public List<RoleName> RoleList { get; set; } = new List<RoleName>()
-        //{
-        //    new RoleName { Role = Enumerations.Role.User},
-        //    new RoleName { Role = Enumerations.Role.Admin},
-        //    new RoleName { Role = Enumerations.Role.Management},
-        //};
+        
         public List<Role> RoleList { get; set; } = new List<Role>()
         {
             Role.User, 

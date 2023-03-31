@@ -9,7 +9,7 @@ using ZeiterfassungsTool.Enumerations;
 
 namespace ZeiterfassungsTool.MVVM.Converters
 {
-    public class EnglishToGermanConverter : IValueConverter
+    public class EnglishRoleNameToGermanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
