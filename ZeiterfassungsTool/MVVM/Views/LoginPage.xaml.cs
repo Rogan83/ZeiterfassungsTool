@@ -19,21 +19,22 @@ public partial class LoginPage : ContentPage
 		// Wenn jemand eingeloggt ist...
 		if (loggedInEmployee.Id != 0)
 		{
-			VisibiltyBtnAndEntry(false, true);
+			ShowLoginControls(true);
 		}
 		else
 		{
-			VisibiltyBtnAndEntry(true, false);
+			ShowLoginControls(false);
 		}
 
-		void VisibiltyBtnAndEntry(bool isVisibleLogin, bool isVisibleLogout)
+		void ShowLoginControls(bool isVisible)
 		{
-			btnForwardToContent.IsVisible = isVisibleLogout;
-			btnLogout.IsVisible = isVisibleLogout;
-
-			entryUsername.IsVisible = isVisibleLogin;
-			entryPassword.IsVisible = isVisibleLogin;
-			btnLogin.IsVisible = isVisibleLogin;
-		}
+			//Die Steuerelemente, die man sehen muss, wenn man eingeloggt ist bzw. die man nicht sehen darf, wenn man ausgeloggt ist.
+            btnForwardToContent.IsVisible = isVisible;
+            btnLogout.IsVisible = isVisible;
+			// Die Steuerelemente, die man sehen muss, wenn man ausgeloggt ist bwz. die man nicht sehen darf, wenn man eingeloggt ist
+            entryUsername.IsVisible = !isVisible;
+            entryPassword.IsVisible = !isVisible;
+            btnLogin.IsVisible = !isVisible;
+        }
 	}
 }

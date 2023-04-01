@@ -30,24 +30,24 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         public string TxtForwardToContent { get; set; }
 
-        public ICommand BackButton =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("LoginPage/StartPage");
-           });
+        //public ICommand BackButton =>
+        //   new Command(() =>
+        //   {
+        //       //Shell.Current.GoToAsync("LoginPage/StartPage");
+        //   });
 
         public LoginPageModel() 
         {
             UpdateButtonForwardText();
-            //Margin = new Thickness(20, 5, 20, 5);
             Margin = new Thickness(20, 10, 20, 10);
         }
-
+        /// <summary>
+        /// Löscht die Tabelle und erstellt eine erneute.
+        /// </summary>
         public ICommand DeleteTable =>
             new Command(() =>
             {
-                //App.EmployeeRepo.DeleteTable();
-                //App.TimetrackingRepo.DeleteTable();
+                // Ich habe deswegen die komplette Tabelle gelöscht und wieder erstellt, damit die IDs wieder von vorne starten. Wenn ich den Inhalt der Tabelle nur löschen würde, dann würde er an der Stelle mit der ID weiterzählen, von wo er aufgehört hatte.
                 App.EmployeeRepo.DropTable(); 
                 App.EmployeeRepo.CreateTable();
 
@@ -61,7 +61,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                var username = EntryUsername; 
                var password = EntryPassword;
 
-               if ((username != null && password != null) ) 
+               if (username != null && password != null) 
                {
                    if (password == string.Empty || username == string.Empty)
                    {
@@ -72,14 +72,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
                    List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
 
-                   //List<Employee> results = new List<Employee>();
-                   //foreach (var item in allAccounts)
-                   //{
-                   //    if (item.Username == username && item.Password == password)
-                   //    {
-                   //        results.Add(item);
-                   //    }
-                   //}
                    bool isEqual = false;
                    var loginUser = allAccounts.FindAll(u => u.Username == username);
                    if (loginUser.Count != 0)
@@ -88,12 +80,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                        isEqual = Hash.Encoder.Compare(password, loginUser[0].Password);            //Vergleicht das eingegebene - und das gehashte Passwort. Wenn sie übereinstimmen, dann wird true zurückgegeben.  
                    }
 
-                   Debug = App.EmployeeRepo.GetItems().Count.ToString();
+                   //Debug = App.EmployeeRepo.GetItems().Count.ToString();
 
-                   //var count = results.Count();
                    var count = loginUser.Count();
 
-                   if (count > 0 && isEqual)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username hat und das Passwort korrekt ist.
+                   if (count == 1 && isEqual)  //Bedeutet, dass min. 1 Account gefunden wurde, der diesen Username hat und das Passwort korrekt ist.
                    {
                        Login.WhoIsLoggedIn = loginUser;         // Speicher ab, wer sich erfolgreich eingeloggt hat.
 
@@ -112,22 +103,20 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    }
                    else
                    {
-                       //Message = "Benutzername oder Passwort sind falsch";
                        App.Current.MainPage.DisplayAlert("Warnung", "Benutzername oder Passwort sind nicht korrekt.", "OK");
                    }
                }
                else
                {
                    App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
-                   //Message = "Es müssen beide Felder ausgefüllt sein.";
                }
            });
         /// <summary>
         /// Deaktiviert und Aktiviert bestimmte Buttons und Entries, nachdem sich jemand Ausgeloggt hat.
         /// </summary>
         /// <param name="element"></param>
-        /// <param name="activate"></param>
-        private void DeactivateAndActivateSeveralButtonAndEntries(object element, bool activate)
+        /// <param name="isVisible"></param>
+        private void DeactivateAndActivateSeveralButtonAndEntries(object element, bool isVisible)
         {
             VerticalStackLayout flexLayout = (VerticalStackLayout)element;
 
@@ -138,12 +127,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             SfTextInputLayout entryPassword = (SfTextInputLayout)flexLayout.FindByName("entryPassword");
             Button btnLogin = (Button)flexLayout.FindByName("btnLogin");
 
-            btnForwardToContent.IsVisible = activate;
-            btnLogout.IsVisible = activate;
+            btnForwardToContent.IsVisible = isVisible;
+            btnLogout.IsVisible = isVisible;
 
-            entryUsername.IsVisible = !activate;
-            entryPassword.IsVisible = !activate;
-            btnLogin.IsVisible = !activate;
+            entryUsername.IsVisible = !isVisible;
+            entryPassword.IsVisible = !isVisible;
+            btnLogin.IsVisible = !isVisible;
         }
 
         /// <summary>
@@ -165,7 +154,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     break;
             }
         }
-
+        /// <summary>
+        /// Damit wird zur nächsten Seite gesprungen. Zur welche Seite man springt, hängt von den Rechten ab, die der Nutzer hat.
+        /// </summary>
         public ICommand ForwardToContent =>
           new Command(() =>
           {

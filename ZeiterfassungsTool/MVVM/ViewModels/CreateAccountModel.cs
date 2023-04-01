@@ -25,8 +25,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         }
 
         #region Properties
-
-
         public string Username { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -37,7 +35,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public string Birthday { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
-
 
         public bool UsernameAlreadyExists { get; set; }
 
@@ -57,9 +54,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public string LbUsername { get; set; }
 
         public bool rbsIsVisible { get; set; } = true;
-
-
-
         #endregion
 
         string alertTextAdmin = "Sie müssen mit einen Konto angemeldet sein, welches über Adminrechte verfügt.";
@@ -67,11 +61,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
         #region Commands
 
-        public ICommand BackButton =>
-           new Command(() =>
-           {
-               Shell.Current.GoToAsync("CreateAccount/LoginPage");
-           });
+        //public ICommand BackButton =>
+        //   new Command(() =>
+        //   {
+        //       Shell.Current.GoToAsync("CreateAccount/LoginPage");
+        //   });
 
         //public ICommand GoToLoginPage =>
         //    new Command( () =>
@@ -86,12 +80,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 
         //    });
 
-        public ICommand DeleteTable =>
-            new Command(() =>
-            {
-                App.EmployeeRepo.DeleteTable();
-            });
-
+        //public ICommand DeleteTable =>
+        //    new Command(() =>
+        //    {
+        //        App.EmployeeRepo.DeleteTable();
+        //    });
 
         //var salt = DateTime.Now.ToString();
         //var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 

@@ -23,8 +23,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("UserSettings", typeof(UserSettings));
         Routing.RegisterRoute("UserWorkingHours", typeof(UserWorkingHours));
 
-
-
         Routing.RegisterRoute("UserList", typeof(UserList));
         Routing.RegisterRoute("UserManagement", typeof(UserManagement));
         Routing.RegisterRoute("Scheduler", typeof(Scheduler));
@@ -36,28 +34,28 @@ public partial class AppShell : Shell
 
 
         //Routing.RegisterRoute("UserList/StartPage", typeof(UserList));
-        Routing.RegisterRoute("UserList/UserManagement", typeof(UserList));
-        Routing.RegisterRoute("UserList/Choice", typeof(UserList));
+        //Routing.RegisterRoute("UserList/UserManagement", typeof(UserList));
+        //Routing.RegisterRoute("UserList/Choice", typeof(UserList));
 
-        Routing.RegisterRoute("UserManagement/UserList", typeof(UserManagement));
+        //Routing.RegisterRoute("UserManagement/UserList", typeof(UserManagement));
 
-        Routing.RegisterRoute("UserPage/LoginPage", typeof(UserPage));
-        Routing.RegisterRoute("CreateAccount/LoginPage", typeof(UserPage));
+        //Routing.RegisterRoute("UserPage/LoginPage", typeof(UserPage));
+        //Routing.RegisterRoute("CreateAccount/LoginPage", typeof(UserPage));
 
-        Routing.RegisterRoute("UserPageScheduler/UserPage", typeof(UserPageScheduler));
-        Routing.RegisterRoute("UserPageScheduler/StartPage", typeof(UserPageScheduler));
-        Routing.RegisterRoute("UserPage/UserPageScheduler", typeof(UserPage));
-        Routing.RegisterRoute("UserPage/UserWorkingHours", typeof(UserPage));
-        Routing.RegisterRoute("ManagementPage/StartPage", typeof(ManagementPage));
+        //Routing.RegisterRoute("UserPageScheduler/UserPage", typeof(UserPageScheduler));
+        //Routing.RegisterRoute("UserPageScheduler/StartPage", typeof(UserPageScheduler));
+        //Routing.RegisterRoute("UserPage/UserPageScheduler", typeof(UserPage));
+        //Routing.RegisterRoute("UserPage/UserWorkingHours", typeof(UserPage));
+        //Routing.RegisterRoute("ManagementPage/StartPage", typeof(ManagementPage));
 
-        Routing.RegisterRoute("UserSettings/UserPage", typeof(UserSettings));
-        Routing.RegisterRoute("UserWorkingHours/UserPage", typeof(UserWorkingHours));
+        //Routing.RegisterRoute("UserSettings/UserPage", typeof(UserSettings));
+        //Routing.RegisterRoute("UserWorkingHours/UserPage", typeof(UserWorkingHours));
 
        
         //Routing.RegisterRoute("LoginPage/PageChoice", typeof(LoginPage));
         //Routing.RegisterRoute("PageChoice/LoginPage", typeof(PageChoice));
         //Routing.RegisterRoute("LoginPage/StartPage", typeof(LoginPage));
-        Routing.RegisterRoute("CreateAccount/StartPage", typeof(CreateAccount));
+        //Routing.RegisterRoute("CreateAccount/StartPage", typeof(CreateAccount));
 
     }
 }

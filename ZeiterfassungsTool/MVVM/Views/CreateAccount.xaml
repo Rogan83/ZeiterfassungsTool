@@ -3,28 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              x:Class="ZeiterfassungsTool.MVVM.Views.CreateAccount"
-             Title=""
-             >
-    <!--<VerticalStackLayout VerticalOptions="Center">
-        <sf:SfTextInputLayout Hint="Password" 
-                              WidthRequest="300"
-                              EnablePasswordVisibilityToggle="True"
-                              HelperText="Geben Sie hier ihr Passwort ein"
-                              ErrorText="Ungültiges Passwort"
-                              HasError="False"
-                              >
-            <Entry/>
-        </sf:SfTextInputLayout>
-    </VerticalStackLayout>-->
+             Title="">
     
-    
-    <Shell.BackButtonBehavior>
+    <!--<Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
-    </Shell.BackButtonBehavior>
+    </Shell.BackButtonBehavior>-->
 
-        <ScrollView >
-        <Grid   BackgroundColor="{StaticResource BGColor1}"
-                    RowDefinitions="auto,auto,auto,auto,auto,auto,*">
+    <ScrollView>
+        <Grid   
+            BackgroundColor="{StaticResource BGColor1}"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,*">
             <VerticalStackLayout 
                     Spacing="10"
                     Padding="20">
@@ -32,13 +20,12 @@
                            FontSize="Medium"
                            HorizontalTextAlignment="Center"/>
 
-
-
                 <VerticalStackLayout x:Name="vslRegister" Grid.Row="2">
                     <Frame BackgroundColor="Azure" Padding="10" IsVisible="{Binding rbsIsVisible}" Margin="0,20,0,40">
                         <VerticalStackLayout >
-                            <Label Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
-                                        FontSize="Medium"/>
+                            <Label 
+                                Text="Wähle die Rolle vom Account aus, welcher erstellt werden soll."
+                                FontSize="Medium"/>
                             <RadioButton x:Name="user"          Content="Mitarbeiter"      GroupName ="SelectRole" IsChecked="{Binding rbUser}" TextColor="Black"/>
                             <RadioButton x:Name="management"    Content="Geschäftsleitung" GroupName ="SelectRole" IsChecked="{Binding rbManagement}" TextColor="Black"/>
                             <RadioButton x:Name="admin"         Content="Admin"            GroupName ="SelectRole" IsChecked="{Binding rbAdmin}" TextColor="Black"/>
@@ -46,129 +33,106 @@
                     </Frame>
 
                     <inputLayout:SfTextInputLayout
-                                Hint="Benutzername"
-                                Stroke="#0450C2"
-                                ContainerBackground="{Binding UsernameColor}"
-                                ErrorText="Benutzername schon vergeben"
-                        
-                                HasError="{Binding UsernameAlreadyExists}"
-                                >
-                        <Entry Text="{Binding Username}" 
-                                   TextColor="Black"/>
+                        Hint="Benutzername"
+                        Stroke="#0450C2"
+                        ContainerBackground="{Binding UsernameColor}"
+                        ErrorText="Benutzername schon vergeben"
+                        HasError="{Binding UsernameAlreadyExists}">
+                        <Entry 
+                            Text="{Binding Username}" 
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Vorname" 
-                                        Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9"
-                                        >
-                        <Entry Text="{Binding Firstname}"
-                                   TextColor="Black"/>
+                        Hint="Vorname" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry  
+                            Text="{Binding Firstname}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Nachname" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9">
-                        <Entry Text="{Binding Lastname}"
-                                   TextColor="Black"/>
+                        Hint="Nachname" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry  
+                            Text="{Binding Lastname}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Geburtstag" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9">
-                        <Entry Text="{Binding Birthday}"
-                                   TextColor="Black"/>
+                        Hint="Geburtstag" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry 
+                            Text="{Binding Birthday}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Straße" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9"
-                                        >
+                        Hint="Straße" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
                         <Entry Text="{Binding Street}"
                                    TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                        Hint="PLZ" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9">
-                        <Entry  Text="{Binding PostalCode}"
-                                      Keyboard="Numeric" MaxLength="5" 
-                                    TextColor="Black"/>
+                        Hint="PLZ" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry  
+                            Text="{Binding PostalCode}"
+                            Keyboard="Numeric" MaxLength="5" 
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
+                    
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Stadt" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9"
-                                        >
-                        <Entry Text="{Binding City}"
-                                   TextColor="Black"/>
-
+                        Hint="Stadt" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry 
+                            Text="{Binding City}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
+                    
                     <inputLayout:SfTextInputLayout 
-                                        Hint="Land" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9"
-                                        >
-                        <Entry Text="{Binding Country}"
-                                   TextColor="Black"/>
-
+                        Hint="Land" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry 
+                            Text="{Binding Country}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
+                    
                     <inputLayout:SfTextInputLayout 
-                                        Hint="E-Mail Adresse" 
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EEF9"
-                                        >
-                        <Entry Text="{Binding EMail}"
-                                   TextColor="Black"/>
+                        Hint="E-Mail Adresse" 
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EEF9">
+                        <Entry 
+                            Text="{Binding EMail}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout 
-                                Margin="0,30,0,0"
-                                        Hint="Passwort" 
-                                        EnablePasswordVisibilityToggle="True"
-                                
-                                        ErrorText="Ungültiges Passwort"
-                                        HasError="False"
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EE"
-                                        >
-                        <Entry Text="{Binding Password}"
-                                   TextColor="Black"/>
+                        Margin="0,30,0,0"
+                        Hint="Passwort" 
+                        EnablePasswordVisibilityToggle="True"
+                        ErrorText="Ungültiges Passwort"
+                        HasError="False"
+                        Stroke="#0450C2"
+                        ContainerBackground="#E6EE">
+                        <Entry 
+                            Text="{Binding Password}"
+                            TextColor="Black"/>
                     </inputLayout:SfTextInputLayout>
 
-                    <!--<inputLayout:SfTextInputLayout 
-                        
-                                        Hint="Passwort wiederholen" 
-                                        EnablePasswordVisibilityToggle="True"
-                                
-                                        ErrorText="Ungültiges Passwort"
-                                        HasError="False"
-                                Stroke="#0450C2"
-                                ContainerBackground="#E6EE"
-                                        >
-                                <Entry Text="{Binding PasswordConfirm}"/>
-                            </inputLayout:SfTextInputLayout>-->
-
-
-
-
-                    <!--<Entry Grid.Row="3" Text="{Binding Username}" IsPassword="false" Placeholder="Benutzername hier eingeben"/>-->
-                    <!--<Entry Grid.Row="4" Text ="{Binding Password}"  IsPassword="True" Placeholder="Passwort"/>-->
                     <Label Grid.Row="2" Text ="{Binding DebugMessage}" TextColor="red"/>
                     <Button x:Name="btnSave" Grid.Row="4" Command="{Binding ToRegister}" CommandParameter="{Binding Source={x:Reference vslRegister}}"    Text="Speichern"  Margin="0,10,0,10"
                             BackgroundColor="{StaticResource ButtonColorDarkBlue}" 
                     TextColor="{StaticResource ButtonColorLightBlue}" FontSize="Medium"/>
-                    <!--<Button x:Name="btnBackToMenu"  Grid.Row="4"  IsVisible="true" BackgroundColor="CadetBlue" Command="{Binding BackToMainMenu}"               Text="Zurück zum Login"/>-->
-                    <!--<Label Grid.Row="0" Text="{Binding LbUsername}" FontSize="Medium"/>-->
-
-
                 </VerticalStackLayout>
-
-
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

@@ -18,11 +18,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
     {
 
         #region Properties
-
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public Employee SelectedEmployee { get; set; }
-
-
         #endregion
 
         #region Commands
@@ -51,26 +48,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 
         #endregion
 
-
-        public ObservableCollection<Employee> GetAccountsWithoutLogginInAccount()
-        {
-            Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
-            List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
-            List<Employee> employeeWithoutLogginInAccount = new();
-
-            //employees.Remove(LoggedInAccount);   //Funktioniert nicht
-
-            foreach (Employee employee in employees)
-            {
-                if (employee.Username != LoggedInAccount.Username)
-                {
-                    employeeWithoutLogginInAccount.Add(employee);
-                }
-            }
-
-            return new ObservableCollection<Employee>(employeeWithoutLogginInAccount);
-        }
-
+        #region Methods
         public ObservableCollection<Employee> GetAllAccounts()
         {
             Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
@@ -78,6 +56,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
             
             return new ObservableCollection<Employee>(employees);
         }
-
+        #endregion
     }
 }
