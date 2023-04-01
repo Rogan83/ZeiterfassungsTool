@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.ViewModels.Admin;
@@ -22,7 +23,15 @@ public partial class UserManagement : ContentPage
 
         model.SelectFirstTime();
 
-        var timetracking = model.Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();             //Sortiert die Liste aufsteigend, (komischerweise aber nicht den 2. Wert)
+        List<Timetracking> timetracking = new();
+        if (model.Employee != null ) 
+        { 
+            timetracking = model.Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();             //Sortiert die Liste aufsteigend, (komischerweise aber nicht den 2. Wert)
+        }
+        else
+        {
+            Debug.WriteLine("Fehler: Employee ist null");
+        }
         //var timetracking = from t in model.Employee.Timetracking                                                              //SQL ähnliche Syntax
         //                   orderby t.StartTime, t.EndTime
         //                   select t;

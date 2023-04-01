@@ -2,18 +2,16 @@
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
+using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     public class UserListModel
     {
-        
-
         public Employee SelectedEmployee { get; set; }
 
-        public ObservableCollection<Employee> Employees { get; set; }
-            = new ObservableCollection<Employee>();
+        public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
 
         public UserListModel()
         {
@@ -26,15 +24,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 }
             }
         }
-
-
+        #region ICommands
         public ICommand BackButton =>
            new Command(() =>
            {
                Shell.Current.GoToAsync("UserList/Choice");
            });
-
-
 
         public ICommand BackToMainMenu =>
            new Command(() =>
@@ -61,10 +56,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
               if (employee != null)
               {
-                  //Shell.Current.GoToAsync(nameof(AdminPageUserManagement), employeeParameter);            // Geht nicht...
-                  //Shell.Current.GoToAsync($"AdminPage/AdminPageUserManagement", employeeParameter);            // Geht nicht...
-                  await Shell.Current.GoToAsync($"UserManagement", Parameter);            
+                  await Shell.Current.GoToAsync(nameof(UserManagement), Parameter); 
               }
           });
+        #endregion 
     }
 }

@@ -49,12 +49,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public bool rbIll { get; set; }
         #endregion
 
-
-        public UserManagementModel()
-        {
-
-        }
-
         #region Commands
 
         public ICommand BackButton =>

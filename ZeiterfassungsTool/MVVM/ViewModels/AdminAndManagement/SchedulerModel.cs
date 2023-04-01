@@ -11,7 +11,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
     public class SchedulerModel
     {
-
         public ObservableCollection<SchedulerAppointment> SchedulerEvents { get; set; }
 
         public SchedulerModel()
@@ -25,7 +24,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 foreach (var timetracking in employee.Timetracking)
                 {
                     var subject = timetracking.Subject;
-                    if (subject == null) { subject = ""; }             // Es darf NIEMALS ein Feld NULL sein, welches dem SchedulerAppointment zugewiesen wird, sonst schmiert die Anwendung ab (
+                    if (subject == null) { subject = ""; }             // Es darf NIEMALS ein Feld NULL sein, welches dem SchedulerAppointment zugewiesen wird, sonst schmiert die Anwendung ab 
 
                     Color background;
                     if (subject == "Krank")

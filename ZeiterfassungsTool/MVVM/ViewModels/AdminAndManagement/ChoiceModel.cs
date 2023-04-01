@@ -257,8 +257,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                         };
 
                         App.EmployeeRepo.SaveItemWithChildren(employee);
-
-                        //employees.Add(new Employee() { Id = iDEmployee, Username = Convert.ToString(parts[1]), Password = Convert.ToString(parts[2]), WorkingHoursPerWeek = Convert.ToInt32(parts[3]), Role = role, Timetracking = timetrackingsForThisUser });
                     }
                 }
                 return true;

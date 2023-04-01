@@ -18,7 +18,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
     public class OvertimeModel
     {
         #region Properties
-       
         private string month;
         public string Month
         {
@@ -32,7 +31,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     else if (result < 0)
                         result = 0;
                     value = result.ToString();
-
                 }
 
                 month = value;
@@ -46,29 +44,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public bool rbTotal { get; set; }
 
         public double PointerSize { get; set; } = 0;
-
         #endregion
 
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
-        public ObservableCollection<EmployeeWorkingHours> EmployeesWorkingHours { get; set; } = new ObservableCollection<EmployeeWorkingHours>();
+        public ObservableCollection<EmployeeWorkingHours> EmployeesHours { get; set; } = new ObservableCollection<EmployeeWorkingHours>();
 
         public OvertimeModel()
         {
+            // Sucht nur die Accounts heraus, welche die Mitarbeiter Rechte haben.
             Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));        
-            //var Allaccounts = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren());
-
-            //List<Employee> users = new List<Employee>();
-
-            //foreach (var account in Allaccounts)
-            //{
-            //    if (account.Role == Enumerations.Role.User) 
-            //    {
-            //        users.Add(account);
-            //    }
-            //}
-            //Employees = new ObservableCollection<Employee>(users);
-
-
+            
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
 
@@ -102,32 +87,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                }
            });
 
-        //public ICommand CreateEmployeeListTotalHours =>
-        //    new Command(() =>
-        //    {
-        //        List<EmployeeWorkingHours> employeesWorkingHours = new();
-
-        //        foreach (var employee in Employees) 
-        //        {
-        //            double actualHoursTotal = CalculateHours.CalculateHoursTotal(employee.Timetracking);
-        //            if (actualHoursTotal > BiggestNumber) BiggestNumber = actualHoursTotal;
-        //            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, employee.Timetracking);
-        //            if (targetHoursTotal > BiggestNumber) BiggestNumber = targetHoursTotal;
-        //            double overtimeTotal = actualHoursTotal - targetHoursTotal;
-        //            if (overtimeTotal > BiggestNumber) BiggestNumber = overtimeTotal;
-
-        //            employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal });
-        //        }
-        //        EmployeesWorkingHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
-        //    });
-
-
-
         private void CreateEmployeeListForOneMonth()
         {
-            double biggestNumber = 0;
+            double biggestNumber = 0;       // Es soll die größte Zahl von allen Balken von allen Mitarbeitern gefunden werden, damit klar ist, wie groß der Maßstab ist, der unten angezeigt wird, da dieser min. so groß sein muss, wie der größte Balken von allen Mitarbeitern, damit dieser auch richtig dargestellt werden kann. 
 
-            List<EmployeeWorkingHours> employeesWorkingHours = new();
+            List<EmployeeWorkingHours> employeesHours = new();
 
             foreach (var employee in Employees)
             {
@@ -149,24 +113,33 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     color = Colors.Red;
                 }
 
-                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursThisMonth, TargetHours = targetHoursPerMonth, Overtime = overtime, 
-                    ColorOvertime = color, PointerSize = 0, OffsetOvertime=25, OffsetTargetHours=50, OffsetWorkingHours=75});
+                employeesHours.Add(new EmployeeWorkingHours
+                {
+                    Username = employee.Username,
+                    WorkingHours = actualHoursThisMonth,
+                    TargetHours = targetHoursPerMonth,
+                    Overtime = overtime,
+                    ColorOvertime = color,
+                    PointerSize = 0,
+                    OffsetOvertime = 25,
+                    OffsetTargetHours = 50,
+                    OffsetWorkingHours = 75
+                });
             }
 
             try
             {
-                BiggestNumber = biggestNumber;               // in dem Augenblick, wo eine kleinere Zahl zugewiesen wird, kommt die Fehlermeldung: "Cannot access a disposed object." und es wird in den Catch Block gesprungen. Komischerweise weist es trotzdem den Wert zu und dieser wird dann auch genutzt. 
+                BiggestNumber = biggestNumber;               // in dem Augenblick, wo eine kleinere Zahl zugewiesen wird, kommt die Fehlermeldung: "Cannot access a disposed object." und es wird in den Catch Block gesprungen. Komischerweise weist es trotzdem den Wert zu und dieser wird dann auch genutzt. Dies passiert auf der Android Plattform, nicht bei Windows
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Exception: " + e);
             }
-            EmployeesWorkingHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
+            EmployeesHours = new ObservableCollection<EmployeeWorkingHours>(employeesHours);
         }
 
         private void CreateEmployeeListTotalHours()
         {
-            
             double biggestNumber = 0;
             List<EmployeeWorkingHours> employeesWorkingHours = new();
 
@@ -180,9 +153,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                 if (Math.Abs(overtimeTotal) > biggestNumber) biggestNumber = Math.Abs((int)overtimeTotal);              // Weil overtimeTotal auch negativ sein kann, aber dieser später umgewandelt wird ins positive für die Minusstunden, muss, um die Minusstunden richtig anzeigen zu können, der absolute Wert genommen werden
                 double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
                 if (takenVacationHoursTotal > biggestNumber) biggestNumber = (int)takenVacationHoursTotal;
-                //double overtimeLeft = overtimeTotal - takenVacationHoursTotal;
 
-                double vacationTimeInHours = CalculateHours.CalculateVacationHoursTotal(employee);//employee.VacationDaysPerYear * 8;
+                double vacationTimeInHours = CalculateHours.CalculateVacationHoursTotal(employee);
                 if (vacationTimeInHours > biggestNumber) biggestNumber = (int)vacationTimeInHours;
 
                 double freeTimeTotal = vacationTimeInHours + overtimeTotal;
@@ -199,9 +171,22 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     colorOvertime = Colors.Red;
                 }
                 // Wenn ich hier die BiggestNumber direkt zuweise, dann kommt eine NaN Fehlermeldung. K.a. wieso
-                employeesWorkingHours.Add(new EmployeeWorkingHours { Username = employee.Username, WorkingHours = actualHoursTotal, TargetHours = targetHoursTotal, Overtime = overtimeTotal, 
-                    TakenVacationHoursTotal = takenVacationHoursTotal, ColorOvertime = colorOvertime, VacationTimeTotal = vacationTimeInHours, FreeTimeTotal = freeTimeTotal, 
-                    FreeTimeLeft = freeTimeLeft, PointerSize = 20, OffsetOvertime=125, OffsetTargetHours=150, OffsetWorkingHours=175});
+                employeesWorkingHours.Add(new EmployeeWorkingHours
+                {
+                    Username = employee.Username,
+                    WorkingHours = actualHoursTotal,
+                    TargetHours = targetHoursTotal,
+                    Overtime = overtimeTotal,
+                    TakenVacationHoursTotal = takenVacationHoursTotal,
+                    ColorOvertime = colorOvertime,
+                    VacationTimeTotal = vacationTimeInHours,
+                    FreeTimeTotal = freeTimeTotal,
+                    FreeTimeLeft = freeTimeLeft,
+                    PointerSize = 20,
+                    OffsetOvertime = 125,
+                    OffsetTargetHours = 150,
+                    OffsetWorkingHours = 175
+                });
             }
             try
             {
@@ -211,10 +196,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             {
                 Debug.WriteLine("Exception: " + e);
             }
-            EmployeesWorkingHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
+            EmployeesHours = new ObservableCollection<EmployeeWorkingHours>(employeesWorkingHours);
         }
     }
-
+    /// <summary>
+    /// Die Klasse beinhaltet alle Eigenschaften, die für die Anzeige der vers. Balken notwendig ist.
+    /// </summary>
     public class EmployeeWorkingHours
     {
         private double overtimeLeft;
@@ -230,16 +217,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public double Overtime { get; set; }
         public double OffsetOvertime { get; set; }
 
-
         public double TakenVacationHoursTotal { get; set; }
-        //public double OvertimeLeft
-        //{
-        //    get => overtimeLeft; set
-        //    {
-        //        if (value < 0) value = 0;
-        //            overtimeLeft = value;
-        //    }
-        //}            // Die übrig gebliebenen Überstunden, wenn vorhanden
 
         public double VacationTimeTotal { get; set; }
         public double FreeTimeTotal { get; set; }
