@@ -46,18 +46,20 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public double PointerSize { get; set; } = 0;
         #endregion
 
-        public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+        //public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+        public ObservableCollection<MySQLModels.Employee> Employees { get; set; } = new ObservableCollection<MySQLModels.Employee>();
         public ObservableCollection<EmployeeWorkingHours> EmployeesHours { get; set; } = new ObservableCollection<EmployeeWorkingHours>();
 
         public OvertimeModel()
         {
             // Sucht nur die Accounts heraus, welche die Mitarbeiter Rechte haben.
-            Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));        
+            //Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));        
+              
             
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
 
-            CreateEmployeeListForOneMonth();
+            
         }
 
         public ICommand BackButton =>
@@ -87,7 +89,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                }
            });
 
-        private void CreateEmployeeListForOneMonth()
+        public async void CreateEmployeeListForOneMonth()
         {
             double biggestNumber = 0;       // Es soll die größte Zahl von allen Balken von allen Mitarbeitern gefunden werden, damit klar ist, wie groß der Maßstab ist, der unten angezeigt wird, da dieser min. so groß sein muss, wie der größte Balken von allen Mitarbeitern, damit dieser auch richtig dargestellt werden kann. 
 
@@ -95,14 +97,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
             foreach (var employee in Employees)
             {
+                var timetracking = await MySQLMethods.GetTimetracking(employee.Id);
+
                 double targetHoursPerMonth = employee.WorkingHoursPerWeek * 4.3;
                 if (targetHoursPerMonth > biggestNumber) biggestNumber = (int)targetHoursPerMonth;
-                double actualHoursThisMonth = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
+                //double actualHoursThisMonth = CalculateHours.WorkingHoursThisMonth(Month, Year, employee.Timetracking);
+                double actualHoursThisMonth = CalculateHours.WorkingHoursThisMonth(Month, Year, timetracking);
                 if (actualHoursThisMonth > biggestNumber) biggestNumber = (int)actualHoursThisMonth;
                 double overtime = actualHoursThisMonth - targetHoursPerMonth;
                 if (overtime > biggestNumber) biggestNumber = (int)overtime;
 
-                double overtimeTotal = CalculateHours.CalculateTargetHoursTotal(targetHoursPerMonth, employee.Timetracking);
+                //double overtimeTotal = CalculateHours.CalculateTargetHoursTotal(targetHoursPerMonth, employee.Timetracking);
+                double overtimeTotal = CalculateHours.CalculateTargetHoursTotal(targetHoursPerMonth, timetracking);
 
                 Color color;
                 if (overtime >= 0)
@@ -138,23 +144,28 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             EmployeesHours = new ObservableCollection<EmployeeWorkingHours>(employeesHours);
         }
 
-        private void CreateEmployeeListTotalHours()
+        private async void CreateEmployeeListTotalHours()
         {
             double biggestNumber = 0;
             List<EmployeeWorkingHours> employeesWorkingHours = new();
 
             foreach (var employee in Employees)
             {
-                double actualHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
+                var timetracking = await MySQLMethods.GetTimetracking(employee.Id);
+
+                //double actualHoursTotal = CalculateHours.CalculateIsHoursTotal(employee.Timetracking);
+                double actualHoursTotal = CalculateHours.CalculateIsHoursTotal(timetracking);
                 if (actualHoursTotal > biggestNumber) biggestNumber = (int)actualHoursTotal;
-                double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, employee.Timetracking);
+                //double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, employee.Timetracking);
+                double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(employee.WorkingHoursPerWeek * 4.3, timetracking);
                 if (targetHoursTotal > biggestNumber) biggestNumber = (int)targetHoursTotal;
                 double overtimeTotal = actualHoursTotal - targetHoursTotal;
                 if (Math.Abs(overtimeTotal) > biggestNumber) biggestNumber = Math.Abs((int)overtimeTotal);              // Weil overtimeTotal auch negativ sein kann, aber dieser später umgewandelt wird ins positive für die Minusstunden, muss, um die Minusstunden richtig anzeigen zu können, der absolute Wert genommen werden
-                double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
+                //double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(employee.Timetracking);
+                double takenVacationHoursTotal = CalculateHours.CalculateTakenVacationHoursTotal(timetracking);
                 if (takenVacationHoursTotal > biggestNumber) biggestNumber = (int)takenVacationHoursTotal;
 
-                double vacationTimeInHours = CalculateHours.CalculateVacationHoursTotal(employee);
+                double vacationTimeInHours = CalculateHours.CalculateVacationHoursTotal(employee, timetracking);
                 if (vacationTimeInHours > biggestNumber) biggestNumber = (int)vacationTimeInHours;
 
                 double freeTimeTotal = vacationTimeInHours + overtimeTotal;

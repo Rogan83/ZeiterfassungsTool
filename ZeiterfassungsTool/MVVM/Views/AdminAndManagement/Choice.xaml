@@ -5,14 +5,13 @@
              x:Class="ZeiterfassungsTool.MVVM.Views.Admin.Choice"
              Title="Choice"
              >
-    <!--<Shell.BackButtonBehavior>
+    <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="True" IsVisible="True" Command="{Binding BackButton}"/>
-    </Shell.BackButtonBehavior>-->
+    </Shell.BackButtonBehavior>
 
 
     <Grid x:Name="grid" RowDefinitions=".7*,.3*"
           BackgroundColor="{StaticResource BGColor1}"
-          
           >
 
         <Grid 
@@ -23,7 +22,7 @@
             <Button
                 Grid.Row="0"
                 Margin="20,100,20,20"
-                Text="zur Arbeitszeiten Ansicht "
+                Text="zur Arbeitszeitenansicht"
                 Command="{Binding GoToUserListView}"
                 WidthRequest="590"
                 BackgroundColor="{StaticResource ButtonColorDarkBlue}"

@@ -17,8 +17,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
     {
 
         #region Properties
-        public Employee Employee { get; set; }
-        public ObservableCollection<Timetracking> Timetracking { get; set; } = new ObservableCollection<Timetracking>();
+        //public Employee Employee { get; set; }
+        public MySQLModels.Employee Employee { get; set; }
+        //public ObservableCollection<Timetracking> Timetracking { get; set; } = new ObservableCollection<Timetracking>();
+        public ObservableCollection<MySQLModels.Timetracking> Timetracking { get; set; } = new();
 
         public DateTime DateAndTimeStartTime { get; set; }
         
@@ -34,7 +36,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
         public string Username { get; set; }
 
-        public Timetracking SelectedTime { get; set; }
+        //public Timetracking SelectedTime { get; set; }
+        public MySQLModels.Timetracking SelectedTime { get; set; }
 
         public string EntrySubject { get; set; }
 
@@ -72,12 +75,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Logout =>
            new Command(() =>
            {
-               Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };             // Zurücksetzen
+               //Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };             // Zurücksetzen
+               Login.WhoIsLoggedIn = new List<MySQLModels.Employee>() { new MySQLModels.Employee() };             // Zurücksetzen
                Shell.Current.GoToAsync("UserList/StartPage");
            });
 
         public ICommand Update =>
-           new Command( async() =>
+           new Command(async() =>
            {
                bool answer = await App.Current.MainPage.DisplayAlert("Aktualisieren", $"Möchten Sie wirklich den Datensatz mit der Id {SelectedTime.Id} aktualisieren?", "JA", "NEIN");
 
@@ -89,21 +93,51 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
                DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
 
-               for (int i = 0; i < Employee.Timetracking.Count; i++)
+               //SQLite
+               //for (int i = 0; i < Employee.Timetracking.Count; i++)
+               //{
+               //    if (Employee.Timetracking[i].Id == SelectedTime.Id)
+               //    {
+               //        //UpdateWithchildren funktioniert nicht, deswegen muss der User gelöscht und in modifizierter Form wieder hinzugefügt werden
+               //        App.EmployeeRepo.DeleteItem(Employee);
+
+               //        Employee.Timetracking[i].StartTime = DateAndTimeStartTime;
+               //        Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
+               //        Employee.Timetracking[i].Subject = ChooseSubject();
+
+               //        App.EmployeeRepo.SaveItemWithChildren(Employee);   
+
+               //        var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+               //        Timetracking = new ObservableCollection<Timetracking>(timetracking);
+
+               //        return;
+               //    }
+               //}
+
+
+               //MySQL
+               var timetracking = await MySQLMethods.GetTimetracking(Employee.Id);
+               for (int i = 0; i < timetracking.Count; i++)
                {
-                   if (Employee.Timetracking[i].Id == SelectedTime.Id)
+                   if (timetracking[i].Id == SelectedTime.Id)
                    {
                        //UpdateWithchildren funktioniert nicht, deswegen muss der User gelöscht und in modifizierter Form wieder hinzugefügt werden
-                       App.EmployeeRepo.DeleteItem(Employee);
+                       //App.EmployeeRepo.DeleteItem(Employee);
 
-                       Employee.Timetracking[i].StartTime = DateAndTimeStartTime;
-                       Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
-                       Employee.Timetracking[i].Subject = ChooseSubject();
+                       //Employee.Timetracking[i].StartTime = DateAndTimeStartTime;  
+                       //Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
+                       //Employee.Timetracking[i].Subject = ChooseSubject();
 
-                       App.EmployeeRepo.SaveItemWithChildren(Employee);   
 
-                       var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
-                       Timetracking = new ObservableCollection<Timetracking>(timetracking);
+                       //App.EmployeeRepo.SaveItemWithChildren(Employee);   
+
+                       //var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+
+                       await MySQLMethods.UpdateTimetracking(timetracking[i]);
+
+                       timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+
+                       Timetracking = new ObservableCollection<MySQLModels.Timetracking>(timetracking);
 
                        return;
                    }
@@ -122,7 +156,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                    return;
                }
 
-               App.EmployeeRepo.DeleteItem(Employee);
+               //SQLite
+               //App.EmployeeRepo.DeleteItem(Employee);
+
+               //MySQL
+               await MySQLMethods.DeleteAccount(Employee.Id);
+
                await Shell.Current.GoToAsync("UserManagement/UserList");
            });
 
@@ -136,36 +175,49 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     return;
                 }
 
-                App.EmployeeRepo.DeleteItem(Employee);
+                //SQLite
+                ////////////////////////
+                //App.EmployeeRepo.DeleteItem(Employee);
 
-                Employee.Timetracking.Remove(SelectedTime);
+                //Employee.Timetracking.Remove(SelectedTime);
 
-                App.EmployeeRepo.SaveItemWithChildren(Employee);
+                //App.EmployeeRepo.SaveItemWithChildren(Employee);
 
-                var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
-                Timetracking = new ObservableCollection<Timetracking>(timetracking);
+                //var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+                //Timetracking = new ObservableCollection<Timetracking>(timetracking);
+                ///////////////////////////////
+
+                //MySQL
+                await MySQLMethods.DeleteTime(SelectedTime.Id);
+
+                var orderedTimetracking = (await MySQLMethods.GetTimetracking(Employee.Id)).OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+                Timetracking = new ObservableCollection<MySQLModels.Timetracking>(orderedTimetracking);
             });
 
-           #endregion
+        #endregion
 
         #region Methods
 
+        int typeId = 0;
         private string ChooseSubject()
         {
             string subject;
             if (rbHoliday)
             {
                 subject = "Urlaub";
+                typeId = 1;
                 IsVisibleEntrySubject = false;
             }
             else if (rbIll)
             {
                 subject = "Krank";
+                typeId = 2;
                 IsVisibleEntrySubject = false;
             }
             else
             {
                 subject = EntrySubject;
+                typeId = 3;
                 IsVisibleEntrySubject = true;
             }
             return subject;
@@ -212,88 +264,72 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
                DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
 
-               App.EmployeeRepo.DeleteItem(Employee);
-
-               int lastElement;
-               int id;
-               if (Employee.Timetracking.Count > 0)
-               {
-                   lastElement = Employee.Timetracking.Count - 1;
-                   id = Employee.Timetracking[lastElement].Id + 1;
-               }
+               //MySQL
+               ////////////////////////////////////////////////////////////////////
+               var timetracking = await MySQLMethods.GetTimetracking(Employee.Id);
+               var count = timetracking.Count();
+               var id = 0;
+               if (count < 1)
+                   id = 1;
                else
+                   id = timetracking[count - 1].Id + 1;
+
+               MySQLModels.Timetracking time = new()
                {
-                   id = 0;
-               }
-
-
-
-               Employee.Timetracking.Add(new Timetracking
-               {
-                   EmployeeID = Employee.Id,
-                   //IsCurrentlyWorking = false,
+                   Id = id,
+                   EmployeeId = Employee.Id,
                    StartTime = DateAndTimeStartTime,
                    EndTime = DateAndTimeEndTime,
-                   //WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
                    Subject = ChooseSubject(),
-                   Id = id
-               });
+                   Typeid = typeId
+               };
 
-               App.EmployeeRepo.SaveItemWithChildren(Employee);
+               await MySQLMethods.AddTime(time);
+               timetracking = await MySQLMethods.GetTimetracking(Employee.Id);
+               timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+               Timetracking = new ObservableCollection<MySQLModels.Timetracking>(timetracking);
+               ////////////////////////////////////////////////////////////////////
+               
 
-               //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-               //var temp = Employee;
-               //Employee = null;
-               //Employee = temp;
-               var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
-               Timetracking = new ObservableCollection<Timetracking>(timetracking);
+               //SQLite
+               /////////////////////////////////
+               //App.EmployeeRepo.DeleteItem(Employee);
+
+               //int lastElement;
+               //int id;
+               //if (Employee.Timetracking.Count > 0)
+               //{
+               //    lastElement = Employee.Timetracking.Count - 1;
+               //    id = Employee.Timetracking[lastElement].Id + 1;
+               //}
+               //else
+               //{
+               //    id = 0;
+               //}
+
+               //Employee.Timetracking.Add(new Timetracking
+               //{
+               //    EmployeeID = Employee.Id,
+               //    //IsCurrentlyWorking = false,
+               //    StartTime = DateAndTimeStartTime,
+               //    EndTime = DateAndTimeEndTime,
+               //    //WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
+               //    Subject = ChooseSubject(),
+               //    Id = id
+               //});
+
+               //App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+               ////Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
+               ////var temp = Employee;
+               ////Employee = null;
+               ////Employee = temp;
+               //var timetracking = Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
+               //Timetracking = new ObservableCollection<Timetracking>(timetracking);
+               /////////////////////////////////////////////
 
                EntrySubject = string.Empty;
            });
-
-              
-
-        //public void AddTime()
-        //{
-        //    DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
-        //    DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
-
-        //    App.EmployeeRepo.DeleteItem(Employee);
-
-        //    int lastElement;
-        //    int id;
-        //    if (Employee.Timetracking.Count > 0)
-        //    {
-        //        lastElement = Employee.Timetracking.Count - 1;
-        //        id = Employee.Timetracking[lastElement].Id + 1;
-        //    }
-        //    else
-        //    {
-        //        id = 0;
-        //    }
-
-            
-
-        //    Employee.Timetracking.Add(new Timetracking
-        //    {
-        //        EmployeeID = Employee.Id,
-        //        IsCurrentlyWorking = false,
-        //        StartTime = DateAndTimeStartTime,
-        //        EndTime = DateAndTimeEndTime,
-        //        WorkingTime = DateAndTimeEndTime - DateAndTimeStartTime,
-        //        Subject = ChooseSubject(),    
-        //        Id = id
-        //    });
-
-        //    App.EmployeeRepo.SaveItemWithChildren(Employee);
-
-        //    //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-        //    var temp = Employee;
-        //    Employee = null;
-        //    Employee = temp;
-
-        //    EntrySubject = string.Empty;
-        //}
 
         //public ICommand DeleteTime =>
         //   new Command(() =>
@@ -327,20 +363,35 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         /// <summary>
         /// Wählt das erste Item von der Timetracking Liste aus, wenn vorhanden
         /// </summary>
-        public void SelectFirstTime()
+        public async void SelectFirstTime()
         {
             //Timetracking = Employee.Timetracking;
             //Username = Employee.Username;
-            if (Employee != null)
+            //SQLite
+            ////////////////////////////////////////////////////////////////////////////////////
+            //if (Employee != null)
+            //{
+            //    if (Employee.Timetracking != null)
+            //        SelectedTime = Employee.Timetracking.FirstOrDefault();          //Das schon ein Element ausgewählt wird beim Start
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Es wurde kein Mitarbeiter ausgewählt");
+            //}
+            ////////////////////////////////////////////////////////////////////////////////////
+            ///
+            //MySQL
+            Timetracking = new ObservableCollection<MySQLModels.Timetracking>(await MySQLMethods.GetTimetracking(Employee.Id));
+
+            if (Timetracking != null)
             {
-                if (Employee.Timetracking != null)
-                    SelectedTime = Employee.Timetracking.FirstOrDefault();          //Das schon ein Element ausgewählt wird beim Start
+                SelectedTime = Timetracking.FirstOrDefault();
             }
             else
             {
-                Console.WriteLine("Es wurde kein Mitarbeiter ausgewählt");
+                Console.WriteLine("Keine Zeiten vorhanden");
             }
-            
+
         }
         #endregion
 

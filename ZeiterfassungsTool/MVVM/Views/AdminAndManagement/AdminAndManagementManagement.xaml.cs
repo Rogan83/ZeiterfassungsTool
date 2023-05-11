@@ -16,13 +16,12 @@ public partial class AdminAndManagementManagement : ContentPage
         BindingContext = model;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
-        base.OnAppearing();
         //Holt alle Mitarbeiter in die Liste (inkl. Admins und Geschäftsleitung). Es soll aber NICHT der Account erscheinen, mit dem man sich eingeloggt hat, damit dieser auch nicht gelöscht werden kann
 
         //model.Employees = model.GetAccountsWithoutLogginInAccount();
-        model.Employees = model.GetAllAccounts();
-        
+        model.Employees = await model.GetAllAccounts();
+        base.OnAppearing();
     }
 }

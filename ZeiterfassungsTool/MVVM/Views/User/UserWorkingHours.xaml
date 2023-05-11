@@ -171,7 +171,7 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="{Binding OvertimeOrMinusHoursText}"  FontSize="Medium" TextColor="{Binding ColorOvertimeOrHoursLeft}"/>
-                        <Span Text="{Binding OvertimeOrMinusHours}" FontSize="Medium"/>
+                        <Span Text="{Binding OvertimeOrMinusHours}" FontSize="Medium" TextColor="Black"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

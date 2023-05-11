@@ -11,7 +11,12 @@ namespace ZeiterfassungsTool.Selectors
     {
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            var timetracking = item as Timetracking;
+            var timetracking = item as MySQLModels.Timetracking;
+            if (timetracking == null)
+            {
+                Application.Current.Resources.TryGetValue("EmployeeStyleWork", out var employeeStyleWork);
+                return employeeStyleWork as DataTemplate;
+            }
 
             if(timetracking.Subject == "Krank")
             {

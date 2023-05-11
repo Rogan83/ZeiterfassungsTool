@@ -16,7 +16,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         #region Properties
 
-        public Employee Employee { get; set; }
+        public MySQLModels.Employee Employee { get; set; }
 
         private string month;
         public string Month
@@ -106,10 +106,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         //}
 
 
-        private void SetColorsAndLabels(double workingHoursThisMonth)
+        private async void SetColorsAndLabels(double workingHoursThisMonth)
         {
-            double isHoursTotal = CalculateHours.CalculateIsHoursTotal(Employee.Timetracking);
-            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, Employee.Timetracking);
+            var timetracking = await MySQLMethods.GetTimetracking(Employee.Id);
+
+            //double isHoursTotal = CalculateHours.CalculateIsHoursTotal(Employee.Timetracking);
+            double isHoursTotal = CalculateHours.CalculateIsHoursTotal(timetracking);
+            //double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, Employee.Timetracking);
+            double targetHoursTotal = CalculateHours.CalculateTargetHoursTotal(TargetHoursPerMonth, timetracking);
             OvertimeTotal = isHoursTotal - targetHoursTotal;
 
             TargetHoursPerMonth = Employee.WorkingHoursPerWeek * 4.3;
@@ -128,7 +132,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             }
 
 
-            VacationDaysLeft = (CalculateHours.CalculateVacationHoursTotal(Employee) - CalculateHours.CalculateTakenVacationHoursTotal(Employee.Timetracking)) / 8;
+            VacationDaysLeft = (CalculateHours.CalculateVacationHoursTotal(Employee, timetracking) - CalculateHours.CalculateTakenVacationHoursTotal(timetracking)) / 8;
 
            
 
@@ -306,10 +310,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
              SetWorkingHours();
          });
 
-        private void SetWorkingHours()
+        private async void SetWorkingHours()
         {
-            
-            WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, Employee.Timetracking);
+            var timetracking = await MySQLMethods.GetTimetracking(Employee.Id);
+            //WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, Employee.Timetracking);
+            WorkingHours = CalculateHours.WorkingHoursThisMonth(Month, Year, timetracking);
 
             //SetColorsAndLabels(WorkingHours);
             SetColorsAndLabels(WorkingHours);

@@ -23,10 +23,13 @@ public partial class UserManagement : ContentPage
 
         model.SelectFirstTime();
 
-        List<Timetracking> timetracking = new();
+        //List<Timetracking> timetracking = new();
+        List<MySQLModels.Timetracking> timetracking = new();
         if (model.Employee != null ) 
         { 
-            timetracking = model.Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();             //Sortiert die Liste aufsteigend, (komischerweise aber nicht den 2. Wert)
+            //SQLite
+            //timetracking = model.Employee.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();             //Sortiert die Liste aufsteigend, (komischerweise aber nicht den 2. Wert)
+            timetracking = model.Timetracking.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToList();
         }
         else
         {
@@ -36,13 +39,15 @@ public partial class UserManagement : ContentPage
         //                   orderby t.StartTime, t.EndTime
         //                   select t;
 
-        model.Timetracking = new ObservableCollection<Timetracking>(timetracking);
+        //model.Timetracking = new ObservableCollection<Timetracking>(timetracking);
+        model.Timetracking = new ObservableCollection<MySQLModels.Timetracking>(timetracking);
 
         var employee = Login.WhoIsLoggedIn[0];
 
         if (employee != null)
         {
-            if (employee.Role != Enumerations.Role.Admin)
+            //if (employee.Role != Enumerations.Role.Admin)
+            if (employee.RoleId != 3)
             {
                 imgBtnDeleteTime.IsEnabled = false;
                 imgBtnDeleteUser.IsEnabled = false;

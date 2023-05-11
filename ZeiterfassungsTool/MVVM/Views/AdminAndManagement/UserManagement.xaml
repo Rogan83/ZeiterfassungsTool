@@ -156,8 +156,6 @@
                             </Label.FormattedText>
                         </Label>
                     </VerticalStackLayout>
-                    
-                    
                 </Frame>
             </CollectionView.Header>
 

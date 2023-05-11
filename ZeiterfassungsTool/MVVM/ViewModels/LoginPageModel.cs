@@ -56,7 +56,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
             });
 
         public ICommand ToLogin =>
-           new Command((element) =>
+           new Command(async(element) =>
            {
                var username = EntryUsername; 
                var password = EntryPassword;
@@ -65,12 +65,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                {
                    if (password == string.Empty || username == string.Empty)
                    {
-                       App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
+                       await App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
                        return;
                    }
 
                    //var results = App.EmployeeRepo.GetItems(x => x.Username == username && x.Password == password);            //Hatte die Kind Elemente nicht mit geholt
-                   List<Employee> allAccounts = App.EmployeeRepo.GetItemsWithChildren();
+                   //SQLite
+                   List<Employee> allAccountsSQLite = App.EmployeeRepo.GetItemsWithChildren();
+
+                   //MySQL
+                   List<MySQLModels.Employee> allAccounts = await MySQLMethods.GetAllAccounts();
 
                    bool isEqual = false;
                    var loginUser = allAccounts.FindAll(u => u.Username == username);
@@ -90,7 +94,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
 
                        if (Login.WhoIsLoggedIn[0].IsResetPassword)
                        {
-                           App.Current.MainPage.DisplayAlert("Erinnerung", "Ihr Passwort wurde zurückgesetzt. Bitte ändern sie dies sofort in den Einstellungen ab.", "OK");
+                           await App.Current.MainPage.DisplayAlert("Erinnerung", "Ihr Passwort wurde zurückgesetzt. Bitte ändern sie dies sofort in den Einstellungen ab.", "OK");
                        }
 
                        DeactivateAndActivateSeveralButtonAndEntries(element, true);
@@ -99,16 +103,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                    }
                    else if (count > 1)
                    {
-                       App.Current.MainPage.DisplayAlert("Warnung", "Es existieren min. 2 Accounts mit dem selben Benutzernamen!", "OK");
+                       await App.Current.MainPage.DisplayAlert("Warnung", "Es existieren min. 2 Accounts mit dem selben Benutzernamen!", "OK");
                    }
                    else
                    {
-                       App.Current.MainPage.DisplayAlert("Warnung", "Benutzername oder Passwort sind nicht korrekt.", "OK");
+                       await App.Current.MainPage.DisplayAlert("Warnung", "Benutzername oder Passwort sind nicht korrekt.", "OK");
                    }
                }
                else
                {
-                   App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
+                   await App.Current.MainPage.DisplayAlert("Warnung", "Es müssen beide Felder ausgefüllt sein.", "OK");
                }
            });
         /// <summary>
@@ -140,20 +144,56 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         /// </summary>
         private void UpdateButtonForwardText()
         {
-            var result = Login.WhoIsLoggedIn[0];
-            switch (result.Role)
+            MySQLModels.Employee result;
+            if (Login.WhoIsLoggedIn != null)
+                result = Login.WhoIsLoggedIn[0];
+            else
+                return;
+            //switch (result.Role)
+            //{
+            //    case Role.User:
+            //        TxtForwardToContent = "Weiter zur Benutzerseite";
+            //        break;
+            //    case Role.Management:
+            //        TxtForwardToContent = "Weiter zur Geschäftsführung";
+            //        break;
+            //    case Role.Admin:
+            //        TxtForwardToContent = "Weiter zur Adminseite";
+            //        break;
+            //}
+
+            switch (result.RoleId)
             {
-                case Role.User:
+                case 1:
                     TxtForwardToContent = "Weiter zur Benutzerseite";
                     break;
-                case Role.Management:
+                case 2:
                     TxtForwardToContent = "Weiter zur Geschäftsführung";
                     break;
-                case Role.Admin:
+                case 3:
                     TxtForwardToContent = "Weiter zur Adminseite";
                     break;
             }
         }
+
+        public async Task CheckIfOneAccountExist()
+        {
+            //SQLite
+            //int count = App.EmployeeRepo.GetItems().Count();
+
+            //MySQL
+            int count = (await MySQLMethods.GetAllAccounts()).Count;
+
+            if (count == 0)
+            {
+                await App.Current.MainPage.DisplayAlert("", "Es existiert noch kein Account. Es wird jetzt ein Admin Account eingerichtet", "OK");
+                await Shell.Current.GoToAsync(nameof(CreateAccount));
+                //Noch kein Account in der Datenbank vorhanden. Der erste Account wird somit ein Admin Account werden.
+            }
+        }
+            
+
+
         /// <summary>
         /// Damit wird zur nächsten Seite gesprungen. Zur welche Seite man springt, hängt von den Rechten ab, die der Nutzer hat.
         /// </summary>
@@ -162,15 +202,19 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
           {
               var result = Login.WhoIsLoggedIn[0];
 
-              switch (result.Role)
+              //switch (result.Role)
+              switch (result.RoleId)
               {
-                  case Role.User:
+                  //case Role.User:
+                  case 1:
                       Shell.Current.GoToAsync(nameof(UserPage));
                       break;
-                  case Role.Management:
+                  //case Role.Management:
+                  case 2:
                       Shell.Current.GoToAsync(nameof(Choice));
                       break;
-                  case Role.Admin:
+                  //case Role.Admin:
+                  case 3:
                        Shell.Current.GoToAsync(nameof(Choice));
                        break;
                   default:
@@ -181,7 +225,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public ICommand Logout =>
           new Command((element) =>
           {
-              Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
+              Login.WhoIsLoggedIn = new List<MySQLModels.Employee>() { new MySQLModels.Employee() };
               Shell.Current.GoToAsync(nameof(LoginPage));
 
               DeactivateAndActivateSeveralButtonAndEntries(element, false);

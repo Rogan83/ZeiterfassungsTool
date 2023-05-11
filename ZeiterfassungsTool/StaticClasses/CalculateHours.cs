@@ -15,7 +15,8 @@ namespace ZeiterfassungsTool.StaticClasses
 {
     public static class CalculateHours
     {
-        public static double WorkingHoursThisMonth(string month, string year, List<Timetracking> timetrackingList)
+        //public static double WorkingHoursThisMonth(string month, string year, List<Timetracking> timetrackingList)
+        public static double WorkingHoursThisMonth(string month, string year, List<MySQLModels.Timetracking> timetrackingList)
         {
             double hours = 0;
             int currentMonth = 0;
@@ -77,7 +78,8 @@ namespace ZeiterfassungsTool.StaticClasses
             return Math.Round(hours);
         }
 
-        public static double CalculateTargetHoursTotal(double targetHoursPerMonth, List<Timetracking> timetrackingList)
+        //public static double CalculateTargetHoursTotal(double targetHoursPerMonth, List<Timetracking> timetrackingList)
+        public static double CalculateTargetHoursTotal(double targetHoursPerMonth, List<MySQLModels.Timetracking> timetrackingList)
         {
             double workingHoursTotal = 0;
             double targetHoursTotal = 0;
@@ -106,31 +108,36 @@ namespace ZeiterfassungsTool.StaticClasses
             return Math.Round(targetHoursTotal);
         }
 
-        public static double CalculateIsHoursTotal(List<Timetracking> timetrackingList)
+        public static double CalculateIsHoursTotal(List<MySQLModels.Timetracking> timetrackingList)
         {
             double workingHoursTotal = 0;
             foreach (var timetracking in timetrackingList)
             {
                 if (timetracking.Subject == "Krank" || timetracking.Subject == "Urlaub")
                     continue;
-
-                workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;
+                
+                workingHoursTotal += (timetracking.EndTime - timetracking.StartTime).TotalHours;   
             }
 
             return Math.Round(workingHoursTotal);
         }
-        
-        public static double CalculateVacationHoursTotal(Employee employee)
+
+        //public static double CalculateVacationHoursTotal(Employee employee)
+        public static double CalculateVacationHoursTotal(MySQLModels.Employee employee, List<MySQLModels.Timetracking> timetracking)
         {
             DateTime firstTime = new DateTime();
             DateTime lastTime = new DateTime();
-            if (employee.Timetracking.Count > 0)
+            //if (employee.Timetracking.Count > 0)
+            if (timetracking.Count > 0)  
             {
-                firstTime = employee.Timetracking[0].StartTime;
-                lastTime = employee.Timetracking[0].EndTime;
+                //firstTime = employee.Timetracking[0].StartTime;
+                firstTime = timetracking[0].StartTime;
+                //lastTime = employee.Timetracking[0].EndTime;
+                lastTime = timetracking[0].EndTime;
             }
              
-            foreach (var t in employee.Timetracking)
+            //foreach (var t in employee.Timetracking)
+            foreach (var t in timetracking)
             {
                 if ( firstTime > t.StartTime)
                 {
@@ -152,7 +159,8 @@ namespace ZeiterfassungsTool.StaticClasses
         }
 
 
-        public static double CalculateTakenVacationHoursTotal(List<Timetracking> timetrackingList)
+        //public static double CalculateTakenVacationHoursTotal(List<Timetracking> timetrackingList)
+        public static double CalculateTakenVacationHoursTotal(List<MySQLModels.Timetracking> timetrackingList)
         {
             if (timetrackingList == null)
                 return 0;

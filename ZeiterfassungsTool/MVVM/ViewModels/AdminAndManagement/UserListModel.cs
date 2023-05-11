@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using PropertyChanged;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
@@ -7,22 +8,21 @@ using ZeiterfassungsTool.StaticClasses;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 {
+    [AddINotifyPropertyChangedInterface]
     public class UserListModel
     {
-        public Employee SelectedEmployee { get; set; }
+        //public Employee SelectedEmployee { get; set; }
+        public MySQLModels.Employee SelectedEmployee { get; set; }
 
-        public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+        //public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+        public ObservableCollection<MySQLModels.Employee> Employees { get; set; } = new ObservableCollection<MySQLModels.Employee>();
+
+        public List<MySQLModels.Employee> employees  = new();
 
         public UserListModel()
         {
-            var employees = App.EmployeeRepo.GetItemsWithChildren();
-            foreach (var employee in employees)
-            {
-                if (employee.Role == Role.User)             // Es sollen nur die Benutzer hinzugefügt werden, da nur diese die Arbeitszeiten mit der Start und Stopfunktion einfügen können
-                {
-                    Employees.Add(employee);
-                }
-            }
+            //SQLite
+            //var employees = App.EmployeeRepo.GetItemsWithChildren();
         }
         #region ICommands
         public ICommand BackButton =>
@@ -40,7 +40,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand Logout =>
            new Command(() =>
            {
-               Login.WhoIsLoggedIn = new List<Employee>() { new Employee() };
+               Login.WhoIsLoggedIn = new List<MySQLModels.Employee>() { new MySQLModels.Employee() };
                Shell.Current.GoToAsync("UserList/StartPage");
            });
 
@@ -60,5 +60,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
               }
           });
         #endregion 
+
+        public async Task<ObservableCollection<MySQLModels.Employee>> GetAllUser()
+        {
+            //SQLite
+            //List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
+            //MySQL
+            List<MySQLModels.Employee> employees = await MySQLMethods.GetAllAccounts();
+
+            var user = from e in employees where e.RoleId == 1 select e;            // 1 = user, 2 = Management, 3 = admin
+
+            //return new ObservableCollection<Employee>(employees);
+            return new ObservableCollection<MySQLModels.Employee>(user);
+        }
     }
 }

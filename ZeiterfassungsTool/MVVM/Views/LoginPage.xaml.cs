@@ -5,17 +5,26 @@ namespace ZeiterfassungsTool.MVVM.Views;
 
 public partial class LoginPage : ContentPage
 {
+	LoginPageModel loginPage;
 	public LoginPage()
 	{
 		InitializeComponent();
-        BindingContext = new LoginPageModel();
+		loginPage = new LoginPageModel();
+		BindingContext = loginPage;
     }
 
-	protected override void OnAppearing()
+	protected async override void OnAppearing()
 	{
 		base.OnAppearing();
 
-		var loggedInEmployee = Login.WhoIsLoggedIn[0];
+        await loginPage.CheckIfOneAccountExist();
+
+		MySQLModels.Employee loggedInEmployee;
+
+		if (Login.WhoIsLoggedIn != null)
+			loggedInEmployee = Login.WhoIsLoggedIn[0];
+		else
+			return;
 		// Wenn jemand eingeloggt ist...
 		if (loggedInEmployee.Id != 0)
 		{

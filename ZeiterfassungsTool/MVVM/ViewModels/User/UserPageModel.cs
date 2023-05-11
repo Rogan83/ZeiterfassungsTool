@@ -17,10 +17,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     [AddINotifyPropertyChangedInterface]
     public class UserPageModel
     {
+        private static System.Timers.Timer Timer1;
+        public DateTime workbegin;
+        public DateTime workend;
 
-        private static System.Timers.Timer aTimer;
-        private DateTime workbegin;
-        private DateTime workend;
+        public List<MySQLModels.Timetracking> Timetracking { get; set; }
 
         #region Properties
 
@@ -31,12 +32,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         public string EntrySubject { get; set; } = string.Empty;
         #endregion
+        public int index = 0;
 
-
-        
         private TimeSpan determinePastTime;
 
-        private Employee user;
+        //private Employee user;
+        private MySQLModels.Employee user;
 
         public UserPageModel()
         {
@@ -47,40 +48,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
             user = Login.WhoIsLoggedIn[0];
 
-            index = user.Timetracking.Count - 1;
-
-            if (index >= 0)  //Ist überhaupt ein Datensatz vorhanden?
-            {
-                bool isCurrentlyWorking = false;
-                if (user.Timetracking[index] != null)
-                {
-                    // Wenn der Mitarbeiter auf den Stopbutton gedrückt hat, wurde ja die EndTime ermittelt, was bedeutet, dass er momentan nicht arbeitet
-                    if (user.Timetracking[index].EndTime > user.Timetracking[index].StartTime)
-                    {
-                        isCurrentlyWorking = false;
-                    }
-                    else
-                    {
-                        isCurrentlyWorking = true;
-                    }
-                }
-
-                //ShowStartTimer = !user.Timetracking[index].IsCurrentlyWorking;
-                //ShowStopTimer = user.Timetracking[index].IsCurrentlyWorking;
-                
-                ShowStartTimer = !isCurrentlyWorking;
-                ShowStopTimer = isCurrentlyWorking;
-
-                workbegin = user.Timetracking[index].StartTime;
-                workend = user.Timetracking[index].EndTime;
-            }
-            else
-            {
-                ShowStartTimer = true;
-                ShowStopTimer = false;
-
-                workbegin = workend = DateTime.Now;
-            }
+            //index = user.Timetracking.Count - 1;
 
             InitTimer(100, true);
             //DebugText = user.Timetracking.Count.ToString();
@@ -93,6 +61,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
            new Command(() =>
            {
                //Shell.Current.GoToAsync(nameof(LoginPage));
+               Timer1.Enabled = false;
                Shell.Current.GoToAsync("UserPage/LoginPage");
            });
 
@@ -136,15 +105,23 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                //Shell.Current.GoToAsync("UserPageScheduler"); UserPage/UserPageScheduler
                Shell.Current.GoToAsync("UserPage/UserPageScheduler");
            });
-
-       
-        private int index = 0;
+        
         public ICommand StartTimeTracking =>
            new Command(() =>
            {
-               user.Timetracking.Add(new Timetracking() { StartTime = DateTime.Now, EndTime = DateTime.Now });
+               if (Timetracking.Count > 0)
+               {
+                   index = Timetracking.Count;
+               }
+               else
+               {
+                   index = 0;
+               }
 
-               index = user.Timetracking.Count - 1;
+               //user.Timetracking.Add(new Timetracking() { StartTime = DateTime.Now, EndTime = DateTime.Now });
+               Timetracking.Add(new MySQLModels.Timetracking() { StartTime = DateTime.Now, EndTime = DateTime.Now });
+
+               //index = user.Timetracking.Count - 1;
 
                // Es soll die Zeit gespeichert werden, wann angefangen wird zu Arbeiten
                workbegin = DateTime.Now;
@@ -154,17 +131,21 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
                //user.Timetracking[count].Workbegin = DateTime.Now;
 
-               user.Timetracking[index].StartTime = workbegin;
-               //user.Timetracking[index].IsCurrentlyWorking = true;
+               //user.Timetracking[index].StartTime = workbegin;
+               Timetracking[index].StartTime = workbegin;
+               Timetracking[index].Typeid = 1;
+               Timetracking[index].EmployeeId = user.Id;
 
                //InitTimer(100, true);
 
-               SaveEmployeeInDataBase();
+               SaveTimetrackingInDatabase();
            });
         
         public ICommand StopTimeTracking =>
-           new Command(() =>
+           new Command(async() =>
            {
+               Timetracking = await MySQLMethods.GetTimetracking(user.Id);
+
                // Es soll die Zeit gespeichert werden, wann gestoppt wird zu Arbeiten
                workend = DateTime.Now;
 
@@ -172,32 +153,33 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                ShowStopTimer = false;
 
                // In Datenbank hinzufügen
-               //user.Timetracking.Add(new Timetracking() { Workbegin = workbegin, Workend = workend, WorkingTime = workend - workbegin});
-               user.Timetracking[index].EndTime = workend;
-               //user.Timetracking[index].WorkingTime = workend - workbegin;
-               //user.Timetracking[index].IsCurrentlyWorking = false;
-               user.Timetracking[index].Subject = EntrySubject;
+               //user.Timetracking[index].EndTime = workend;
+               Timetracking[index].EndTime = workend;
+               //user.Timetracking[index].Subject = EntrySubject;
+               Timetracking[index].Subject = EntrySubject;
 
                EntrySubject = string.Empty;
 
-               DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}";
+               //DebugText = $"Anzahl TimeTracking Datensätze: {user.Timetracking.Count.ToString()}";
+               DebugText = $"Anzahl TimeTracking Datensätze: {Timetracking.Count.ToString()}";
 
-               SaveEmployeeInDataBase();
+               UpdateTimetrackingInDatabase();
            });
         #endregion
         #region Methods
 
-        private void InitTimer(int duration, bool isActivate)
+        public void InitTimer(int duration, bool isActivate)
         {
-            aTimer = new System.Timers.Timer(duration);
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = isActivate;
+            Timer1 = new System.Timers.Timer(duration);
+            Timer1.Elapsed += OnTimedEvent;
+            Timer1.AutoReset = true;
+            Timer1.Enabled = isActivate;
         }
+        
 
-        private TimeSpan DeterminePastTime()
+        private async Task<TimeSpan> DeterminePastTime()
         {
-           
+            var timetrackingList = await MySQLMethods.GetTimetracking(user.Id);
             // Wenn der Index kleiner als null ist, dann ist noch keine Zeit aufgenommen wurden. Insofern müssen auch keine Zeiten zusammen addiert werden.
             if (index < 0)
             {
@@ -210,7 +192,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             TimeSpan workingTimeTotal = new();
 
             //Addiere alle Arbeitszeiten zusammen
-            foreach (var timetracking in user.Timetracking)
+            //foreach (var timetracking in user.Timetracking)
+            foreach (var timetracking in timetrackingList)
             {
                 if (timetracking.Subject == "Urlaub" || timetracking.Subject == "Krank")
                     continue;
@@ -248,42 +231,37 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             return workingTimeTotal;
         }
 
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        private async void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            determinePastTime = DeterminePastTime();
+            determinePastTime = await DeterminePastTime();
 
             // ... und addiere nach dem Start noch zusätzlich die Zeit, die vergangen ist, wenn die Zeit noch nicht gestoppt wurde. (Was bedeutet, dass noch momentan gearbeitet wird.
-            if (workbegin > workend)
+            if (workbegin >= workend)
             {
                 var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
                 determinePastTime += passedTimeSinceStartTimeTracking;
             }
-            //if (index >= 0)
-            //{
-            //    //if (user.Timetracking[index].IsCurrentlyWorking)
-            //    {
-            //        var passedTimeSinceStartTimeTracking = DateTime.Now - workbegin;
-            //        determinePastTime += passedTimeSinceStartTimeTracking;
-            //    }
-            //}
-            //else
-            //{
-            //    TimePassed = "0h : 0m : 0s";
-            //    return;
-            //}
 
             //var workingTimeTotal = DateTime.Now - workbegin;
             TimePassed = $"{determinePastTime.Hours.ToString()}h : {determinePastTime.Minutes.ToString()}m : {determinePastTime.Seconds.ToString()}s";
         }
 
-        void SaveEmployeeInDataBase()
+       
+
+        async void SaveTimetrackingInDatabase()
         {
-            App.EmployeeRepo.DeleteItem(user);                  //Updaten funktioniert aus irgendeinen Grund nicht, deswegen musste ich mich mit Löschen und neu hinzufügen behelfen
-            App.EmployeeRepo.SaveItemWithChildren(user);        //Speichert irgendwie nicht die children, ka warum
+            //SQLite
+            //App.EmployeeRepo.DeleteItem(user);                  //Updaten funktioniert aus irgendeinen Grund nicht, deswegen musste ich mich mit Löschen und neu hinzufügen behelfen
+            //App.EmployeeRepo.SaveItemWithChildren(user);        //Speichert irgendwie nicht die children, ka warum
 
-            //var count = App.EmployeeRepo.GetItems().Count;
+            //MySQL
+            await MySQLMethods.AddTime(Timetracking[index]);
+        }
 
-            List<Employee> a = App.EmployeeRepo.GetItemsWithChildren();
+        async void UpdateTimetrackingInDatabase()
+        {
+            var id = Timetracking[index].Id;
+            await MySQLMethods.UpdateTimetracking(Timetracking[index]);
         }
 
         #endregion

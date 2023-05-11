@@ -18,8 +18,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
     {
 
         #region Properties
-        public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
-        public Employee SelectedEmployee { get; set; }
+        //public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
+        public ObservableCollection<MySQLModels.Employee> Employees { get; set; } = new ObservableCollection<MySQLModels.Employee>();
+        //public Employee SelectedEmployee { get; set; }
+        public MySQLModels.Employee SelectedEmployee { get; set; }
         #endregion
 
         #region Commands
@@ -31,7 +33,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
 
 
         public ICommand EmployeeClickedCommand =>
-          new Command(async () =>
+          new Command(async() =>
           {
               var employee = SelectedEmployee;
 
@@ -49,12 +51,18 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
         #endregion
 
         #region Methods
-        public ObservableCollection<Employee> GetAllAccounts()
+        //public async Task<ObservableCollection<Employee>> GetAllAccounts()
+        public async Task<ObservableCollection<MySQLModels.Employee>> GetAllAccounts()
         {
-            Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
-            List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
+            //Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
+            MySQLModels.Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
+            //SQLite
+            //List<Employee> employees = App.EmployeeRepo.GetItemsWithChildren();
+            //MySQL
+            List<MySQLModels.Employee> employees = await MySQLMethods.GetAllAccounts();
             
-            return new ObservableCollection<Employee>(employees);
+            //return new ObservableCollection<Employee>(employees);
+            return new ObservableCollection<MySQLModels.Employee>(employees);
         }
         #endregion
     }

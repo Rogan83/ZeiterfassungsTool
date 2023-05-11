@@ -19,7 +19,8 @@ public partial class Choice : ContentPage
 		var loggedInAccount = Login.WhoIsLoggedIn[0];
 		if (loggedInAccount != null)
 		{
-			if (loggedInAccount.Role != Enumerations.Role.Admin)
+			//if (loggedInAccount.Role != Enumerations.Role.Admin)
+			if (loggedInAccount.RoleId != 3)
 			{
 				btnShowAllAccounts.IsVisible = false;
 			}

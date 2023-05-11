@@ -7,21 +7,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
-using ZeiterfassungsTool.Models;
+//using ZeiterfassungsTool.Models;
+using ZeiterfassungsTool.MySQLModels;
+
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.StaticClasses;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Core;
+using System.Text.Json;
+using MvvmHelpers.Interfaces;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
     public class CreateAccountModel
     {
+        // Verbindung zum MySQL Server
+        HttpClient client;
+        JsonSerializerOptions _serializerOptions;
+        static string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
+        static string urlEmployee = $"{baseAddress}/api/Employee";
+        ////////////////////////////////////////
+        
         public CreateAccountModel()
         {
-            CheckIfOneAccountExist();
             //LbUsername = $"Sie sind mit dem Benutzername {Login.WhoIsLoggedIn[0].Username} angemeldet.";
+
+            client = new HttpClient();
+            _serializerOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            };
         }
 
         #region Properties
@@ -32,7 +48,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string Birthday { get; set; }
+        //public string Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
 
@@ -90,13 +107,14 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         //var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
 
         public ICommand ToRegister =>
-            new Command((vslRegisterElements) =>
+            new Command(async(vslRegisterElements) =>
             {
+                await CheckIfOneAccountExist();
                 var hashedPW = Hash.HashPasswordScrypt(Password);
 
-                if (ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
+                if (await ExistsThisUser())           //Untersucht, ob der Benutzername schon vergeben wurde
                 {
-                    App.Current.MainPage.DisplayAlert("","Dieser Benutzername ist bereits schon vergeben.","OK");
+                    await App.Current.MainPage.DisplayAlert("","Dieser Benutzername ist bereits schon vergeben.","OK");
                     UsernameAlreadyExists = true;
                     UsernameColor = Colors.Red;
                     return;
@@ -110,12 +128,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 {
                     if (Password == String.Empty)
                     {
-                        App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld darf nicht leer sein!", "Ok");
+                        await App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld darf nicht leer sein!", "Ok");
                         return;
                     }
                     else if(Username == string.Empty)
                     {
-                        App.Current.MainPage.DisplayAlert("", $"Sie müssen einen Benutzernamen wählen!", "Ok");
+                        await App.Current.MainPage.DisplayAlert("", $"Sie müssen einen Benutzernamen wählen!", "Ok");
                         return;
                     }
 
@@ -123,12 +141,29 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     {
                         if (hashedPW == null)
                         {
-                            App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld ist leer!", "Ok");
+                            await App.Current.MainPage.DisplayAlert("", $"Das Passwort Feld ist leer!", "Ok");
                             return;
                         }
-                        App.EmployeeRepo.SaveItem(new Employee() { Username = this.Username, Firstname = this.Firstname, Lastname = this.Lastname, 
-                            Birthday = this.Birthday, City = this.City, Country = this.Country, EMail = this.EMail, PostalCode = this.PostalCode, 
-                            Street = this.Street, Password = hashedPW, /*Salt = salt,*/ Role = Role.Admin });         //Salt braucht man nur nach der anderen Hash Verschlüsselung
+
+                        //SQLite
+                        //App.EmployeeRepo.SaveItem(new Employee()
+                        //{
+                        //    Username = this.Username,
+                        //    Firstname = this.Firstname,
+                        //    Lastname = this.Lastname,
+                        //    Birthday = this.Birthday,
+                        //    City = this.City,
+                        //    Country = this.Country,
+                        //    EMail = this.EMail,
+                        //    PostalCode = this.PostalCode,
+                        //    Street = this.Street,
+                        //    Password = hashedPW, /*Salt = salt,*/
+                        //    Role = Role.Admin
+                        //});         //Salt braucht man nur nach der anderen Hash Verschlüsselung
+
+                        InitEmployeeEntrys();
+
+                        Save(hashedPW, 3);      //3 = admin
                     }
                     else
                     {
@@ -142,54 +177,81 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                         }
                         else if (rbManagement)
                         {
-                            if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            //if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            if (Login.WhoIsLoggedIn[0].RoleId == 3)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
                             {
                                 role = Role.Management;
                             }
                             else
                             {
-                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
+                                await App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
                                 return;
                             }
                         }
                         else if (rbAdmin)
                         {
-                            if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            //if (Login.WhoIsLoggedIn[0].Role == Role.Admin)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
+                            if (Login.WhoIsLoggedIn[0].RoleId == 3)            //Wenn ein Admin angemeldet ist, dann kann der Account angelegt werden
                             {
                                 role = Role.Admin;
                             }
                             else
                             {
-                                App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
+                                await App.Current.MainPage.DisplayAlert("Fehlende Rechte", alertTextAdmin, "Ok");
                                 return;
                             }
                         }
 
                         rbsIsVisible = false;
-                        App.EmployeeRepo.SaveItem(new Employee()
+
+                        //SQLite
+
+                        //App.EmployeeRepo.SaveItem(new Employee()
+                        //{
+                        //    Username = this.Username,
+                        //    Firstname = this.Firstname,
+                        //    Lastname = this.Lastname,
+                        //    Birthday = this.Birthday,
+                        //    City = this.City,
+                        //    Country = this.Country,
+                        //    EMail = this.EMail,
+                        //    PostalCode = this.PostalCode,
+                        //    Street = this.Street,
+                        //    Password = hashedPW,
+                        //    //Salt = salt,
+                        //    Role = role
+                        //});
+
+                        int id;
+
+                        switch (role)
                         {
-                            Username = this.Username,
-                            Firstname = this.Firstname,
-                            Lastname = this.Lastname,
-                            Birthday = this.Birthday,
-                            City = this.City,
-                            Country = this.Country,
-                            EMail = this.EMail,
-                            PostalCode = this.PostalCode,
-                            Street = this.Street,
-                            Password = hashedPW,
-                            //Salt = salt,
-                            Role = role
-                        });
+                            case Role.User:
+                                id = 1;
+                                break;
+                            case Role.Management:
+                                id = 2;
+                                break;
+                            case Role.Admin:
+                                id = 3;
+                                break;
+                            default:
+                                id = 1;
+                                break;
+                        }
+
+                        InitEmployeeEntrys();
+
+                        Save(hashedPW, id);
                     }
                     DebugMessage = App.EmployeeRepo.StatusMessage;
-                    App.Current.MainPage.DisplayAlert("Account angelegt", $"Der Account mit dem Benutzernamen \"{Username}\" wurde erfolgreich angelegt", "Ok");
-                    Shell.Current.GoToAsync("CreateAccount/LoginPage");
+                    await App.Current.MainPage.DisplayAlert("Account angelegt", $"Der Account mit dem Benutzernamen \"{Username}\" wurde erfolgreich angelegt", "Ok");
+                    await Shell.Current.GoToAsync("CreateAccount/LoginPage");
                     HideControls(vslRegisterElements);
                 }
                 else
                 {
-                    App.Current.MainPage.DisplayAlert("","Der Benutzername und das Passwort Feld darf nicht leer sein!","Ok");
+                    await App.Current.MainPage.DisplayAlert("","Der Benutzername und das Passwort Feld darf nicht leer sein!","Ok");
                     return;
                 }
                 
@@ -198,12 +260,64 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         #endregion
 
         #region Methods
-
-        private bool ExistsThisUser()
+        //MySQL
+        private async void Save(string hashedPW, int id)
         {
-            var user = App.EmployeeRepo.GetItem(x => x.Username == this.Username);
+            await MySQLMethods.SaveAccount(new Employee()
+            {
+                Username = this.Username,
+                Firstname = this.Firstname,
+                Lastname = this.Lastname,
+                Birthday = this.Birthday,
+                City = this.City,
+                Country = this.Country,
+                EMail = this.EMail,
+                PostalCode = this.PostalCode,
+                Street = this.Street,
+                Password = hashedPW,
+                WorkingHoursPerWeek = 40,
+                RoleId = id              // 1 = user, 2 = management, 3 = admin
+            });
+        }
 
-            if (user == null)
+        private void InitEmployeeEntrys()
+        {
+            if (this.Username == null)
+                this.Username = string.Empty;
+            if (this.Firstname == null)
+                this.Firstname = string.Empty;
+            if (this.Lastname == null)
+                this.Lastname = string.Empty;
+            if (this.Birthday == null)
+                this.Birthday = DateTime.Now;
+            if (this.City == null)
+                this.City = string.Empty;
+            if (this.Country == null)
+                this.Country = string.Empty;
+            if (this.EMail == null)
+                this.EMail = string.Empty;
+            if (this.PostalCode == null)
+                this.PostalCode = string.Empty;
+            if (this.Street == null)
+                this.Street = string.Empty;
+            if (this.Password == null)
+                this.Password = string.Empty;
+        }
+
+        private async Task<bool> ExistsThisUser()
+        {
+            ////SQLite
+            //var user = App.EmployeeRepo.GetItem(x => x.Username == this.Username);
+
+            //if (user == null)
+            //    return false;
+
+            //return true;
+
+            //MySQL
+            var user = await MySQLMethods.GetSingleAccount(this.Username);
+
+            if (user.Count == 0)
                 return false;
 
             return true;
@@ -255,11 +369,16 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
         //    }
         //}
 
-        public void CheckIfOneAccountExist()
+        public async Task CheckIfOneAccountExist()
         {
-            int count = App.EmployeeRepo.GetItems().Count();
+            //SQLite
+            //int count = App.EmployeeRepo.GetItems().Count();
+
+            //MySQL
+            int count = (await MySQLMethods.GetAllAccounts()).Count;
+
             string text = "Bitte geben Sie ihr Benutzername und Passwort zum Registrieren ein.";
-            if (count == 0)
+           if (count == 0)
             {
                 
                 //Noch kein Account in der Datenbank vorhanden. Der erste Account wird somit ein Admin Account werden.
@@ -274,6 +393,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 isFirstAccount = false;
             }
         }
+
+
+
         #endregion
 
     }

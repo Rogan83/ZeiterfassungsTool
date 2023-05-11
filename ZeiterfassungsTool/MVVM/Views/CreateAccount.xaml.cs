@@ -4,13 +4,18 @@ namespace ZeiterfassungsTool.MVVM.Views;
 
 public partial class CreateAccount : ContentPage
 {
+    CreateAccountModel createAccount;
     public CreateAccount()
     {
         InitializeComponent();
+        createAccount = new CreateAccountModel();
+        BindingContext = createAccount;
+    }
 
-        BindingContext = new CreateAccountModel();
-
-        
+    protected async override void OnAppearing()
+    { 
+        base.OnAppearing(); 
+        await createAccount.CheckIfOneAccountExist();
     }
     //protected override bool OnBackButtonPressed()
     //{

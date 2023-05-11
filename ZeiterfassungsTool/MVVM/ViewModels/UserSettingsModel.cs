@@ -19,10 +19,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
     [QueryProperty(nameof(Employee), "employee")]
     public class UserSettingsModel
     {
+        private System.Timers.Timer aTimer;
 
-        private  System.Timers.Timer aTimer;
-
-        public Employee Employee { get; set; }
+        //public Employee Employee { get; set; }
+        public MySQLModels.Employee Employee { get; set; }
 
         public string Username { get; set; }
         public string Firstname { get; set; }
@@ -31,7 +31,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
 
@@ -44,6 +44,13 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             Role.Admin, 
         };
 
+        public List<int> RoleList2 { get; set; } = new List<int>()
+        {
+            1,
+            2,
+            3,
+        };
+
         public Enumerations.Role SelectedRole { get; set; }
 
         public int SelectedRoleIndex { get; set; }
@@ -51,7 +58,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
         public Thickness Margin { get; set; }
 
 
-        public int WorkingHoursPerWeek { get; set; } = 40;
+        public double WorkingHoursPerWeek { get; set; } = 40;
 
         public UserSettingsModel()
         {
@@ -97,8 +104,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             if (Employee.Country != null)
                 Country = Employee.Country;
 
-            if (Employee.Birthday != null)
-                Birthday = Employee.Birthday;
+            Birthday = Employee.Birthday;
 
             if (Employee.EMail != null)
                 EMail = Employee.EMail;
@@ -106,12 +112,10 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             VacationDays = Employee.VacationDaysPerYear;
 
             //SelectedRole = Employee.Role;
-            SelectedRoleIndex = RoleList.FindIndex(x => x == Employee.Role);
+            SelectedRoleIndex = RoleList2.FindIndex(x => x == Employee.RoleId);
 
             //if (employee.Password != null) 
             //    Password = employee.Password;
-
-
             Margin = new Thickness(20, 5, 20, 5);
 
             aTimer.Enabled = false;
@@ -119,7 +123,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
         private void Back()
         {
-            if (Login.WhoIsLoggedIn[0].Role == Enumerations.Role.User)
+            //if (Login.WhoIsLoggedIn[0].Role == Enumerations.Role.User)
+            if (Login.WhoIsLoggedIn[0].RoleId == 1)
                 Shell.Current.GoToAsync("UserSettings/UserPage");
             else
                 Shell.Current.GoToAsync(nameof(AdminAndManagementManagement));
@@ -141,8 +146,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                     {
                         return;
                     }
+                    //SQLite
+                    //App.EmployeeRepo.DeleteItem(Employee);
 
-                    App.EmployeeRepo.DeleteItem(Employee);
+                    //MySQL
+                    await MySQLMethods.DeleteAccount(Employee.Id);
+
                     await App.Current.MainPage.DisplayAlert("", $"Der Account mit dem Benutzernamen '{Employee.Username}' wurde gelöscht", "OK");
                     await Shell.Current.GoToAsync(nameof(Choice));
                 }
@@ -157,8 +166,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             {
                 try
                 {
-                    App.EmployeeRepo.DeleteItem(Employee);
-
                     bool answer = await App.Current.MainPage.DisplayAlert("Passwort zurücksetzen?", $"Möchten Sie das Passwort vom Benutzer {Employee.Username} wirklich zurücksetzen?", "JA", "NEIN");
 
                     if (answer == false)
@@ -166,7 +173,9 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                         return;
                     }
 
-                    App.EmployeeRepo.DeleteItem(Employee);
+                    //SQLite
+                    //App.EmployeeRepo.DeleteItem(Employee);
+
                     var password = "0";
 
                     //var salt = DateTime.Now.ToString();
@@ -177,7 +186,12 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                     //SelectedEmployee.Salt = salt;
 
                     Employee.IsResetPassword = true;
-                    App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+                    //SQLite
+                    //App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+                    //MySQL
+                    await MySQLMethods.UpdateAccount(Employee);
 
                     await App.Current.MainPage.DisplayAlert("", $"Das Passwort vom Benutzer {Employee.Username} lautet nun '0'.", "OK");
                 }
@@ -188,7 +202,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
             });
 
         public ICommand SaveChangingData =>
-          new Command( async () =>
+          new Command(async () =>
           {
               //var salt = DateTime.Now.ToString();
               //var hashedPW = Hash.HashPassword($"{Password}{salt}");          // Das Passwort mit dem Salt in einen Hash Wert umwandeln (Der Salt Wert ändert das gehashte PW nochmals ab, weil z.B. ein Passwort "1234" immer den gleichen Wert als Hash ergibt. So könnte man daraus schließen, dass ein gleicher Hash Wert zum gleichen Passwort gehört. Da nun zusätzlich noch ein Salt Wert hinzugefügt wird, welcher bei jeden User anders ist, ist auch das Passwort bei jeden User anders, selbst wenn User A das selbe PW hat wie User B 
@@ -196,9 +210,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               if (Password != null)
                 hashedPW = Hash.HashPasswordScrypt(Password);
 
-              var user = App.EmployeeRepo.GetItems().Find(name => name.Username == Username);
-              //var currentEmployee = Login.WhoIsLoggedIn[0];
-              
+              //SQLite
+              //var user = App.EmployeeRepo.GetItems().Find(name => name.Username == Username);
+
+              //MySQL
+              var user = (await MySQLMethods.GetAllAccounts()).Find(user => user.Username == Username);
 
               //Wurde ein Nutzer mit dem Benutzernamen gefunden, dann darf dieser Benutzername nicht vergeben werden
               if (user != null && Employee.Username != Username)
@@ -219,10 +235,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
                   return;
               }
 
-              App.EmployeeRepo.DeleteItem(Employee);
+              //SQLite
+              //App.EmployeeRepo.DeleteItem(Employee);
 
+              //MySQL
               Employee.WorkingHoursPerWeek = WorkingHoursPerWeek;
-
               Employee.Username = Username;
               Employee.Firstname= Firstname;
               Employee.Lastname= Lastname;
@@ -233,7 +250,7 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
               Employee.Birthday = Birthday;
               Employee.EMail = EMail;
               Employee.VacationDaysPerYear = VacationDays;
-              Employee.Role = RoleList[SelectedRoleIndex];
+              Employee.RoleId = RoleList2[SelectedRoleIndex];
 
               if (hashedPW != null)
                   Employee.Password = hashedPW;
@@ -242,7 +259,11 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.User
 
               Employee.IsResetPassword = false;
 
-              App.EmployeeRepo.SaveItemWithChildren(Employee);
+              //SQLite
+              //App.EmployeeRepo.SaveItemWithChildren(Employee);
+
+              //MySQL
+              await MySQLMethods.UpdateAccount(Employee);
 
               await App.Current.MainPage.DisplayAlert("", "Die Einstellungen wurden gespeichert.", "OK");
 
