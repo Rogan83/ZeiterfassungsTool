@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement;
 //using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MySQLModels;
 
@@ -15,9 +16,9 @@ namespace ZeiterfassungsTool.StaticClasses
     {
         static HttpClient client;
         static JsonSerializerOptions _serializerOptions;
-        static string baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
-        static string urlEmployee = $"{baseAddress}/api/Employee";
-        static string urlTimetracking = $"{baseAddress}/api/Timetracking";
+        static string baseAddress; //= DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
+        static string urlEmployee; // = $"{baseAddress}/api/Employee";
+        static string urlTimetracking; // = $"{baseAddress}/api/Timetracking";
 
         static MySQLMethods()
         {
@@ -26,6 +27,13 @@ namespace ZeiterfassungsTool.StaticClasses
             {
                 WriteIndented = true,
             };
+
+
+            SettingsConnectionToDatabaseModel settingsConnectionToDatabaseModel = new SettingsConnectionToDatabaseModel();
+
+            baseAddress = File.ReadAllText(settingsConnectionToDatabaseModel.pathPlusFilename);
+            urlEmployee = $"{baseAddress}/api/Employee";
+            urlTimetracking = $"{baseAddress}/api/Timetracking";
         }
 
         #region EmployeeMethods

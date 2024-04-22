@@ -81,6 +81,9 @@
 	  <MauiXaml Update="MVVM\Views\AdminAndManagement\Overtime.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\AdminAndManagement\SettingsConnectionToDatabase.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AdminAndManagement\UserList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

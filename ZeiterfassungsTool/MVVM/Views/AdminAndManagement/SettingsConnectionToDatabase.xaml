@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZeiterfassungsTool.MVVM.Views.AdminAndManagement.SettingsConnectionToDatabase"
+             Title="SettingsConnectionToDatabase">
+    <VerticalStackLayout>
+        <HorizontalStackLayout Padding="0,50,0,50" BackgroundColor="AliceBlue" HorizontalOptions="Center">
+            <Label 
+                Text="Adresse: "
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Entry
+                Text="{Binding ConnectionData}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="500"
+                />
+        </HorizontalStackLayout>
+        <Button
+            Text="Verbindung überprüfen"
+            Command="{Binding ReadConnectionData}"
+            />
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -17,6 +17,10 @@ public partial class LoginPage : ContentPage
 	{
 		base.OnAppearing();
 
+	 	bool connectionExisits = await loginPage.CheckIfConnectionToDatabaseExisits();
+		if (!connectionExisits)
+			return;
+
         await loginPage.CheckIfOneAccountExist();
 
 		MySQLModels.Employee loggedInEmployee;

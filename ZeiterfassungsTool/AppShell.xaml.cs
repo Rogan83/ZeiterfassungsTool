@@ -31,7 +31,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("ManagementPage", typeof(ManagementPage));
 
-
+        Routing.RegisterRoute("SettingsConnectionToDatabase", typeof(SettingsConnectionToDatabase));
 
         //Routing.RegisterRoute("UserList/StartPage", typeof(UserList));
         //Routing.RegisterRoute("UserList/UserManagement", typeof(UserList));

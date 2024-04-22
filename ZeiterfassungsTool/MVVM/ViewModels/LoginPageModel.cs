@@ -1,20 +1,15 @@
 ﻿using Microsoft.Maui.Controls;
 using PropertyChanged;
 using Syncfusion.Maui.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ZeiterfassungsTool.Enumerations;
 using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MVVM.Views;
 using ZeiterfassungsTool.MVVM.Views.Admin;
 using ZeiterfassungsTool.MVVM.Views.AdminAndManagement;
 using ZeiterfassungsTool.StaticClasses;
-
-
+using System.Diagnostics;
+using ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement;
 
 namespace ZeiterfassungsTool.MVVM.ViewModels
 {
@@ -174,6 +169,34 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                     TxtForwardToContent = "Weiter zur Adminseite";
                     break;
             }
+        }
+
+        public async Task<bool> CheckIfConnectionToDatabaseExisits()
+        {
+            SettingsConnectionToDatabaseModel settingsConnectionToDatabaseModel = new();
+            string pathPlusFilename = settingsConnectionToDatabaseModel.pathPlusFilename;
+
+            if (File.Exists(pathPlusFilename))
+            {
+                string content = File.ReadAllText(pathPlusFilename);
+
+                if (content == String.Empty)
+                {
+                    App.Current.MainPage.DisplayAlert("Verbindung wurde noch nicht eingerichtet.", "Keine gültige Verbindung gefunden", "OK");
+                    await Shell.Current.GoToAsync(nameof(SettingsConnectionToDatabase));
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert("Verbindung wurde noch nicht eingerichtet.", "Es muss noch die Verbindung zum Server hergestellt werden", "OK");
+                
+                await Shell.Current.GoToAsync(nameof(SettingsConnectionToDatabase));
+                return false;
+            }
+            
+            //File.WriteAllText("test.txt", newContent);
         }
 
         public async Task CheckIfOneAccountExist()
