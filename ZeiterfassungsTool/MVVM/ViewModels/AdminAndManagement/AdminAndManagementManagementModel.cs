@@ -51,7 +51,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.AdminAndManagement
         #endregion
 
         #region Methods
-        //public async Task<ObservableCollection<Employee>> GetAllAccounts()
         public async Task<ObservableCollection<MySQLModels.Employee>> GetAllAccounts()
         {
             //Employee LoggedInAccount = Login.WhoIsLoggedIn[0];
