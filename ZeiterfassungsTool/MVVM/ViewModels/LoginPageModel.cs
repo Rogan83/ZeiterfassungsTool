@@ -144,18 +144,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels
                 result = Login.WhoIsLoggedIn[0];
             else
                 return;
-            //switch (result.Role)
-            //{
-            //    case Role.User:
-            //        TxtForwardToContent = "Weiter zur Benutzerseite";
-            //        break;
-            //    case Role.Management:
-            //        TxtForwardToContent = "Weiter zur Geschäftsführung";
-            //        break;
-            //    case Role.Admin:
-            //        TxtForwardToContent = "Weiter zur Adminseite";
-            //        break;
-            //}
 
             switch (result.RoleId)
             {
