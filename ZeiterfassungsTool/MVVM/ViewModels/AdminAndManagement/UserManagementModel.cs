@@ -223,34 +223,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
             return subject;
         }
 
-        //public void Update()
-        //{
-        //    DateAndTimeStartTime = new DateTime(DateStartTime.Year, DateStartTime.Month, DateStartTime.Day, TimeStartTime.Hours, TimeStartTime.Minutes, TimeStartTime.Seconds);
-        //    DateAndTimeEndTime = new DateTime(DateEndTime.Year, DateEndTime.Month, DateEndTime.Day, TimeEndTime.Hours, TimeEndTime.Minutes, TimeEndTime.Seconds);
-
-        //    for (int i = 0; i < Employee.Timetracking.Count; i++)
-        //    {
-        //        if (Employee.Timetracking[i].Id == SelectedTime.Id)
-        //        {
-        //            //UpdateWithchildren funktioniert nicht, deswegen muss der User gelöscht und in modifizierter Form wieder hinzugefügt werden
-        //            App.EmployeeRepo.DeleteItem(Employee);
-
-        //            Employee.Timetracking[i].StartTime = DateAndTimeStartTime;
-        //            Employee.Timetracking[i].EndTime = DateAndTimeEndTime;
-        //            Employee.Timetracking[i].Subject = ChooseSubject();
-
-        //            App.EmployeeRepo.SaveItemWithChildren(Employee);
-
-        //            //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-        //            var temp = Employee;
-        //            Employee = null;
-        //            Employee = temp;
-
-        //            return;
-        //        }
-        //    }
-        //}
-
         public ICommand AddTime =>
            new Command(async () =>
            {
@@ -330,35 +302,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
 
                EntrySubject = string.Empty;
            });
-
-        //public ICommand DeleteTime =>
-        //   new Command(() =>
-        //   {
-        //       App.EmployeeRepo.DeleteItem(Employee);
-
-        //       Employee.Timetracking.Remove(SelectedTime);
-
-        //       App.EmployeeRepo.SaveItemWithChildren(Employee);
-
-        //       //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-        //       var temp = Employee;
-        //       Employee = null;
-        //       Employee = temp;
-        //   });
-
-        //public void DeleteTime()
-        //{
-        //    App.EmployeeRepo.DeleteItem(Employee);
-
-        //    Employee.Timetracking.Remove(SelectedTime);
-
-        //    App.EmployeeRepo.SaveItemWithChildren(Employee);
-
-        //    //Wirkt unnötig, aber ansonsten aktualisiert sich nicht das UI
-        //    var temp = Employee;
-        //    Employee = null;
-        //    Employee = temp;
-        //}
 
         /// <summary>
         /// Wählt das erste Item von der Timetracking Liste aus, wenn vorhanden
