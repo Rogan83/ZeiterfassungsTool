@@ -53,13 +53,8 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public OvertimeModel()
         {
             // Sucht nur die Accounts heraus, welche die Mitarbeiter Rechte haben.
-            //Employees = new ObservableCollection<Employee>(App.EmployeeRepo.GetItemsWithChildren().Where(x => x.Role == Enumerations.Role.User));        
-              
-            
             Month = DateTime.Now.Month.ToString();
             Year = DateTime.Now.Year.ToString();
-
-            
         }
 
         public ICommand BackButton =>
@@ -71,14 +66,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
         public ICommand CreateEmployeeListCommand =>
            new Command(() =>
            {
-               //Ich wollte hier auf einen Balken zugreifen, hat aber nicht geklappt
-               //SfLinearGauge sfLinearGauge = element as SfLinearGauge;
-               //if (sfLinearGauge != null)
-               //{
-               //    var childs = sfLinearGauge.BarPointers;
-               //    childs[3].Value = 100;
-               //}
-
                if (rbChooseMonth)
                {
                    CreateEmployeeListForOneMonth();
