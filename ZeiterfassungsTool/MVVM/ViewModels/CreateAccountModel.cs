@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZeiterfassungsTool.Enumerations;
-//using ZeiterfassungsTool.Models;
 using ZeiterfassungsTool.MySQLModels;
 
 using ZeiterfassungsTool.MVVM.Views;
