@@ -109,11 +109,6 @@ namespace ZeiterfassungsTool.MVVM.ViewModels.Admin
                     await App.Current.MainPage.DisplayAlert("", "Die Übertragung ist abgeschlossen.", "OK");
            });
 
-        
-
-
-        
-
         /// <summary>
         /// Überprüfe, ob der Code für Android oder Windows erstellt wurde und passe dementsprechend den Pfad an.
         /// </summary>
